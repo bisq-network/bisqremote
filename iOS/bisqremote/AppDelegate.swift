@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  n
+//  
 //
 //  Created by Joachim Neumann on 03/06/2018.
 //  Copyright © 2018 joachim Neumann. All rights reserved.
@@ -13,10 +13,24 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         registerForPushNotifications()
+        
+        // Check if launched from a notification
+        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+            let aps = notification["aps"] as! [String: AnyObject]
+            
+            let mainViewController = (window?.rootViewController) as? MainViewController
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: aps, options: .prettyPrinted)
+                let jsonString = String(data: jsonData, encoding: .ascii)
+                mainViewController?.notification = jsonString
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         return true
     }
 

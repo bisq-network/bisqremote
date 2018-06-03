@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */; };
 		BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45E920C34BC10052C91A /* AppDelegate.swift */; };
-		BEFB45EC20C34BC10052C91A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45EB20C34BC10052C91A /* ViewController.swift */; };
+		BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45EB20C34BC10052C91A /* MainViewController.swift */; };
 		BEFB45EF20C34BC10052C91A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45ED20C34BC10052C91A /* Main.storyboard */; };
 		BEFB45F120C34BC10052C91A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45F020C34BC10052C91A /* Assets.xcassets */; };
 		BEFB45F420C34BC10052C91A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		BEFB45E620C34BC10052C91A /* bisqremote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisqremote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFB45E920C34BC10052C91A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BEFB45EB20C34BC10052C91A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BEFB45EB20C34BC10052C91A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BEFB45EE20C34BC10052C91A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEFB45F020C34BC10052C91A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEFB45F320C34BC10052C91A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -57,7 +59,8 @@
 			children = (
 				BEFB45FC20C355870052C91A /* bisqremote.entitlements */,
 				BEFB45E920C34BC10052C91A /* AppDelegate.swift */,
-				BEFB45EB20C34BC10052C91A /* ViewController.swift */,
+				BEFB45EB20C34BC10052C91A /* MainViewController.swift */,
+				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
 				BEFB45ED20C34BC10052C91A /* Main.storyboard */,
 				BEFB45F020C34BC10052C91A /* Assets.xcassets */,
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
@@ -145,7 +148,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEFB45EC20C34BC10052C91A /* ViewController.swift in Sources */,
+				BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */,
+				BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */,
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
