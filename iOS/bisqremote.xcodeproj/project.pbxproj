@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */; };
+		BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */; };
+		BE92215420C49C6F00F8EB93 /* BisqNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92215320C49C6F00F8EB93 /* BisqNotification.swift */; };
+		BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */; };
 		BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45E920C34BC10052C91A /* AppDelegate.swift */; };
 		BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45EB20C34BC10052C91A /* MainViewController.swift */; };
 		BEFB45EF20C34BC10052C91A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45ED20C34BC10052C91A /* Main.storyboard */; };
@@ -17,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
+		BE92215320C49C6F00F8EB93 /* BisqNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BisqNotification.swift; sourceTree = "<group>"; };
+		BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		BEFB45E620C34BC10052C91A /* bisqremote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisqremote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFB45E920C34BC10052C91A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEFB45EB20C34BC10052C91A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +66,10 @@
 				BEFB45FC20C355870052C91A /* bisqremote.entitlements */,
 				BEFB45E920C34BC10052C91A /* AppDelegate.swift */,
 				BEFB45EB20C34BC10052C91A /* MainViewController.swift */,
+				BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */,
 				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
+				BE92215320C49C6F00F8EB93 /* BisqNotification.swift */,
+				BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */,
 				BEFB45ED20C34BC10052C91A /* Main.storyboard */,
 				BEFB45F020C34BC10052C91A /* Assets.xcassets */,
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
@@ -148,8 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE92215420C49C6F00F8EB93 /* BisqNotification.swift in Sources */,
 				BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */,
+				BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */,
 				BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */,
+				BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */,
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
