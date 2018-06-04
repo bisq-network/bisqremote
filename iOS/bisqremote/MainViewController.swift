@@ -10,15 +10,8 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    var notification: String?
-    @IBOutlet weak var messageTextField: UITextView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if notification != nil {
-            messageTextField.text = notification
-        }
     }
-
 }
 

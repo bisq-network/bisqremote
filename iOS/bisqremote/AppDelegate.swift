@@ -20,13 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check if launched from a notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
-            
-            let mainViewController = (window?.rootViewController) as? MainViewController
-            
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: aps, options: .prettyPrinted)
-                let jsonString = String(data: jsonData, encoding: .ascii)
-                mainViewController?.notification = jsonString
+                if let jsonString = String(data: jsonData, encoding: .ascii) {
+                    let defaults = UserDefaults.standard
+                    let newNotification = BisqNotification(_text: jsonString)
+                    var bisqNotifications = defaults.object(forKey:"bisqNotifications") as? [BisqNotification] ?? [BisqNotification]()
+                    bisqNotifications.append(newNotification)
+                    defaults.set(bisqNotifications, forKey: "bisqNotifications")
+                }
             } catch {
                 print(error.localizedDescription)
             }

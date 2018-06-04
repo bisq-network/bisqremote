@@ -10,10 +10,10 @@ import UIKit
 
 class NotificationTableViewController: UITableViewController {
 
-    var bisqNotifications = [BisqNotification]()
-    
+   var bisqNotifications = [BisqNotification]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        bisqNotifications = UserDefaults.standard.object(forKey:"bisqNotifications") as? [BisqNotification] ?? [BisqNotification]()
         loadSampleBisqNotifications()
     }
 
