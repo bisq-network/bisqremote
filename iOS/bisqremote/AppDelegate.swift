@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         print(jsonString)
                         if let temp = BisqNotifications.shared.parse(json: jsonString) {
                             BisqNotifications.shared.add(new: temp)
+                        } else {
+                            print("wrong notification format")
                         }
                     }
                 } catch {

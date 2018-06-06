@@ -6,6 +6,9 @@
 //  Copyright © 2018 joachim Neumann. All rights reserved.
 //
 
+
+//example message:
+//{"aps":{"bisqNotificationVersion": 1, "alert":"Testing.. (60)","badge":1,"sound":"default", "bisqMessage": "TRADE_ACCEPTED", "timestampEvent": "2018-06-06 21:52:50"}}
 import Foundation
 
 let userDefaultKey = "bisqNotification"
@@ -16,6 +19,7 @@ struct ANotification: Codable {
     var badge: Int
     var sound: String
     var bisqMessage: String
+    var timestampEvent: Date
 }
 
 class BisqNotifications {
@@ -26,6 +30,12 @@ class BisqNotifications {
     private let encoder = JSONEncoder()
     private init() {
         load()
+    
+        // set date format to the javascript standard
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        encoder.dateEncodingStrategy = .formatted(formatter)
     }
 
     func parseArray(json: String) {
