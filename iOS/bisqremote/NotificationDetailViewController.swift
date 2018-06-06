@@ -10,12 +10,12 @@ import UIKit
 
 class NotificationDetailViewController: UIViewController {
 
-    var bisqNotification: BisqNotification?
+    var aNotification: ANotification?
     @IBOutlet weak var textLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textLabel.text = bisqNotification?.text
+        textLabel.text = aNotification?.bisqMessage
     }
 
 }

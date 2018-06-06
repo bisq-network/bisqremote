@@ -16,21 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         registerForPushNotifications()
-        
+
         // Check if launched from a notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: aps, options: .prettyPrinted)
-                if let jsonString = String(data: jsonData, encoding: .ascii) {
-                    let defaults = UserDefaults.standard
-                    let newNotification = BisqNotification(_text: jsonString)
-                    var bisqNotifications = defaults.object(forKey:"bisqNotifications") as? [BisqNotification] ?? [BisqNotification]()
-                    bisqNotifications.append(newNotification)
-                    defaults.set(bisqNotifications, forKey: "bisqNotifications")
+            let version = aps["bisqNotificationVersion"] as! Int
+            if (version == 1) {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: aps, options: .prettyPrinted)
+                    if let jsonString = String(data: jsonData, encoding: .ascii) {
+                        print(jsonString)
+                        if let temp = BisqNotifications.shared.parse(json: jsonString) {
+                            BisqNotifications.shared.add(new: temp)
+                        }
+                    }
+                } catch {
+                    print(error.localizedDescription)
                 }
-            } catch {
-                print(error.localizedDescription)
+            } else {
+                print("wrong version")
             }
         }
         return true

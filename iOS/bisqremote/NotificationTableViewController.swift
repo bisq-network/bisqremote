@@ -10,11 +10,8 @@ import UIKit
 
 class NotificationTableViewController: UITableViewController {
 
-   var bisqNotifications = [BisqNotification]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        bisqNotifications = UserDefaults.standard.object(forKey:"bisqNotifications") as? [BisqNotification] ?? [BisqNotification]()
-        loadSampleBisqNotifications()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -22,7 +19,7 @@ class NotificationTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bisqNotifications.count
+        return BisqNotifications.shared.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,8 +28,8 @@ class NotificationTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of NotificationTableViewCell.")
         }
         
-        let notification = bisqNotifications[indexPath.row]
-        cell.notificationMessage.text = notification.text
+        let notification = BisqNotifications.shared.at(n: indexPath.row)
+        cell.notificationMessage.text = notification.bisqMessage
         
         return cell
     }
@@ -46,24 +43,21 @@ class NotificationTableViewController: UITableViewController {
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            BisqNotifications.shared.remove(n: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
-    /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
     }
-    */
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -89,19 +83,12 @@ class NotificationTableViewController: UITableViewController {
                 fatalError("the selected cell is not being displayed in the table")
             }
             
-            let selectedNotification = bisqNotifications[indexPath.row]
-            detailViewController.bisqNotification = selectedNotification
+            let selectedNotification = BisqNotifications.shared.at(n: indexPath.row)
+            detailViewController.aNotification = selectedNotification
             
         default:
             fatalError("Unexpected destination: \(segue.destination)")
         }
     }
     
-    private func loadSampleBisqNotifications() {
-        let n1 = BisqNotification(_text: "n1")
-        let n2 = BisqNotification(_text: "n2")
-        let n3 = BisqNotification(_text: "n3")
-        bisqNotifications += [n1, n2, n3]
-    }
-
 }
