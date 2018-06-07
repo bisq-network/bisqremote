@@ -76,16 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let token = tokenParts.joined()
-        print("Device token: \n\(token)")
-        print("Example notification:")
-        do {
-            let exampleAps = BisqNotifications.exampleAPS()
-            let s = try BisqNotifications.shared.encoder.encode(exampleAps)
-            let json = try JSONSerialization.jsonObject(with: s)
-            print(["aps": json].prettyPrintedJSON)
-        } catch {
-            print("could not pront example notification")
-        }
+        print("### Device token: \n### \(token)")
+        print("\n### Example notification:")
+        print("### "+BisqNotifications.exampleAPS())
     }
     
     func application(_ application: UIApplication,

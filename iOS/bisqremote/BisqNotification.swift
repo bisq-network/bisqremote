@@ -6,9 +6,6 @@
 //  Copyright © 2018 joachim Neumann. All rights reserved.
 //
 
-
-//example message:
-//{"aps":{"bisqNotificationVersion": 1, "alert":"Testing.. (60)","badge":1,"sound":"default", "bisqMessage": "TRADE_ACCEPTED", "timestampEvent": "2018-06-06 21:52:50"}}
 import Foundation
 
 let userDefaultKey = "bisqNotification"
@@ -23,33 +20,42 @@ struct ANotification: Codable {
 class BisqNotifications {
 
     static let shared = BisqNotifications()
+    
     private var array: [ANotification] = [ANotification]()
-    private let decoder = JSONDecoder()
-    let encoder = JSONEncoder()
+    static private let decoder = JSONDecoder()
+    static private let encoder = JSONEncoder()
     private let dateformatter = DateFormatter()
     private init() {
         load()
-    
+        
         // set date format to the javascript standard
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        decoder.dateDecodingStrategy = .formatted(dateformatter)
-        encoder.dateEncodingStrategy = .formatted(dateformatter)
+        BisqNotifications.decoder.dateDecodingStrategy = .formatted(dateformatter)
+        BisqNotifications.encoder.dateEncodingStrategy = .formatted(dateformatter)
+        BisqNotifications.encoder.outputFormatting = .prettyPrinted
+
     }
 
-    struct APS : Codable {
+    private struct APS : Codable {
         let alert: String
         let badge: Int
         let sound: String
         let bisqNotification: ANotification
     }
 
-    static func exampleAPS() -> APS {
+    static func exampleAPS() -> String {
         let aps = APS(
             alert: "Bisq Notification",
             badge: 1,
             sound: "default",
             bisqNotification: exampleNotification())
-        return aps
+        let completeMessage = ["aps": aps]
+        do {
+            let jsonData = try encoder.encode(completeMessage)
+            return String(data: jsonData, encoding: .utf8)!
+        } catch {
+            return("could not create example APS")
+        }
     }
 
     static func exampleNotification() -> ANotification {
@@ -62,7 +68,7 @@ class BisqNotifications {
     func parseArray(json: String) {
         do {
             let data: Data? = json.data(using: .utf8)
-            array = try decoder.decode([ANotification].self, from: data!)
+            array = try BisqNotifications.decoder.decode([ANotification].self, from: data!)
         } catch {
             array = [ANotification]()
         }
@@ -73,7 +79,7 @@ class BisqNotifications {
         do {
             let withReceivedDate = json.replacingOccurrences(of: "}", with: ", \"timestampReceived\": \""+dateformatter.string(from: Date())+"\"}")
             let data: Data? = withReceivedDate.data(using: .utf8)
-            ret = try decoder.decode(ANotification.self, from: data!)
+            ret = try BisqNotifications.decoder.decode(ANotification.self, from: data!)
         } catch {
             ret = nil
         }
@@ -82,7 +88,7 @@ class BisqNotifications {
 
     private func save() {
         do {
-            let jsonData = try encoder.encode(array)
+            let jsonData = try BisqNotifications.encoder.encode(array)
             let toDefaults = String(data: jsonData, encoding: .utf8)!
             UserDefaults.standard.set(toDefaults, forKey: userDefaultKey)
         } catch {
@@ -112,7 +118,7 @@ class BisqNotifications {
     func add(new: AnyObject?) {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
-            add(new: try decoder.decode(ANotification.self, from: jsonData))
+            add(new: try BisqNotifications.decoder.decode(ANotification.self, from: jsonData))
             save()
         } catch {
             print("could not add notification")
