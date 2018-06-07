@@ -12,6 +12,9 @@ class NotificationTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (BisqNotifications.shared.count == 0) {
+            BisqNotifications.shared.add(new: BisqNotifications.exampleNotification())
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -29,7 +32,7 @@ class NotificationTableViewController: UITableViewController {
         }
         
         let notification = BisqNotifications.shared.at(n: indexPath.row)
-        cell.notificationMessage.text = notification.bisqMessage
+        cell.notificationMessage.text = notification.message
         
         return cell
     }
@@ -91,4 +94,17 @@ class NotificationTableViewController: UITableViewController {
         }
     }
     
+}
+
+
+extension Dictionary {
+    var prettyPrintedJSON: String {
+        do {
+            let data: Data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+            let s = String(data: data, encoding: .utf8)!
+            return s
+        } catch _ {
+            return "could not prettyPrint"
+        }
+    }
 }

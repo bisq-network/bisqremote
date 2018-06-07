@@ -20,24 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check if launched from a notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
-            let version = aps["bisqNotificationVersion"] as! Int
-            if (version == 1) {
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: aps, options: .prettyPrinted)
-                    if let jsonString = String(data: jsonData, encoding: .ascii) {
-                        print(jsonString)
-                        if let temp = BisqNotifications.shared.parse(json: jsonString) {
-                            BisqNotifications.shared.add(new: temp)
-                        } else {
-                            print("wrong notification format")
-                        }
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-            } else {
-                print("wrong version")
-            }
+            BisqNotifications.shared.add(new: aps["bisqNotification"])
         }
         return true
     }
@@ -93,7 +76,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let token = tokenParts.joined()
-        print("Device Token: \(token)")
+        print("Device token: \n\(token)")
+        print("Example notification:")
+        do {
+            let exampleAps = BisqNotifications.exampleAPS()
+            let s = try BisqNotifications.shared.encoder.encode(exampleAps)
+            let json = try JSONSerialization.jsonObject(with: s)
+            print(["aps": json].prettyPrintedJSON)
+        } catch {
+            print("could not pront example notification")
+        }
     }
     
     func application(_ application: UIApplication,

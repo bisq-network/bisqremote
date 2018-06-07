@@ -15,7 +15,7 @@ class NotificationDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textLabel.text = aNotification?.bisqMessage
+        textLabel.text = aNotification?.message
     }
 
 }
