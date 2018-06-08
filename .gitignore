@@ -1,0 +1,3 @@
+*/*.xcodeproj/project.xcworkspace/xcuserdata
+*/xcuserdata/*.xcuserdatad
+*iOS/*.xcodeproj/xcuserdata/*.xcuserdatad
