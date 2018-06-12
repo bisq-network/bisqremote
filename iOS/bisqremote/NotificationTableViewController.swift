@@ -13,7 +13,7 @@ class NotificationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (BisqNotifications.shared.countAll == 0) {
-            BisqNotifications.shared.add(new: BisqNotifications.exampleNotification())
+            BisqNotifications.shared.addRaw(new: BisqNotifications.exampleNotification())
         }
     }
 
@@ -30,13 +30,8 @@ class NotificationTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NotificationTableViewCell  else {
             fatalError("The dequeued cell is not an instance of NotificationTableViewCell.")
         }
-        
-        let notification = BisqNotifications.shared.at(n: indexPath.row)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy hh:mm:ss"
-        cell.notificationMessage.text = notification.aNotification.message + " \(dateFormatter.string(from: (notification.timestampReceived)))"
-
-        
+        let notification = BisqNotifications.shared.at(n:indexPath.row)
+        cell.notificationMessage.text = "v=\(notification.version)"
         return cell
     }
  
@@ -90,7 +85,7 @@ class NotificationTableViewController: UITableViewController {
             }
             
             let selectedNotification = BisqNotifications.shared.at(n: indexPath.row)
-            detailViewController.timestampedNotification = selectedNotification
+            detailViewController.notification = selectedNotification
             
         default:
             fatalError("Unexpected destination: \(segue.destination)")

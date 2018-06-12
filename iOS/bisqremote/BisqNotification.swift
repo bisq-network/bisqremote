@@ -11,29 +11,59 @@ import UIKit // for setting the badge number
 
 let userDefaultKey = "bisqNotification"
 
-struct ANotification: Codable, Equatable {
+class RawNotification: Codable {
     var version: Int
-    var message: String
     var timestampEvent: Date
-    var read: Bool
-//    var timestampReceived: Date
-    
-    static func == (lhs: ANotification, rhs: ANotification) -> Bool {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm"
-        return
-            lhs.version == rhs.version &&
-            lhs.message == rhs.message &&
-            df.string(from: lhs.timestampEvent) == df.string(from: rhs.timestampEvent)
+
+    init(v: Int, t: Date) {
+        version = v
+        timestampEvent = t
     }
+    
+    private enum CodingKeys: String, CodingKey {
+        case version
+        case timestampEvent
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        version = try container.decode(Int.self, forKey: .version)
+        timestampEvent = try container.decode(Date.self, forKey: .timestampEvent)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(version, forKey: .version)
+        try container.encode(timestampEvent, forKey: .timestampEvent)
+    }
+    
 }
 
-class TimestampedNotification: Codable {
-    var timestampReceived: Date
-    var aNotification: ANotification
-    init(n: ANotification) {
-        aNotification = n
-        timestampReceived = Date()
+class Notification: RawNotification {
+    var read: Bool
+    
+    private enum CodingKeys: String, CodingKey {
+        case read
+    }
+    
+    override init(v: Int, t: Date) {
+        read = false
+        super.init(v: v, t: t)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let superdecoder = try container.superDecoder()
+        read = try container.decode(Bool.self, forKey: .read)
+        try super.init(from: superdecoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(read, forKey: .read)
+        
+        let superdecoder = container.superEncoder()
+        try super.encode(to: superdecoder)
     }
 }
 
@@ -41,7 +71,7 @@ class BisqNotifications {
 
     static let shared = BisqNotifications()
     
-    private var array: [TimestampedNotification] = [TimestampedNotification]()
+    private var array: [Notification] = [Notification]()
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private let dateformatter = DateFormatter()
@@ -55,47 +85,10 @@ class BisqNotifications {
         load()
     }
 
-    private func test() {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm:ss:SSSZ"
-            
-        let jd = JSONDecoder()
-        let je = JSONEncoder()
-        jd.dateDecodingStrategy = .formatted(df)
-        je.dateEncodingStrategy = .formatted(df)
-        do {
-            let n1 = [BisqNotifications.exampleNotification()]
-            let nd1 = try je.encode(n1)
-            let ns1 = String(data: nd1, encoding: .utf8)!
-            
-            let nd2: Data? = ns1.data(using: .utf8)
-            let n2 = try jd.decode([ANotification].self, from: nd2!)
-            
-            let nd22 = try je.encode(n2)
-            let ns2 = String(data: nd22, encoding: .utf8)!
-            assert(n1 == n2)
-            assert(n1[0] == n2[0])
-            assert(ns1 == ns2)
-
-            let t1 = n1[0].timestampEvent
-            let t2 = n2[0].timestampEvent
-            let dateS1 = df.string(from: t1)
-            let dateS2 = df.string(from: t2)
-            assert(dateS1 == dateS2)
-            let tx1 = df.date(from: dateS1)
-            let tx2 = df.date(from: dateS2)
-            print (t1>t2)
-            print (t1<t2)
-            assert(tx1 == tx2)
-            assert(t1 == t2)
-        } catch let jsonErr {
-            print("/n###/n### save failed/n###/n", jsonErr)
-        }
-    }
     private struct APS : Codable {
         let alert: String
         let sound: String
-        let bisqNotification: ANotification
+        let bisqNotification: RawNotification
     }
 
     static func exampleAPS() -> String {
@@ -117,30 +110,26 @@ class BisqNotifications {
         }
     }
 
-    static func exampleNotification() -> ANotification {
-        return ANotification(
-            version: 1,
-            message: "example notification",
-            timestampEvent: Date(),
-            read: false)
+    static func exampleNotification() -> RawNotification {
+        return RawNotification(v: 1, t: Date())
     }
     
     func parseArray(json: String) {
         do {
             let data: Data? = json.data(using: .utf8)
-            array = try decoder.decode([TimestampedNotification].self, from: data!)
+            array = try decoder.decode([Notification].self, from: data!)
         } catch {
-            array = [TimestampedNotification]()
+            array = [Notification]()
         }
     }
 
-    func parse(json: String) -> ANotification? {
-        var ret: ANotification?
+    func parse(json: String) -> Notification? {
+        var ret: Notification?
         do {
             // add timestamp of reception
             let withReceptionTimestamp = json.replacingOccurrences(of: "}", with: ", \"timestampReceived\": \""+dateformatter.string(from: Date())+"\"}")
             let data: Data? = withReceptionTimestamp.data(using: .utf8)
-            ret = try decoder.decode(ANotification.self, from: data!)
+            ret = try decoder.decode(Notification.self, from: data!)
         } catch {
             ret = nil
         }
@@ -171,27 +160,28 @@ class BisqNotifications {
     var countUnread: Int {
         var unread = 0
         for n in array {
-            if (!n.aNotification.read) { unread += 1 }
+            if (!n.read) { unread += 1 }
         }
         return unread
     }
 
-    func at(n: Int) -> TimestampedNotification {
-        return array[n]
+    func at(n: Int) -> Notification {
+        let x = array[n]
+        return x
     }
     
     
-    func add(new: ANotification) {
-        let temp = TimestampedNotification(n: new)
+    func addNotification(new: Notification) {
+        let temp = Notification(v: new.version, t: new.timestampEvent)
         array.append(temp)
         save()
     }
-    
-    func add(new: AnyObject?) {
+
+    func addRaw(new: AnyObject?) {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
-            add(new: try decoder.decode(ANotification.self, from: jsonData))
-            save()
+            let raw = try decoder.decode(RawNotification.self, from: jsonData)
+            addNotification(new: Notification(v: raw.version, t: raw.timestampEvent))
         } catch {
             print("could not add notification")
         }

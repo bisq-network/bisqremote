@@ -10,14 +10,14 @@ import UIKit
 
 class NotificationDetailViewController: UIViewController {
 
-    var timestampedNotification: TimestampedNotification?
+    var notification: Notification?
     @IBOutlet weak var textLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy hh:mm:ss"
-        textLabel.text = (timestampedNotification?.aNotification.message)! + " \(dateFormatter.string(from: (timestampedNotification?.timestampReceived)!))"
+        textLabel.text = "v=\(notification!.version)"
     }
 
 }
