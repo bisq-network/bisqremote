@@ -13,6 +13,10 @@ let userDefaultKey = "bisqNotification"
 
 let TYPE_TRADE_ACCEPTED = "TRADE_ACCEPTED"
 
+
+// Datastructure as sent from the Bisq notification server
+// This class does not have the variables timestampReceived and read.
+// We need a class and custom encoder and decoder because we will inherit from this class
 class RawNotification: Codable {
     let version: Int
     let notificationType: String
@@ -57,6 +61,7 @@ class RawNotification: Codable {
     
 }
 
+// This class ist stored persistently in the phone.
 class Notification: RawNotification {
     var read: Bool
     let timestampReceived: Date
@@ -90,8 +95,8 @@ class Notification: RawNotification {
     }
 }
 
+// Singleton with the array of notifications
 class BisqNotifications {
-
     static let shared = BisqNotifications()
     
     let dateformatterShort = DateFormatter()
@@ -106,7 +111,6 @@ class BisqNotifications {
         decoder.dateDecodingStrategy = .formatted(dateformatterLong)
         encoder.dateEncodingStrategy = .formatted(dateformatterLong)
         encoder.outputFormatting = .prettyPrinted
-
         load()
     }
 
@@ -120,9 +124,9 @@ class BisqNotifications {
         // Normally, the badge number is managed on the server.
         // In our use case, the server (=bisq notification node) should have as
         // little knowledge as possible. Therefore, the badge is incremented
-        // in the app.
-        // One drawback is that the badge number is not immediately updated
-        // when a notification arrives on the phone
+        // in the app and left out in the aps example
+        // One drawback of thids approach is that the badge number is not
+        // immediately updated when a notification arrives on the phone
         let aps = APS(
             alert: "Bisq Notification",
             sound: "default",
@@ -196,7 +200,7 @@ class BisqNotifications {
         return x
     }
     
-    
+    // Three functions to add to the array - for JSON, raw and normal notifications
     func addFromJSON(new: AnyObject?) {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
@@ -215,6 +219,7 @@ class BisqNotifications {
         array.append(n)
         save()
     }
+    
     func remove(n: Int) {
         array.remove(at: n)
         save()
