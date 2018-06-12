@@ -13,7 +13,7 @@ class NotificationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (BisqNotifications.shared.countAll == 0) {
-            BisqNotifications.shared.addRaw(new: BisqNotifications.exampleNotification())
+            BisqNotifications.shared.addRaw(raw: BisqNotifications.exampleNotification())
         }
     }
 

@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check if launched from a notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
-            BisqNotifications.shared.addRaw(new: aps["bisqNotification"])
+            BisqNotifications.shared.addFromJSON(new: aps["bisqNotification"])
         }
         
         return true
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let message = userInfo as? [String: AnyObject] {
             let aps = message["aps"] as! [String: AnyObject]
-            BisqNotifications.shared.addRaw(new: aps["bisqNotification"])
+            BisqNotifications.shared.addFromJSON(new: aps["bisqNotification"])
         }
     }
 

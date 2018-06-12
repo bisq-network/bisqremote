@@ -26,7 +26,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="34" height="30"/>
                                         <state key="normal" title="Start"/>
                                         <connections>
-                                            <segue destination="edC-1E-qDP" kind="show" id="t8B-Hl-1PF"/>
+                                            <segue destination="edC-1E-qDP" kind="show" id="uVB-BZ-nr9"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -197,17 +197,24 @@ class BisqNotifications {
     }
     
     
-    func addRaw(new: AnyObject?) {
+    func addFromJSON(new: AnyObject?) {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
             let raw = try decoder.decode(RawNotification.self, from: jsonData)
-            array.append(Notification(version_: raw.version, notificationType_: raw.notificationType, comment_: raw.comment, timestampEvent_: raw.timestampEvent))
-            save()
+            addRaw(raw: raw)
         } catch {
             print("could not add notification")
         }
     }
-    
+
+    func addRaw(raw: RawNotification) {
+        addNotification(n: Notification(version_: raw.version, notificationType_: raw.notificationType, comment_: raw.comment, timestampEvent_: raw.timestampEvent))
+    }
+
+    func addNotification(n: Notification) {
+        array.append(n)
+        save()
+    }
     func remove(n: Int) {
         array.remove(at: n)
         save()
