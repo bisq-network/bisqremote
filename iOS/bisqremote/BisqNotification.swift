@@ -90,6 +90,11 @@ class BisqNotifications {
     }
 
     static func exampleAPS() -> String {
+        // normally, the badge number os managed on the server.
+        // In this app, the bisq notification node should have as little knowledge as possible
+        // therefore, the badge is incremented in the app
+        // One drawback is that the badge number is not immediately incremented
+        // when a notification arrives on the phone
         let aps = APS(
             alert: "Bisq Notification",
             sound: "default",
