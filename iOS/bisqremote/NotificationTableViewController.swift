@@ -32,6 +32,11 @@ class NotificationTableViewController: UITableViewController {
         }
         let notification = BisqNotifications.shared.at(n:indexPath.row)
         cell.notificationMessage.text = "v=\(notification.version)"
+        if notification.read {
+            cell.notificationMessage.font = UIFont.systemFont(ofSize: 16.0)
+        } else {
+            cell.notificationMessage.font = UIFont.boldSystemFont(ofSize: 16.0)
+        }
         return cell
     }
  
@@ -86,7 +91,10 @@ class NotificationTableViewController: UITableViewController {
             
             let selectedNotification = BisqNotifications.shared.at(n: indexPath.row)
             detailViewController.notification = selectedNotification
+            selectedNotification.read = true
+            BisqNotifications.shared.save()
             
+            tableView.reloadRows(at: [indexPath], with: .top)
         default:
             fatalError("Unexpected destination: \(segue.destination)")
         }

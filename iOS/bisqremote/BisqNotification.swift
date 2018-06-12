@@ -11,43 +11,53 @@ import UIKit // for setting the badge number
 
 let userDefaultKey = "bisqNotification"
 
+let TYPE_TRADE_ACCEPTED = 0
+
 class RawNotification: Codable {
-    var version: Int
-    var timestampEvent: Date
+    let version: Int
+    let notificationType: Int // TODO convert this to an enum
+    let timestampEvent: Date
 
     init(v: Int, t: Date) {
         version = v
+        notificationType = TYPE_TRADE_ACCEPTED
         timestampEvent = t
     }
     
     private enum CodingKeys: String, CodingKey {
         case version
         case timestampEvent
+        case notificationType
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         version = try container.decode(Int.self, forKey: .version)
         timestampEvent = try container.decode(Date.self, forKey: .timestampEvent)
+        notificationType = try container.decode(Int.self, forKey: .notificationType)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(version, forKey: .version)
         try container.encode(timestampEvent, forKey: .timestampEvent)
+        try container.encode(notificationType, forKey: .notificationType)
     }
     
 }
 
 class Notification: RawNotification {
     var read: Bool
-    
+    let timestampReceived: Date
+
     private enum CodingKeys: String, CodingKey {
         case read
+        case timestampReceived
     }
     
     override init(v: Int, t: Date) {
         read = false
+        timestampReceived = Date()
         super.init(v: v, t: t)
     }
     
@@ -55,13 +65,15 @@ class Notification: RawNotification {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
         read = try container.decode(Bool.self, forKey: .read)
+        timestampReceived = try container.decode(Date.self, forKey: .timestampReceived)
         try super.init(from: superdecoder)
     }
     
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(read, forKey: .read)
-        
+        try container.encode(timestampReceived, forKey: .timestampReceived)
+
         let superdecoder = container.superEncoder()
         try super.encode(to: superdecoder)
     }
@@ -92,10 +104,11 @@ class BisqNotifications {
     }
 
     static func exampleAPS() -> String {
-        // normally, the badge number os managed on the server.
-        // In this app, the bisq notification node should have as little knowledge as possible
-        // therefore, the badge is incremented in the app
-        // One drawback is that the badge number is not immediately incremented
+        // Normally, the badge number is managed on the server.
+        // In our use case, the server (=bisq notification node) should have as
+        // little knowledge as possible. Therefore, the badge is incremented
+        // in the app.
+        // One drawback is that the badge number is not immediately updated
         // when a notification arrives on the phone
         let aps = APS(
             alert: "Bisq Notification",
@@ -136,7 +149,7 @@ class BisqNotifications {
         return ret
     }
 
-    private func save() {
+    func save() {
         do {
             let jsonData = try encoder.encode(array)
             let toDefaults = String(data: jsonData, encoding: .utf8)!
@@ -171,17 +184,12 @@ class BisqNotifications {
     }
     
     
-    func addNotification(new: Notification) {
-        let temp = Notification(v: new.version, t: new.timestampEvent)
-        array.append(temp)
-        save()
-    }
-
     func addRaw(new: AnyObject?) {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
             let raw = try decoder.decode(RawNotification.self, from: jsonData)
-            addNotification(new: Notification(v: raw.version, t: raw.timestampEvent))
+            array.append(Notification(v: raw.version, t: raw.timestampEvent))
+            save()
         } catch {
             print("could not add notification")
         }
