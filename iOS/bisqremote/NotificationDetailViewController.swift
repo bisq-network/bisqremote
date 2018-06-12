@@ -15,8 +15,6 @@ class NotificationDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy hh:mm:ss"
         textLabel.text = "v=\(notification!.version)"
     }
 

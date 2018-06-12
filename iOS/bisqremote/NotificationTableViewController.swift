@@ -31,12 +31,15 @@ class NotificationTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of NotificationTableViewCell.")
         }
         let notification = BisqNotifications.shared.at(n:indexPath.row)
-        cell.notificationMessage.text = "v=\(notification.version)"
+        cell.comment.text = "\(notification.notificationType)"
+        cell.timeEvent.text = BisqNotifications.shared.dateformatterShort.string(from: notification.timestampEvent)
+
         if notification.read {
-            cell.notificationMessage.font = UIFont.systemFont(ofSize: 16.0)
+            cell.comment.font = UIFont.systemFont(ofSize: 16.0)
         } else {
-            cell.notificationMessage.font = UIFont.boldSystemFont(ofSize: 16.0)
+            cell.comment.font = UIFont.boldSystemFont(ofSize: 16.0)
         }
+
         return cell
     }
  

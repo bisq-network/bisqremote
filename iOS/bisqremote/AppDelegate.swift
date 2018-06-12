@@ -13,6 +13,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var apsToken: String = "unknown"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         registerForPushNotifications()
@@ -95,8 +96,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return String(format: "%02.2hhx", data)
         }
         
-        let token = tokenParts.joined()
-        print("### Device token: \n\(token)")
+        apsToken = tokenParts.joined()
+        print("### Device token: \n\(apsToken)")
         print("\n### Example notification:\n")
         print(BisqNotifications.exampleAPS())
     }

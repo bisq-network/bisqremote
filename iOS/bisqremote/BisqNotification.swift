@@ -11,37 +11,48 @@ import UIKit // for setting the badge number
 
 let userDefaultKey = "bisqNotification"
 
-let TYPE_TRADE_ACCEPTED = 0
+let TYPE_TRADE_ACCEPTED = "TRADE_ACCEPTED"
 
 class RawNotification: Codable {
     let version: Int
-    let notificationType: Int // TODO convert this to an enum
+    let notificationType: String
+    let comment: String
     let timestampEvent: Date
 
-    init(v: Int, t: Date) {
-        version = v
-        notificationType = TYPE_TRADE_ACCEPTED
-        timestampEvent = t
+    init(version_: Int, notificationType_: String, comment_: String, timestampEvent_: Date) {
+        version = version_
+        notificationType = notificationType_
+        comment = comment_
+        timestampEvent = timestampEvent_
     }
     
     private enum CodingKeys: String, CodingKey {
         case version
-        case timestampEvent
         case notificationType
+        case comment
+        case timestampEvent
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         version = try container.decode(Int.self, forKey: .version)
+        let notificationTypeCandidate = try container.decode(String.self, forKey: .notificationType)
+        switch notificationTypeCandidate {
+        case TYPE_TRADE_ACCEPTED:
+            notificationType = TYPE_TRADE_ACCEPTED
+        default:
+            fatalError("wrong notificationType \(notificationTypeCandidate)")
+        }
+        comment = try container.decode(String.self, forKey: .comment)
         timestampEvent = try container.decode(Date.self, forKey: .timestampEvent)
-        notificationType = try container.decode(Int.self, forKey: .notificationType)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(version, forKey: .version)
-        try container.encode(timestampEvent, forKey: .timestampEvent)
         try container.encode(notificationType, forKey: .notificationType)
+        try container.encode(comment, forKey: .comment)
+        try container.encode(timestampEvent, forKey: .timestampEvent)
     }
     
 }
@@ -55,10 +66,10 @@ class Notification: RawNotification {
         case timestampReceived
     }
     
-    override init(v: Int, t: Date) {
+    override init(version_: Int, notificationType_: String, comment_: String, timestampEvent_: Date) {
         read = false
         timestampReceived = Date()
-        super.init(v: v, t: t)
+        super.init(version_: version_, notificationType_: notificationType_, comment_: comment_, timestampEvent_: timestampEvent_)
     }
     
     required init(from decoder: Decoder) throws {
@@ -83,15 +94,17 @@ class BisqNotifications {
 
     static let shared = BisqNotifications()
     
+    let dateformatterShort = DateFormatter()
+    private let dateformatterLong = DateFormatter()
     private var array: [Notification] = [Notification]()
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
-    private let dateformatter = DateFormatter()
     private init() {
         // set date format to the javascript standard
-        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        decoder.dateDecodingStrategy = .formatted(dateformatter)
-        encoder.dateEncodingStrategy = .formatted(dateformatter)
+        dateformatterLong.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
+        decoder.dateDecodingStrategy = .formatted(dateformatterLong)
+        encoder.dateEncodingStrategy = .formatted(dateformatterLong)
         encoder.outputFormatting = .prettyPrinted
 
         load()
@@ -124,7 +137,7 @@ class BisqNotifications {
     }
 
     static func exampleNotification() -> RawNotification {
-        return RawNotification(v: 1, t: Date())
+        return RawNotification(version_: 1, notificationType_: TYPE_TRADE_ACCEPTED, comment_: "no comment", timestampEvent_: Date())
     }
     
     func parseArray(json: String) {
@@ -140,7 +153,7 @@ class BisqNotifications {
         var ret: Notification?
         do {
             // add timestamp of reception
-            let withReceptionTimestamp = json.replacingOccurrences(of: "}", with: ", \"timestampReceived\": \""+dateformatter.string(from: Date())+"\"}")
+            let withReceptionTimestamp = json.replacingOccurrences(of: "}", with: ", \"timestampReceived\": \""+dateformatterLong.string(from: Date())+"\"}")
             let data: Data? = withReceptionTimestamp.data(using: .utf8)
             ret = try decoder.decode(Notification.self, from: data!)
         } catch {
@@ -188,7 +201,7 @@ class BisqNotifications {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
             let raw = try decoder.decode(RawNotification.self, from: jsonData)
-            array.append(Notification(v: raw.version, t: raw.timestampEvent))
+            array.append(Notification(version_: raw.version, notificationType_: raw.notificationType, comment_: raw.comment, timestampEvent_: raw.timestampEvent))
             save()
         } catch {
             print("could not add notification")
