@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit // for setting the badge number
 
 let userDefaultKey = "bisqNotification"
 
@@ -14,6 +15,7 @@ struct ANotification: Codable, Equatable {
     var version: Int
     var message: String
     var timestampEvent: Date
+    var read: Bool
 //    var timestampReceived: Date
     
     static func == (lhs: ANotification, rhs: ANotification) -> Bool {
@@ -83,7 +85,6 @@ class BisqNotifications {
     }
     private struct APS : Codable {
         let alert: String
-        let badge: Int
         let sound: String
         let bisqNotification: ANotification
     }
@@ -91,7 +92,6 @@ class BisqNotifications {
     static func exampleAPS() -> String {
         let aps = APS(
             alert: "Bisq Notification",
-            badge: 1,
             sound: "default",
             bisqNotification: exampleNotification())
         let completeMessage = ["aps": aps]
@@ -107,7 +107,8 @@ class BisqNotifications {
         return ANotification(
             version: 1,
             message: "example notification",
-            timestampEvent: Date())
+            timestampEvent: Date(),
+            read: false)
     }
     
     func parseArray(json: String) {
@@ -137,6 +138,7 @@ class BisqNotifications {
             let jsonData = try encoder.encode(array)
             let toDefaults = String(data: jsonData, encoding: .utf8)!
             UserDefaults.standard.set(toDefaults, forKey: userDefaultKey)
+            UIApplication.shared.applicationIconBadgeNumber = countUnread
         } catch {
             print("/n###/n### save failed/n###/n")
         }
@@ -145,12 +147,21 @@ class BisqNotifications {
     private func load() {
         let fromDefaults = UserDefaults.standard.string(forKey: userDefaultKey) ?? "[]"
         parseArray(json: fromDefaults)
+        UIApplication.shared.applicationIconBadgeNumber = countUnread
     }
     
-    var count: Int {
+    var countAll: Int {
         return array.count
     }
     
+    var countUnread: Int {
+        var unread = 0
+        for n in array {
+            if (!n.read) { unread += 1 }
+        }
+        return unread
+    }
+
     func at(n: Int) -> ANotification {
         return array[n]
     }

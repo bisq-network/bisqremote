@@ -95,9 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let token = tokenParts.joined()
-        print("### Device token: \n### \(token)")
-        print("\n### Example notification:")
-        print("### "+BisqNotifications.exampleAPS())
+        print("### Device token: \n\(token)")
+        print("\n### Example notification:\n")
+        print(BisqNotifications.exampleAPS())
     }
     
     func application(_ application: UIApplication,

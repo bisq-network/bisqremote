@@ -12,7 +12,7 @@ class NotificationTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (BisqNotifications.shared.count == 0) {
+        if (BisqNotifications.shared.countAll == 0) {
             BisqNotifications.shared.add(new: BisqNotifications.exampleNotification())
         }
     }
@@ -22,7 +22,7 @@ class NotificationTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return BisqNotifications.shared.count
+        return BisqNotifications.shared.countAll
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
