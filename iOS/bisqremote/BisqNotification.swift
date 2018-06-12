@@ -28,11 +28,20 @@ struct ANotification: Codable, Equatable {
     }
 }
 
+class TimestampedNotification: Codable {
+    var timestampReceived: Date
+    var aNotification: ANotification
+    init(n: ANotification) {
+        aNotification = n
+        timestampReceived = Date()
+    }
+}
+
 class BisqNotifications {
 
     static let shared = BisqNotifications()
     
-    private var array: [ANotification] = [ANotification]()
+    private var array: [TimestampedNotification] = [TimestampedNotification]()
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private let dateformatter = DateFormatter()
@@ -119,9 +128,9 @@ class BisqNotifications {
     func parseArray(json: String) {
         do {
             let data: Data? = json.data(using: .utf8)
-            array = try decoder.decode([ANotification].self, from: data!)
+            array = try decoder.decode([TimestampedNotification].self, from: data!)
         } catch {
-            array = [ANotification]()
+            array = [TimestampedNotification]()
         }
     }
 
@@ -162,18 +171,19 @@ class BisqNotifications {
     var countUnread: Int {
         var unread = 0
         for n in array {
-            if (!n.read) { unread += 1 }
+            if (!n.aNotification.read) { unread += 1 }
         }
         return unread
     }
 
-    func at(n: Int) -> ANotification {
+    func at(n: Int) -> TimestampedNotification {
         return array[n]
     }
     
     
     func add(new: ANotification) {
-        array.append(new)
+        let temp = TimestampedNotification(n: new)
+        array.append(temp)
         save()
     }
     

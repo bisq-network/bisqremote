@@ -32,7 +32,10 @@ class NotificationTableViewController: UITableViewController {
         }
         
         let notification = BisqNotifications.shared.at(n: indexPath.row)
-        cell.notificationMessage.text = notification.message
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy hh:mm:ss"
+        cell.notificationMessage.text = notification.aNotification.message + " \(dateFormatter.string(from: (notification.timestampReceived)))"
+
         
         return cell
     }
@@ -87,7 +90,7 @@ class NotificationTableViewController: UITableViewController {
             }
             
             let selectedNotification = BisqNotifications.shared.at(n: indexPath.row)
-            detailViewController.aNotification = selectedNotification
+            detailViewController.timestampedNotification = selectedNotification
             
         default:
             fatalError("Unexpected destination: \(segue.destination)")
