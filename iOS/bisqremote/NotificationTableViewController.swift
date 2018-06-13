@@ -20,6 +20,11 @@ class NotificationTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func deleteAllPressed(_ sender: Any) {
+        NotificationArray.shared.deleteAll()
+        tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

@@ -15,8 +15,8 @@ class NotificationDetailViewController: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var receiveTimelabel: UILabel!
-    @IBOutlet weak var actionRequiredTitle: UILabel!
     @IBOutlet weak var actionMessage: UITextView!
+    @IBOutlet weak var transactionID: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,7 @@ class NotificationDetailViewController: UIViewController {
             textLabel.text = n.notificationType
             eventTimeLabel.text   = "event:    "+dateformatterShort.string(from: n.timestampEvent)
             receiveTimelabel.text = "received: "+dateformatterShort.string(from: n.timestampReceived)
+            transactionID.text = "transaction ID: "+n.transactionHash
             if n.actionRequired.count > 0 {
                 actionMessage.isHidden = false
                 actionMessage.text = n.actionRequired
@@ -33,7 +34,7 @@ class NotificationDetailViewController: UIViewController {
                 if !n.actionDone {
                     actionMessage.backgroundColor = UIColor(red: 255.0/255.0, green: 126.0/255.0, blue: 121.0/255.0, alpha: 0.5)
                 } else {
-                    actionMessage.backgroundColor = UIColor(red: 0.0/255.0, green: 143.0/255.0, blue: 0/255.0, alpha: 0.2)
+                    actionMessage.backgroundColor = UIColor(red: 0.0/255.0, green: 143.0/255.0, blue: 0/255.0, alpha: 0.15)
                 }
             } else {
                 actionMessage.isHidden = true

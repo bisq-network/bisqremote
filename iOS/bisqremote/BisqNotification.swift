@@ -175,7 +175,7 @@ class NotificationArray {
         r.version = 1
         r.notificationType = TYPE_TRADE_ACCEPTED
         r.comment = "no comment"
-        r.actionRequired = "pay;ldijf g;ldskfhjg ;sodfjg sd;lfjg sdofijgsdlfkjg d;lkfjg ;dlfkjg ;dlkfj g;osdfj g;ldkjfg;lsdkjfg;ldfkjgl"
+        r.actionRequired = "You need to make the bank transfer to receive your BTC"
         r.transactionHash = "293842038402983"
         r.markPreviousActionsAsDone = true
         r.timestampEvent = Date()
@@ -258,13 +258,12 @@ class NotificationArray {
                 }
             }
         }
-        for n in array {
-            if n.transactionHash == new.transactionHash {
-                let x = n.actionDone
-            }
-        }
         array.insert(new, at: 0)
         save()
+    }
+    
+    func deleteAll() {
+        array.removeAll()
     }
     
     func remove(n: Int) {

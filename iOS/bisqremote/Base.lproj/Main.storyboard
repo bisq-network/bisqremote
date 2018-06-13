@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Start Screen-->
+        <!--Start-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="startScreen" title="Start Screen" id="BYZ-38-t0r" customClass="MainViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="startScreen" title="Start" id="BYZ-38-t0r" customClass="MainViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="hkq-qW-YlD"/>
                                 </constraints>
-                                <string key="text">This App can receive notifications from Bisq running on your computer. The Bisq notifications are encrypted, but Apple might learn when you receive a Bisq notification.</string>
+                                <string key="text">This App can receive notifications from Bisq running on your computer. The Bisq notifications are encrypted, but Apple might learn when you receive a  notification from Bisq.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -94,7 +94,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Z7T-Wj-Kux">
+                    <navigationItem key="navigationItem" title="Start" id="Z7T-Wj-Kux">
                         <barButtonItem key="rightBarButtonItem" title="Info" id="IgS-cR-p7n">
                             <connections>
                                 <segue destination="Pd3-ye-N34" kind="show" id="CvL-94-PHi"/>
@@ -233,10 +233,10 @@
             </objects>
             <point key="canvasLocation" x="-610.39999999999998" y="780.35982008995506"/>
         </scene>
-        <!--Detail-->
+        <!--Notification Detail View Controller-->
         <scene sceneID="FcW-U4-rc4">
             <objects>
-                <viewController title="Detail" id="NLY-kU-KyA" customClass="NotificationDetailViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NLY-kU-KyA" customClass="NotificationDetailViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="upf-5O-NMz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -260,7 +260,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="action description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-PA-fy8">
-                                <rect key="frame" x="10" y="221" width="345" height="36.5"/>
+                                <rect key="frame" x="10" y="275" width="345" height="36.5"/>
                                 <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="0.72848886986301364" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="mn4-jU-vY2"/>
@@ -268,16 +268,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transaction ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdd-8y-ixK">
+                                <rect key="frame" x="20" y="179" width="335" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Mdd-8y-ixK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="1U6-K3-Voa"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="504-3V-xSC"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="3t0-Gv-2ua" secondAttribute="trailing" constant="20" id="9Zd-6m-d6t"/>
                             <constraint firstItem="3t0-Gv-2ua" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="9nO-uO-13o"/>
+                            <constraint firstItem="Mdd-8y-ixK" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="8" id="Acu-Dx-HK1"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="top" secondItem="qFD-Tm-O6F" secondAttribute="top" constant="30" id="CyO-vW-Prt"/>
                             <constraint firstItem="bKp-PA-fy8" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="10" id="DOx-lo-I3X"/>
-                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="50" id="FDU-j8-QXy"/>
+                            <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="Mdd-8y-ixK" secondAttribute="trailing" constant="20" id="KDa-EG-7Rk"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="meb-g0-7et" secondAttribute="trailing" constant="20" id="KXj-md-ldW"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="Mdd-8y-ixK" secondAttribute="bottom" constant="76" id="Lvw-HE-62l"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="bKp-PA-fy8" secondAttribute="trailing" constant="20" id="Svz-br-hwQ"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="centerX" secondItem="upf-5O-NMz" secondAttribute="centerX" id="VYU-Kv-0Te"/>
                             <constraint firstItem="3t0-Gv-2ua" firstAttribute="top" secondItem="geA-pf-XsK" secondAttribute="bottom" constant="8" id="aAY-b5-DcT"/>
@@ -291,16 +300,17 @@
                         <outlet property="eventTimeLabel" destination="3t0-Gv-2ua" id="mLa-X2-fLN"/>
                         <outlet property="receiveTimelabel" destination="meb-g0-7et" id="bUU-q5-jTd"/>
                         <outlet property="textLabel" destination="geA-pf-XsK" id="EPz-Ah-ECc"/>
+                        <outlet property="transactionID" destination="Mdd-8y-ixK" id="CiF-LC-c3m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dwk-0C-F5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="10.344827586206897"/>
         </scene>
-        <!--Notification List-->
+        <!--Notifications-->
         <scene sceneID="twP-0d-2ee">
             <objects>
-                <tableViewController storyboardIdentifier="listScreen" title="Notification List" id="edC-1E-qDP" customClass="NotificationTableViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="listScreen" title="Notifications" id="edC-1E-qDP" customClass="NotificationTableViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3on-RQ-wxT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -342,7 +352,7 @@
                                             </constraints>
                                         </stackView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action" translatesAutoresizingMaskIntoConstraints="NO" id="NFB-jf-5a1">
-                                            <rect key="frame" x="334" y="23" width="25" height="48"/>
+                                            <rect key="frame" x="314" y="23" width="25" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="25" id="9wj-eT-iSy"/>
                                                 <constraint firstAttribute="height" constant="48" id="Tww-y9-RzW"/>
@@ -356,7 +366,7 @@
                                         <constraint firstItem="Kq5-Zy-mjn" firstAttribute="top" secondItem="ckV-oX-QoS" secondAttribute="topMargin" constant="20" id="KeS-F9-XUY"/>
                                         <constraint firstItem="K96-6P-egi" firstAttribute="trailing" secondItem="Kq5-Zy-mjn" secondAttribute="trailing" id="OGF-yX-wTB"/>
                                         <constraint firstItem="NFB-jf-5a1" firstAttribute="centerY" secondItem="2gF-jD-Yei" secondAttribute="centerY" id="RgW-g9-T1y"/>
-                                        <constraint firstItem="NFB-jf-5a1" firstAttribute="trailing" secondItem="ckV-oX-QoS" secondAttribute="trailingMargin" id="YWg-vz-RZq"/>
+                                        <constraint firstItem="NFB-jf-5a1" firstAttribute="trailing" secondItem="ckV-oX-QoS" secondAttribute="trailingMargin" constant="-20" id="YWg-vz-RZq"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="K96-6P-egi" secondAttribute="bottom" constant="3" id="eTW-j9-Wdy"/>
                                         <constraint firstItem="2gF-jD-Yei" firstAttribute="leading" secondItem="ckV-oX-QoS" secondAttribute="leadingMargin" id="xbI-dk-XGQ"/>
                                     </constraints>
@@ -375,6 +385,15 @@
                             <outlet property="delegate" destination="edC-1E-qDP" id="6lY-81-8LY"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Notifications" id="MlT-U6-TNn">
+                        <barButtonItem key="rightBarButtonItem" title="Delete all" id="bjy-Ku-3bu">
+                            <connections>
+                                <action selector="deleteAllPressed:" destination="edC-1E-qDP" id="Soj-LZ-cho"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ckW-8Q-0Ls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
