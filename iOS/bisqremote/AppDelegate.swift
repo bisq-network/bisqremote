@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Check if launched from a notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
-            BisqNotifications.shared.addFromJSON(new: aps["bisqNotification"])
+            NotificationArray.shared.addFromJSON(new: aps["bisqNotification"])
         }
 
         if UserDefaults.standard.bool(forKey: userDefaultKeySetupDone) {
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let message = userInfo as? [String: AnyObject] {
             let aps = message["aps"] as! [String: AnyObject]
-            BisqNotifications.shared.addFromJSON(new: aps["bisqNotification"])
+            NotificationArray.shared.addFromJSON(new: aps["bisqNotification"])
         }
     }
 
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         apsToken = tokenParts.joined()
         print("### Device token: \n\(apsToken)")
         print("\n### Example notification:\n")
-        print(BisqNotifications.exampleAPS())
+        print(NotificationArray.exampleAPS())
     }
     
     func application(_ application: UIApplication,

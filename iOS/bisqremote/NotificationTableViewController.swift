@@ -9,11 +9,13 @@
 import UIKit
 
 class NotificationTableViewController: UITableViewController {
+    let dateformatterShort = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (BisqNotifications.shared.countAll < 3) {
-            BisqNotifications.shared.addRaw(raw: BisqNotifications.exampleNotification())
+        dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
+        if (NotificationArray.shared.countAll < 3) {
+            NotificationArray.shared.addRaw(raw: NotificationArray.exampleNotification())
         }
     }
 
@@ -22,7 +24,7 @@ class NotificationTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return BisqNotifications.shared.countAll
+        return NotificationArray.shared.countAll
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -30,16 +32,22 @@ class NotificationTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NotificationTableViewCell  else {
             fatalError("The dequeued cell is not an instance of NotificationTableViewCell.")
         }
-        let notification = BisqNotifications.shared.at(n:indexPath.row)
+        let notification = NotificationArray.shared.at(n:indexPath.row)
         cell.comment.text = "\(notification.notificationType)"
-        cell.timeEvent.text = BisqNotifications.shared.dateformatterShort.string(from: notification.timestampEvent)
-
+        cell.timeEvent.text = dateformatterShort.string(from: notification.timestampEvent)
+        if notification.actionRequired.count > 0 {
+            cell.actionImage.isHidden = false
+        } else {
+            cell.actionImage.isHidden = true
+        }
         if notification.read {
             cell.comment.font = UIFont.systemFont(ofSize: 16.0)
             cell.okImage.image = UIImage(named: "ok_read.png")
+            cell.actionImage.image = UIImage(named: "action_read.png")
         } else {
             cell.comment.font = UIFont.boldSystemFont(ofSize: 16.0)
             cell.okImage.image = UIImage(named: "ok.png")
+            cell.actionImage.image = UIImage(named: "action.png")
         }
 
         return cell
@@ -58,7 +66,7 @@ class NotificationTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            BisqNotifications.shared.remove(n: indexPath.row)
+            NotificationArray.shared.remove(n: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
 //        } else if editingStyle == .insert {
 //            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -94,10 +102,10 @@ class NotificationTableViewController: UITableViewController {
                 fatalError("the selected cell is not being displayed in the table")
             }
             
-            let selectedNotification = BisqNotifications.shared.at(n: indexPath.row)
+            let selectedNotification = NotificationArray.shared.at(n: indexPath.row)
             detailViewController.notification = selectedNotification
             selectedNotification.read = true
-            BisqNotifications.shared.save()
+            NotificationArray.shared.save()
             
             tableView.reloadRows(at: [indexPath], with: .top)
         default:

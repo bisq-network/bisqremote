@@ -63,7 +63,7 @@
                                     <segue destination="edC-1E-qDP" kind="show" id="sIK-aH-05O"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnX-c8-NOa">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnX-c8-NOa">
                                 <rect key="frame" x="309" y="620" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="C7L-AR-cVM"/>
@@ -308,6 +308,13 @@
                                                 <constraint firstAttribute="height" constant="48" id="nNk-Db-A9a"/>
                                             </constraints>
                                         </stackView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action" translatesAutoresizingMaskIntoConstraints="NO" id="NFB-jf-5a1">
+                                            <rect key="frame" x="334" y="23" width="25" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="9wj-eT-iSy"/>
+                                                <constraint firstAttribute="height" constant="48" id="Tww-y9-RzW"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Kq5-Zy-mjn" firstAttribute="leading" secondItem="2gF-jD-Yei" secondAttribute="trailing" constant="22" id="2db-bp-61h"/>
@@ -315,11 +322,14 @@
                                         <constraint firstItem="K96-6P-egi" firstAttribute="leading" secondItem="Kq5-Zy-mjn" secondAttribute="leading" id="Hdq-Ls-rlp"/>
                                         <constraint firstItem="Kq5-Zy-mjn" firstAttribute="top" secondItem="ckV-oX-QoS" secondAttribute="topMargin" constant="20" id="KeS-F9-XUY"/>
                                         <constraint firstItem="K96-6P-egi" firstAttribute="trailing" secondItem="Kq5-Zy-mjn" secondAttribute="trailing" id="OGF-yX-wTB"/>
+                                        <constraint firstItem="NFB-jf-5a1" firstAttribute="centerY" secondItem="2gF-jD-Yei" secondAttribute="centerY" id="RgW-g9-T1y"/>
+                                        <constraint firstItem="NFB-jf-5a1" firstAttribute="trailing" secondItem="ckV-oX-QoS" secondAttribute="trailingMargin" id="YWg-vz-RZq"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="K96-6P-egi" secondAttribute="bottom" constant="3" id="eTW-j9-Wdy"/>
                                         <constraint firstItem="2gF-jD-Yei" firstAttribute="leading" secondItem="ckV-oX-QoS" secondAttribute="leadingMargin" id="xbI-dk-XGQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="actionImage" destination="NFB-jf-5a1" id="hg6-xB-t3o"/>
                                     <outlet property="comment" destination="Kq5-Zy-mjn" id="RK4-3X-9nK"/>
                                     <outlet property="okImage" destination="3xY-fy-kl5" id="8ah-C1-W68"/>
                                     <outlet property="timeEvent" destination="K96-6P-egi" id="8Qx-n4-lcn"/>
@@ -358,6 +368,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="action" width="262" height="518"/>
         <image name="help" width="200" height="200"/>
         <image name="iTunesArtwork" width="512" height="512"/>
         <image name="ok" width="243" height="189"/>

@@ -21,12 +21,14 @@ class RawNotification: Codable {
     let version: Int
     let notificationType: String
     let comment: String
+    let actionRequired: String
     let timestampEvent: Date
 
-    init(version_: Int, notificationType_: String, comment_: String, timestampEvent_: Date) {
+    init(version_: Int, notificationType_: String, comment_: String, actionRequired_: String, timestampEvent_: Date) {
         version = version_
         notificationType = notificationType_
         comment = comment_
+        actionRequired = actionRequired_
         timestampEvent = timestampEvent_
     }
     
@@ -34,6 +36,7 @@ class RawNotification: Codable {
         case version
         case notificationType
         case comment
+        case actionRequired
         case timestampEvent
     }
     
@@ -48,6 +51,7 @@ class RawNotification: Codable {
             fatalError("wrong notificationType \(notificationTypeCandidate)")
         }
         comment = try container.decode(String.self, forKey: .comment)
+        actionRequired = try container.decode(String.self, forKey: .actionRequired)
         timestampEvent = try container.decode(Date.self, forKey: .timestampEvent)
     }
     
@@ -56,6 +60,7 @@ class RawNotification: Codable {
         try container.encode(version, forKey: .version)
         try container.encode(notificationType, forKey: .notificationType)
         try container.encode(comment, forKey: .comment)
+        try container.encode(actionRequired, forKey: .actionRequired)
         try container.encode(timestampEvent, forKey: .timestampEvent)
     }
     
@@ -71,10 +76,10 @@ class Notification: RawNotification {
         case timestampReceived
     }
     
-    override init(version_: Int, notificationType_: String, comment_: String, timestampEvent_: Date) {
+    override init(version_: Int, notificationType_: String, comment_: String, actionRequired_: String, timestampEvent_: Date) {
         read = false
         timestampReceived = Date()
-        super.init(version_: version_, notificationType_: notificationType_, comment_: comment_, timestampEvent_: timestampEvent_)
+        super.init(version_: version_, notificationType_: notificationType_, comment_: comment_, actionRequired_:  actionRequired_, timestampEvent_: timestampEvent_)
     }
     
     required init(from decoder: Decoder) throws {
@@ -96,10 +101,9 @@ class Notification: RawNotification {
 }
 
 // Singleton with the array of notifications
-class BisqNotifications {
-    static let shared = BisqNotifications()
+class NotificationArray {
+    static let shared = NotificationArray()
     
-    let dateformatterShort = DateFormatter()
     private let dateformatterLong = DateFormatter()
     private var array: [Notification] = [Notification]()
     private let decoder = JSONDecoder()
@@ -107,7 +111,6 @@ class BisqNotifications {
     private init() {
         // set date format to the javascript standard
         dateformatterLong.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
         decoder.dateDecodingStrategy = .formatted(dateformatterLong)
         encoder.dateEncodingStrategy = .formatted(dateformatterLong)
         encoder.outputFormatting = .prettyPrinted
@@ -133,7 +136,7 @@ class BisqNotifications {
             bisqNotification: exampleNotification())
         let completeMessage = ["aps": aps]
         do {
-            let jsonData = try BisqNotifications.shared.encoder.encode(completeMessage)
+            let jsonData = try NotificationArray.shared.encoder.encode(completeMessage)
             return String(data: jsonData, encoding: .utf8)!
         } catch {
             return("could not create example APS")
@@ -141,7 +144,7 @@ class BisqNotifications {
     }
 
     static func exampleNotification() -> RawNotification {
-        return RawNotification(version_: 1, notificationType_: TYPE_TRADE_ACCEPTED, comment_: "no comment", timestampEvent_: Date())
+        return RawNotification(version_: 1, notificationType_: TYPE_TRADE_ACCEPTED, comment_: "no comment", actionRequired_: "", timestampEvent_: Date())
     }
     
     func parseArray(json: String) {
@@ -212,7 +215,7 @@ class BisqNotifications {
     }
 
     func addRaw(raw: RawNotification) {
-        addNotification(n: Notification(version_: raw.version, notificationType_: raw.notificationType, comment_: raw.comment, timestampEvent_: raw.timestampEvent))
+        addNotification(n: Notification(version_: raw.version, notificationType_: raw.notificationType, comment_: raw.comment, actionRequired_: raw.actionRequired, timestampEvent_: raw.timestampEvent))
     }
 
     func addNotification(n: Notification) {
