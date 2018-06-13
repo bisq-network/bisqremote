@@ -72,14 +72,14 @@
 				BEFB45EB20C34BC10052C91A /* MainViewController.swift */,
 				BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */,
 				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
+				AAE403A720CFF62500CCC879 /* AboutViewController.swift */,
+				AAEE3A2D20D076D900D52326 /* SetupViewController.swift */,
 				BE92215320C49C6F00F8EB93 /* BisqNotification.swift */,
 				BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */,
 				BEFB45ED20C34BC10052C91A /* Main.storyboard */,
 				BEFB45F020C34BC10052C91A /* Assets.xcassets */,
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
 				BEFB45F520C34BC10052C91A /* Ibisqremotefo.plist */,
-				AAE403A720CFF62500CCC879 /* AboutViewController.swift */,
-				AAEE3A2D20D076D900D52326 /* SetupViewController.swift */,
 			);
 			path = bisqremote;
 			sourceTree = "<group>";

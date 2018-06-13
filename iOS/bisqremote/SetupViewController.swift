@@ -101,10 +101,10 @@ class SetupViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     func found(code: String) {
         let x = code.split(separator: " ")
         guard x.count == 2 else { return }
-        guard x[0].count == 64 else { return }
-        guard x[1].count == 33 else { return }
-        UserDefaults.standard.set(x[0], forKey: userDefaultSymmetricKey)
-        UserDefaults.standard.set(x[1], forKey: userDefaultKeyHash)
+        guard x[0].count > 0 else { return }
+        guard x[0] == "bisq_key" else { return }
+        guard x[1].count == 32 else { return }
+        UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
         UserDefaults.standard.set(true, forKey: userDefaultKeySetupDone)
         _ = navigationController?.popViewController(animated: true)
     }

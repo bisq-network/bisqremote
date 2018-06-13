@@ -17,8 +17,6 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     @IBOutlet weak var apsTokenLabel: UILabel!
     @IBOutlet weak var symmetricKeyTitle: UILabel!
     @IBOutlet weak var symmetricKeyLabel: UILabel!
-    @IBOutlet weak var hashTitle: UILabel!
-    @IBOutlet weak var hashLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -29,9 +27,6 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         apsTokenLabel.text = apsToken.trunc(length: 6, trailing:"...")
         if let key = UserDefaults.standard.string(forKey: userDefaultSymmetricKey) {
             symmetricKeyLabel.text = key.trunc(length: 6, trailing:"...")
-        }
-        if let hash =  UserDefaults.standard.string(forKey: userDefaultKeyHash) {
-            hashLabel.text = hash.trunc(length: 6, trailing:"...")
         }
         qrcodeImageView.isHidden = true
     }
@@ -82,14 +77,10 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
             qrcodeImageView.isHidden = false
             symmetricKeyTitle.isHidden = true
             symmetricKeyLabel.isHidden = true
-            hashTitle.isHidden = true
-            hashLabel.isHidden = true
         } else {
             qrcodeImageView.isHidden = true
             symmetricKeyTitle.isHidden = false
             symmetricKeyLabel.isHidden = false
-            hashTitle.isHidden = false
-            hashLabel.isHidden = false
         }
     }
     

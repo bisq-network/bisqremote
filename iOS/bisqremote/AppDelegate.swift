@@ -10,7 +10,6 @@ import UIKit
 import UserNotifications
 
 let userDefaultKeySetupDone = "setup"
-let userDefaultKeyHash = "Hash"
 let userDefaultSymmetricKey = "SymmetricKey"
 
 @UIApplicationMain
@@ -20,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var apsToken: String = "unknown"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        window?.tintColor = UIColor(red: 37.0/255.0, green: 177.0/255.0, blue: 53.0/255.0, alpha: 1.0)
         registerForPushNotifications()
 
         // Check if launched from a notification
