@@ -12,7 +12,7 @@ class NotificationTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (BisqNotifications.shared.countAll == 0) {
+        if (BisqNotifications.shared.countAll < 3) {
             BisqNotifications.shared.addRaw(raw: BisqNotifications.exampleNotification())
         }
     }
@@ -36,8 +36,10 @@ class NotificationTableViewController: UITableViewController {
 
         if notification.read {
             cell.comment.font = UIFont.systemFont(ofSize: 16.0)
+            cell.okImage.image = UIImage(named: "ok_read.png")
         } else {
             cell.comment.font = UIFont.boldSystemFont(ofSize: 16.0)
+            cell.okImage.image = UIImage(named: "ok.png")
         }
 
         return cell

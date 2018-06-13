@@ -22,8 +22,14 @@ class MainViewController: UIViewController {
         if setupDone {
             showNotificationsButton.isEnabled = true
         } else {
-            showNotificationsButton.isEnabled = false
+//            showNotificationsButton.isEnabled = false
         }
+    }
+    
+    @IBAction func helpPressed(_ sender: Any) {
+        let x = UIAlertController(title: "SETUP", message: "Start the Bisq desktop app on your computer and open 'Bisq Mobile' in the Menu. Then press 'Read QR code' on your phone to finalize the Setup", preferredStyle: .actionSheet)
+        x.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(x, animated: true) {}
     }
 }
 

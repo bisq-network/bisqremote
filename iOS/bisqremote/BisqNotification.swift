@@ -216,7 +216,7 @@ class BisqNotifications {
     }
 
     func addNotification(n: Notification) {
-        array.append(n)
+        array.insert(n, at: 0)
         save()
     }
     

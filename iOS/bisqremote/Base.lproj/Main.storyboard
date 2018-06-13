@@ -35,39 +35,56 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="hkq-qW-YlD"/>
                                 </constraints>
-                                <string key="text">This App can receive notifications from Bisq running on your computer. The notifications are encrypted, but Apple will know when you receive a Bisq notification.</string>
+                                <string key="text">This App can receive notifications from Bisq running on your computer. The Bisq notifications are encrypted, but Apple might learn when you receive a Bisq notification.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTa-V6-mAH">
+                                <rect key="frame" x="60" y="617" width="239" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="omv-TU-Z6a"/>
+                                </constraints>
+                                <state key="normal" title="Read QR code">
+                                    <color key="titleColor" red="0.1450980392" green="0.69411764710000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="cuH-ja-uJh" kind="show" id="PUQ-xE-0g9"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIS-Bd-Rz9">
                                 <rect key="frame" x="20" y="482" width="335" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="HbJ-qg-w3n"/>
                                 </constraints>
-                                <state key="normal" title="Bisq notifications"/>
+                                <state key="normal" title="Bisq notifications">
+                                    <color key="titleColor" red="0.1450980392" green="0.69411764710000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="edC-1E-qDP" kind="show" id="sIK-aH-05O"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTa-V6-mAH">
-                                <rect key="frame" x="20" y="617" width="335" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnX-c8-NOa">
+                                <rect key="frame" x="309" y="620" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="omv-TU-Z6a"/>
+                                    <constraint firstAttribute="height" constant="25" id="C7L-AR-cVM"/>
+                                    <constraint firstAttribute="width" constant="25" id="H7v-gb-rl0"/>
                                 </constraints>
-                                <state key="normal" title="Read QR code from Bisq desptop App"/>
+                                <state key="normal" title="Button" image="help"/>
                                 <connections>
-                                    <segue destination="cuH-ja-uJh" kind="show" id="PUQ-xE-0g9"/>
+                                    <action selector="helpPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3E4-Mn-PH7"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aIS-Bd-Rz9" firstAttribute="top" secondItem="yKU-e3-sbN" secondAttribute="bottom" constant="58" id="2tw-i4-1Vq"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jTa-V6-mAH" secondAttribute="trailing" constant="20" id="73m-x5-wvN"/>
                             <constraint firstItem="QUx-Sa-keS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="7WA-rm-wld"/>
-                            <constraint firstItem="jTa-V6-mAH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="95a-V0-N2d"/>
+                            <constraint firstItem="jTa-V6-mAH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="Bdh-vj-GnM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jTa-V6-mAH" secondAttribute="trailing" constant="60" id="Byd-Df-kYr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yKU-e3-sbN" secondAttribute="trailing" constant="20" id="Mzz-FD-3sz"/>
+                            <constraint firstItem="BnX-c8-NOa" firstAttribute="leading" secondItem="jTa-V6-mAH" secondAttribute="trailing" constant="10" id="YRU-LT-Fe1"/>
                             <constraint firstItem="QUx-Sa-keS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cB2-wI-65Z"/>
+                            <constraint firstItem="BnX-c8-NOa" firstAttribute="centerY" secondItem="jTa-V6-mAH" secondAttribute="centerY" id="fHY-JO-eC8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jTa-V6-mAH" secondAttribute="bottom" constant="20" id="fuN-Wh-7KS"/>
                             <constraint firstItem="QUx-Sa-keS" firstAttribute="centerX" secondItem="yKU-e3-sbN" secondAttribute="centerX" id="kaM-lk-97J"/>
                             <constraint firstItem="aIS-Bd-Rz9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="s8Y-ch-pzE"/>
@@ -129,7 +146,9 @@
                                     <constraint firstAttribute="width" constant="150" id="C5f-CO-Q11"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="email to myself"/>
+                                <state key="normal" title="email to myself">
+                                    <color key="titleColor" red="0.1450980392" green="0.69411764710000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="sendEmail:" destination="Pd3-ye-N34" eventType="touchUpInside" id="hD2-2r-Z39"/>
                                 </connections>
@@ -140,7 +159,9 @@
                                     <constraint firstAttribute="width" constant="150" id="493-ja-VwM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="QR code"/>
+                                <state key="normal" title="QR code">
+                                    <color key="titleColor" red="0.1450980392" green="0.69411764710000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="createQRcode:" destination="Pd3-ye-N34" eventType="touchUpInside" id="Sx7-Xn-PVx"/>
                                 </connections>
@@ -260,7 +281,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kq5-Zy-mjn" userLabel="comment">
-                                            <rect key="frame" x="86" y="18" width="271" height="21"/>
+                                            <rect key="frame" x="86" y="31" width="271" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="271" id="5JJ-9t-WQU"/>
                                                 <constraint firstAttribute="height" constant="21" id="VB2-bU-yiT"/>
@@ -278,7 +299,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2gF-jD-Yei">
                                             <rect key="frame" x="16" y="23" width="48" height="48"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ok" translatesAutoresizingMaskIntoConstraints="NO" id="3xY-fy-kl5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ok" translatesAutoresizingMaskIntoConstraints="NO" id="3xY-fy-kl5">
                                                     <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                                 </imageView>
                                             </subviews>
@@ -292,7 +313,7 @@
                                         <constraint firstItem="Kq5-Zy-mjn" firstAttribute="leading" secondItem="2gF-jD-Yei" secondAttribute="trailing" constant="22" id="2db-bp-61h"/>
                                         <constraint firstItem="2gF-jD-Yei" firstAttribute="top" secondItem="ckV-oX-QoS" secondAttribute="topMargin" constant="12" id="40h-7O-7d8"/>
                                         <constraint firstItem="K96-6P-egi" firstAttribute="leading" secondItem="Kq5-Zy-mjn" secondAttribute="leading" id="Hdq-Ls-rlp"/>
-                                        <constraint firstItem="Kq5-Zy-mjn" firstAttribute="top" secondItem="ckV-oX-QoS" secondAttribute="topMargin" constant="7" id="KeS-F9-XUY"/>
+                                        <constraint firstItem="Kq5-Zy-mjn" firstAttribute="top" secondItem="ckV-oX-QoS" secondAttribute="topMargin" constant="20" id="KeS-F9-XUY"/>
                                         <constraint firstItem="K96-6P-egi" firstAttribute="trailing" secondItem="Kq5-Zy-mjn" secondAttribute="trailing" id="OGF-yX-wTB"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="K96-6P-egi" secondAttribute="bottom" constant="3" id="eTW-j9-Wdy"/>
                                         <constraint firstItem="2gF-jD-Yei" firstAttribute="leading" secondItem="ckV-oX-QoS" secondAttribute="leadingMargin" id="xbI-dk-XGQ"/>
@@ -300,6 +321,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="comment" destination="Kq5-Zy-mjn" id="RK4-3X-9nK"/>
+                                    <outlet property="okImage" destination="3xY-fy-kl5" id="8ah-C1-W68"/>
                                     <outlet property="timeEvent" destination="K96-6P-egi" id="8Qx-n4-lcn"/>
                                     <segue destination="NLY-kU-KyA" kind="show" identifier="showDetail" id="cjt-xV-rV4"/>
                                 </connections>
@@ -323,6 +345,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xgZ-n0-zNL">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.1450980392" green="0.69411764710000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -335,7 +358,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="help" width="200" height="200"/>
         <image name="iTunesArtwork" width="512" height="512"/>
-        <image name="ok" width="48" height="48"/>
+        <image name="ok" width="243" height="189"/>
     </resources>
 </document>
