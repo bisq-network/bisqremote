@@ -9,6 +9,10 @@
 import UIKit
 import UserNotifications
 
+let userDefaultKeySetupDone = "setup"
+let userDefaultKeyHash = "Hash"
+let userDefaultSymmetricKey = "SymmetricKey"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,7 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let aps = notification["aps"] as! [String: AnyObject]
             BisqNotifications.shared.addFromJSON(new: aps["bisqNotification"])
         }
-        
+
+        if UserDefaults.standard.bool(forKey: userDefaultKeySetupDone) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let secondViewController = storyboard.instantiateViewController(withIdentifier: "listScreen") as! NotificationTableViewController
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            rootViewController.pushViewController(secondViewController, animated: true)
+        }
+
         return true
     }
 
