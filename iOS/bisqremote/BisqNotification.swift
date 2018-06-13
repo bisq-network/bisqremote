@@ -18,22 +18,22 @@ let TYPE_TRADE_ACCEPTED = "TRADE_ACCEPTED"
 // This class does not have the variables timestampReceived and read.
 // We need a class and custom encoder and decoder because we will inherit from this class
 class RawNotification: Codable {
-    let version: Int
-    let notificationType: String
-    let comment: String
-    let actionRequired: String
-    let transactionHash: String
+    var version: Int
+    var notificationType: String
+    var comment: String
+    var actionRequired: String
+    var transactionHash: String
     var markPreviousActionsAsDone: Bool
-    let timestampEvent: Date
+    var timestampEvent: Date
 
-    init(version_: Int, notificationType_: String, comment_: String, actionRequired_: String, transactionHash_: String, markPreviousActionsAsDone_: Bool, timestampEvent_: Date) {
-        version = version_
-        notificationType = notificationType_
-        comment = comment_
-        actionRequired = actionRequired_
-        transactionHash = transactionHash_
-        markPreviousActionsAsDone = markPreviousActionsAsDone_
-        timestampEvent = timestampEvent_
+    init() {
+        version = 0
+        notificationType = ""
+        comment = ""
+        actionRequired = ""
+        transactionHash = ""
+        markPreviousActionsAsDone = false
+        timestampEvent = Date()
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -65,6 +65,7 @@ class RawNotification: Codable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
         try container.encode(version, forKey: .version)
         try container.encode(notificationType, forKey: .notificationType)
         try container.encode(comment, forKey: .comment)
@@ -88,35 +89,22 @@ class Notification: RawNotification {
         case timestampReceived
     }
     
-    override init(
-        version_: Int,
-        notificationType_: String,
-        comment_: String,
-        actionRequired_: String,
-        transactionHash_: String,
-        markPreviousActionsAsDone_: Bool,
-        timestampEvent_: Date) {
+    override init() {
         read = false
         actionDone = false
         timestampReceived = Date()
-        super.init(version_: version_,
-                   notificationType_: notificationType_,
-                   comment_: comment_,
-                   actionRequired_: actionRequired_,
-                   transactionHash_: transactionHash_,
-                   markPreviousActionsAsDone_: markPreviousActionsAsDone_,
-                   timestampEvent_: timestampEvent_)
+        super.init()
     }
     
     convenience init(raw: RawNotification) {
-        self.init(
-            version_: raw.version,
-            notificationType_: raw.notificationType,
-            comment_: raw.comment,
-            actionRequired_: raw.actionRequired,
-            transactionHash_: raw.transactionHash,
-            markPreviousActionsAsDone_: raw.markPreviousActionsAsDone,
-            timestampEvent_: raw.timestampEvent)
+        self.init()
+        self.version = raw.version
+        self.notificationType = raw.notificationType
+        self.comment = raw.comment
+        self.actionRequired = raw.actionRequired
+        self.transactionHash = raw.transactionHash
+        self.markPreviousActionsAsDone = raw.markPreviousActionsAsDone
+        self.timestampEvent = raw.timestampEvent
     }
     
     required init(from decoder: Decoder) throws {
@@ -183,13 +171,15 @@ class NotificationArray {
     }
 
     static func exampleRawNotification() -> RawNotification {
-        return RawNotification(version_: 1,
-                               notificationType_: TYPE_TRADE_ACCEPTED,
-                               comment_: "no comment",
-                               actionRequired_: "pay",
-                               transactionHash_: "293842038402983",
-                               markPreviousActionsAsDone_: false,
-                               timestampEvent_: Date())
+        let r = RawNotification()
+        r.version = 1
+        r.notificationType = TYPE_TRADE_ACCEPTED
+        r.comment = "no comment"
+        r.actionRequired = "pay;ldijf g;ldskfhjg ;sodfjg sd;lfjg sdofijgsdlfkjg d;lkfjg ;dlfkjg ;dlkfj g;osdfj g;ldkjfg;lsdkjfg;ldfkjgl"
+        r.transactionHash = "293842038402983"
+        r.markPreviousActionsAsDone = true
+        r.timestampEvent = Date()
+        return r
     }
     
     func parseArray(json: String) {
@@ -252,7 +242,9 @@ class NotificationArray {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: new!)
             let raw = try decoder.decode(RawNotification.self, from: jsonData)
-            addNotification(new: Notification(raw: raw))
+            if raw.version >= 1 {
+                addNotification(new: Notification(raw: raw))
+            }
         } catch {
             print("could not add notification")
         }

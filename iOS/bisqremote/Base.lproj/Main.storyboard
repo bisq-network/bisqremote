@@ -242,21 +242,54 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geA-pf-XsK">
-                                <rect key="frame" x="20" y="323" width="335" height="21"/>
+                                <rect key="frame" x="20" y="94" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="event time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3t0-Gv-2ua">
+                                <rect key="frame" x="20" y="123" width="335" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="received time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meb-g0-7et">
+                                <rect key="frame" x="20" y="151" width="335" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="action description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-PA-fy8">
+                                <rect key="frame" x="10" y="221" width="345" height="36.5"/>
+                                <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="0.72848886986301364" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="mn4-jU-vY2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="geA-pf-XsK" firstAttribute="centerY" secondItem="upf-5O-NMz" secondAttribute="centerY" id="1Ce-gb-Zdn"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="504-3V-xSC"/>
+                            <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="3t0-Gv-2ua" secondAttribute="trailing" constant="20" id="9Zd-6m-d6t"/>
+                            <constraint firstItem="3t0-Gv-2ua" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="9nO-uO-13o"/>
+                            <constraint firstItem="geA-pf-XsK" firstAttribute="top" secondItem="qFD-Tm-O6F" secondAttribute="top" constant="30" id="CyO-vW-Prt"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="10" id="DOx-lo-I3X"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="50" id="FDU-j8-QXy"/>
+                            <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="meb-g0-7et" secondAttribute="trailing" constant="20" id="KXj-md-ldW"/>
+                            <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="bKp-PA-fy8" secondAttribute="trailing" constant="20" id="Svz-br-hwQ"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="centerX" secondItem="upf-5O-NMz" secondAttribute="centerX" id="VYU-Kv-0Te"/>
+                            <constraint firstItem="3t0-Gv-2ua" firstAttribute="top" secondItem="geA-pf-XsK" secondAttribute="bottom" constant="8" id="aAY-b5-DcT"/>
+                            <constraint firstItem="meb-g0-7et" firstAttribute="top" secondItem="3t0-Gv-2ua" secondAttribute="bottom" constant="8" id="geY-nF-sXg"/>
+                            <constraint firstItem="meb-g0-7et" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="jXw-EW-B5v"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qFD-Tm-O6F"/>
                     </view>
                     <connections>
+                        <outlet property="actionMessage" destination="bKp-PA-fy8" id="GrK-cN-SXq"/>
+                        <outlet property="eventTimeLabel" destination="3t0-Gv-2ua" id="mLa-X2-fLN"/>
+                        <outlet property="receiveTimelabel" destination="meb-g0-7et" id="bUU-q5-jTd"/>
                         <outlet property="textLabel" destination="geA-pf-XsK" id="EPz-Ah-ECc"/>
                     </connections>
                 </viewController>
