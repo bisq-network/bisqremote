@@ -14,8 +14,9 @@ class NotificationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
-        if (NotificationArray.shared.countAll < 3) {
-            NotificationArray.shared.addRaw(raw: NotificationArray.exampleNotification())
+        if (NotificationArray.shared.countAll < 10) {
+            let x = Notification(raw: NotificationArray.exampleRawNotification())
+            NotificationArray.shared.addNotification(new: x)
         }
     }
 
@@ -35,7 +36,7 @@ class NotificationTableViewController: UITableViewController {
         let notification = NotificationArray.shared.at(n:indexPath.row)
         cell.comment.text = "\(notification.notificationType)"
         cell.timeEvent.text = dateformatterShort.string(from: notification.timestampEvent)
-        if notification.actionRequired.count > 0 {
+        if notification.actionRequired.count > 0 && !notification.actionDone {
             cell.actionImage.isHidden = false
         } else {
             cell.actionImage.isHidden = true

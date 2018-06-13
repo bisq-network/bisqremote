@@ -81,9 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
-            print("Permission granted: \(granted)")
+            print("iOS Notification: permission granted: \(granted)")
             
-            guard granted else { return }
+            guard granted else {
+                if (error != nil) {
+                    print("iOS Notification: permission not granted: \(error.debugDescription)")
+                }
+                return
+            }
             self.getNotificationSettings()
         }
     }
