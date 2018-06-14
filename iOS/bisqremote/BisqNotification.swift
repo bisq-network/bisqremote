@@ -20,29 +20,29 @@ let TYPE_TRADE_ACCEPTED = "TRADE_ACCEPTED"
 class RawNotification: Codable {
     var version: Int
     var notificationType: String
-    var comment: String
+    var title: String
+    var message: String
     var actionRequired: String
-    var transactionHash: String
-    var markPreviousActionsAsDone: Bool
+    var transactionID: String
     var timestampEvent: Date
 
     init() {
         version = 0
         notificationType = ""
-        comment = ""
+        title = ""
+        message = ""
         actionRequired = ""
-        transactionHash = ""
-        markPreviousActionsAsDone = false
+        transactionID = ""
         timestampEvent = Date()
     }
     
     private enum CodingKeys: String, CodingKey {
         case version
         case notificationType
-        case comment
+        case title
+        case message
         case actionRequired
-        case transactionHash
-        case markPreviousActionsAsDone
+        case transactionID
         case timestampEvent
     }
     
@@ -56,10 +56,10 @@ class RawNotification: Codable {
         default:
             fatalError("wrong notificationType \(notificationTypeCandidate)")
         }
-        comment = try container.decode(String.self, forKey: .comment)
+        title = try container.decode(String.self, forKey: .title)
+        message = try container.decode(String.self, forKey: .message)
         actionRequired = try container.decode(String.self, forKey: .actionRequired)
-        transactionHash = try container.decode(String.self, forKey: .transactionHash)
-        markPreviousActionsAsDone = try container.decode(Bool.self, forKey: .markPreviousActionsAsDone)
+        transactionID = try container.decode(String.self, forKey: .transactionID)
         timestampEvent = try container.decode(Date.self, forKey: .timestampEvent)
     }
     
@@ -68,10 +68,10 @@ class RawNotification: Codable {
         
         try container.encode(version, forKey: .version)
         try container.encode(notificationType, forKey: .notificationType)
-        try container.encode(comment, forKey: .comment)
+        try container.encode(title, forKey: .title)
+        try container.encode(message, forKey: .message)
         try container.encode(actionRequired, forKey: .actionRequired)
-        try container.encode(transactionHash, forKey: .transactionHash)
-        try container.encode(markPreviousActionsAsDone, forKey: .markPreviousActionsAsDone)
+        try container.encode(transactionID, forKey: .transactionID)
         try container.encode(timestampEvent, forKey: .timestampEvent)
     }
 }
@@ -80,18 +80,15 @@ class RawNotification: Codable {
 // This class ist stored persistently in the phone.
 class Notification: RawNotification {
     var read: Bool
-    var actionDone: Bool
     let timestampReceived: Date
 
     private enum CodingKeys: String, CodingKey {
         case read
-        case actionDone
         case timestampReceived
     }
     
     override init() {
         read = false
-        actionDone = false
         timestampReceived = Date()
         super.init()
     }
@@ -100,10 +97,10 @@ class Notification: RawNotification {
         self.init()
         self.version = raw.version
         self.notificationType = raw.notificationType
-        self.comment = raw.comment
+        self.title = raw.title
+        self.message = raw.message
         self.actionRequired = raw.actionRequired
-        self.transactionHash = raw.transactionHash
-        self.markPreviousActionsAsDone = raw.markPreviousActionsAsDone
+        self.transactionID = raw.transactionID
         self.timestampEvent = raw.timestampEvent
     }
     
@@ -111,7 +108,6 @@ class Notification: RawNotification {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let superdecoder = try container.superDecoder()
         read = try container.decode(Bool.self, forKey: .read)
-        actionDone = try container.decode(Bool.self, forKey: .actionDone)
         timestampReceived = try container.decode(Date.self, forKey: .timestampReceived)
         try super.init(from: superdecoder)
     }
@@ -119,7 +115,6 @@ class Notification: RawNotification {
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(read, forKey: .read)
-        try container.encode(actionDone, forKey: .actionDone)
         try container.encode(timestampReceived, forKey: .timestampReceived)
 
         let superdecoder = container.superEncoder()
@@ -174,10 +169,10 @@ class NotificationArray {
         let r = RawNotification()
         r.version = 1
         r.notificationType = TYPE_TRADE_ACCEPTED
-        r.comment = "no comment"
+        r.title = "example title"
+        r.message = "example message"
         r.actionRequired = "You need to make the bank transfer to receive your BTC"
-        r.transactionHash = "293842038402983"
-        r.markPreviousActionsAsDone = true
+        r.transactionID = "293842038402983"
         r.timestampEvent = Date()
         return r
     }
@@ -251,13 +246,6 @@ class NotificationArray {
     }
 
     func addNotification(new: Notification) {
-        if new.markPreviousActionsAsDone {
-            for n in array {
-                if n.transactionHash == new.transactionHash {
-                    n.actionDone = true
-                }
-            }
-        }
         array.insert(new, at: 0)
         save()
     }

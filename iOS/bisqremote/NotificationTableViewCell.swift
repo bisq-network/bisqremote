@@ -11,7 +11,6 @@ import UIKit
 class NotificationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var okImage: UIImageView!
-    @IBOutlet weak var actionImage: UIImageView!
     @IBOutlet weak var timeEvent: UILabel!
     @IBOutlet weak var comment: UILabel!
     

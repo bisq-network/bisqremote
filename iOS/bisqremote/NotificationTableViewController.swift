@@ -36,19 +36,12 @@ class NotificationTableViewController: UITableViewController {
         let notification = NotificationArray.shared.at(n:indexPath.row)
         cell.comment.text = "\(notification.notificationType)"
         cell.timeEvent.text = dateformatterShort.string(from: notification.timestampEvent)
-        if notification.actionRequired.count > 0 && !notification.actionDone {
-            cell.actionImage.isHidden = false
-        } else {
-            cell.actionImage.isHidden = true
-        }
         if notification.read {
             cell.comment.font = UIFont.systemFont(ofSize: 16.0)
             cell.okImage.image = UIImage(named: "ok_read.png")
-            cell.actionImage.image = UIImage(named: "action_read.png")
         } else {
             cell.comment.font = UIFont.boldSystemFont(ofSize: 16.0)
             cell.okImage.image = UIImage(named: "ok.png")
-            cell.actionImage.image = UIImage(named: "action.png")
         }
 
         return cell

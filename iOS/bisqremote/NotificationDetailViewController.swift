@@ -26,16 +26,12 @@ class NotificationDetailViewController: UIViewController {
             textLabel.text = n.notificationType
             eventTimeLabel.text   = "event:    "+dateformatterShort.string(from: n.timestampEvent)
             receiveTimelabel.text = "received: "+dateformatterShort.string(from: n.timestampReceived)
-            transactionID.text = "transaction ID: "+n.transactionHash
+            transactionID.text = "transaction ID: "+n.transactionID
             if n.actionRequired.count > 0 {
                 actionMessage.isHidden = false
                 actionMessage.text = n.actionRequired
                 actionMessage.layoutIfNeeded()
-                if !n.actionDone {
-                    actionMessage.backgroundColor = UIColor(red: 255.0/255.0, green: 126.0/255.0, blue: 121.0/255.0, alpha: 0.5)
-                } else {
-                    actionMessage.backgroundColor = UIColor(red: 0.0/255.0, green: 143.0/255.0, blue: 0/255.0, alpha: 0.15)
-                }
+                actionMessage.backgroundColor = UIColor(red: 255.0/255.0, green: 126.0/255.0, blue: 121.0/255.0, alpha: 0.5)
             } else {
                 actionMessage.isHidden = true
             }
