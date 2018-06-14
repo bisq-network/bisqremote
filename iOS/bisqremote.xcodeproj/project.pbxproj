@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA811D8920D284B100F7CFBA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA811D8820D284B100F7CFBA /* SettingsViewController.swift */; };
+		AA811D8B20D2ABBC00F7CFBA /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA811D8A20D2ABBC00F7CFBA /* constants.swift */; };
 		AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD220D255960092050E /* WelcomViewController.swift */; };
 		AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */; };
 		AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		AA811D8820D284B100F7CFBA /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		AA811D8A20D2ABBC00F7CFBA /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		AA97BFD220D255960092050E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
 		AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEncryptionViewController.swift; sourceTree = "<group>"; };
 		AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScanQRViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
 				BEFB45F520C34BC10052C91A /* Ibisqremotefo.plist */,
 				AA811D8820D284B100F7CFBA /* SettingsViewController.swift */,
+				AA811D8A20D2ABBC00F7CFBA /* constants.swift */,
 			);
 			path = bisqremote;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */,
 				BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */,
 				AA811D8920D284B100F7CFBA /* SettingsViewController.swift in Sources */,
+				AA811D8B20D2ABBC00F7CFBA /* constants.swift in Sources */,
 				BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */,
 				BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */,
 				AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */,
@@ -333,13 +337,13 @@
 				CODE_SIGN_ENTITLEMENTS = bisqremote/bisqremote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9D2B63BTCP;
+				DEVELOPMENT_TEAM = 8A4DL788W9;
 				INFOPLIST_FILE = bisqremote/Ibisqremotefo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremote;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -354,13 +358,13 @@
 				CODE_SIGN_ENTITLEMENTS = bisqremote/bisqremote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9D2B63BTCP;
+				DEVELOPMENT_TEAM = 8A4DL788W9;
 				INFOPLIST_FILE = bisqremote/Ibisqremotefo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremote;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

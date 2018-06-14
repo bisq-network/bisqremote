@@ -13,6 +13,7 @@ class SetupEncryptionViewController: UIViewController {
     @IBOutlet weak var encryptionKeyStatusImage: UIImageView!
     @IBOutlet weak var encryptionKeyStatusLabel: UILabel!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var fakeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,12 @@ class SetupEncryptionViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if FAKE_ENCRYPTION_KEY_BUTTON {
+            fakeButton.isHidden = false
+        } else {
+            fakeButton.isHidden = true
+        }
+        
         if (UserDefaults.standard.string(forKey: userDefaultSymmetricKey) != nil) {
             nextButton.isHidden = false
             encryptionKeyStatusImage.isHidden = false
@@ -39,6 +46,14 @@ class SetupEncryptionViewController: UIViewController {
         if let url = NSURL(string: "https://en.wikipedia.org/wiki/Symmetric-key_algorithm"){
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
+    }
+    
+    @IBAction func fakePressed(_ sender: Any) {
+        UserDefaults.standard.set("fake aps token 82763459827364", forKey: userDefaultApsToken)
+        UserDefaults.standard.set("fake encryption key 9876324598723", forKey: userDefaultSymmetricKey)
+        nextButton.isHidden = false
+        encryptionKeyStatusImage.isHidden = false
+        encryptionKeyStatusLabel.isHidden = false
     }
     
     @IBAction func helpPressed(_ sender: Any) {

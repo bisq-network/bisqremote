@@ -16,6 +16,7 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     @IBOutlet weak var qrImage: UIImageView!
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var selectMethodControl: UISegmentedControl!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,10 +26,12 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
             for: .normal)
         if let t = UserDefaults.standard.string(forKey: userDefaultApsToken) {
             apsToken = t
+            qrImage.contentMode = .scaleAspectFill
             qrImage.image = generateQRCode(from: apsToken)
+            qrImage.contentMode = .scaleAspectFill
             rawText.text = apsToken
-            setMethod(index: 0)
         }
+        setMethod(index: 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,7 +47,8 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
             let transform = CGAffineTransform(scaleX: 3, y: 3)
             
             if let output = filter.outputImage?.transformed(by: transform) {
-                return UIImage(ciImage: output)
+                let i = UIImage(ciImage: output)
+                return i
             }
         }
         
