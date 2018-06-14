@@ -34,7 +34,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navigationController = application.windows[0].rootViewController as! UINavigationController
             navigationController.setViewControllers([vc], animated: false)
         }
+        
+        let plainText = "this is my plain text"
+        let key = "simplekey"
+        let iv = "1234123412341234"
+        
+        let cryptoLib = CryptLib();
+        
+        let encryptedString = cryptoLib.encryptPlainText(with: plainText, key: key, iv: iv)
+        print("encryptedString \(encryptedString! as String)")
+        
+        let decryptedString = cryptoLib.decryptCipherText(with: encryptedString, key: key, iv: iv)
+        print("decryptedString \(decryptedString! as String)")
 
+        
+        
         return true
     }
 

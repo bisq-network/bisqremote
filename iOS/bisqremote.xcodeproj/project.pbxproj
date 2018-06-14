@@ -13,6 +13,7 @@
 		AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */; };
 		AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */; };
 		AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */; };
+		AAECD5A420D309E800F80E3A /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECD5A220D309E800F80E3A /* CryptLib.m */; };
 		BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */; };
 		BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */; };
 		BE92215420C49C6F00F8EB93 /* BisqNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92215320C49C6F00F8EB93 /* BisqNotification.swift */; };
@@ -30,6 +31,9 @@
 		AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEncryptionViewController.swift; sourceTree = "<group>"; };
 		AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScanQRViewController.swift; sourceTree = "<group>"; };
 		AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTransferNotificationTokenViewController.swift; sourceTree = "<group>"; };
+		AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bisqremote-Bridging-Header.h"; sourceTree = "<group>"; };
+		AAECD5A220D309E800F80E3A /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
+		AAECD5A320D309E800F80E3A /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
 		BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		BE92215320C49C6F00F8EB93 /* BisqNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BisqNotification.swift; sourceTree = "<group>"; };
@@ -65,6 +69,16 @@
 			path = Setup;
 			sourceTree = "<group>";
 		};
+		AAECD59E20D3098300F80E3A /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				AAECD5A320D309E800F80E3A /* CryptLib.h */,
+				AAECD5A220D309E800F80E3A /* CryptLib.m */,
+				AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
 		BEFB45DD20C34BC10052C91A = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +98,7 @@
 		BEFB45E820C34BC10052C91A /* bisqremote */ = {
 			isa = PBXGroup;
 			children = (
+				AAECD59E20D3098300F80E3A /* Crypto */,
 				AA97BFD120D255670092050E /* Setup */,
 				BEFB45FC20C355870052C91A /* bisqremote.entitlements */,
 				AA811D8A20D2ABBC00F7CFBA /* constants.swift */,
@@ -133,6 +148,7 @@
 				TargetAttributes = {
 					BEFB45E520C34BC10052C91A = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 0940;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -191,6 +207,7 @@
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
 				AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */,
 				AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */,
+				AAECD5A420D309E800F80E3A /* CryptLib.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bisqremote/bisqremote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -347,6 +365,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "bisqremote/Crypto/bisqremote-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -356,6 +376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bisqremote/bisqremote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -369,6 +390,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "bisqremote/Crypto/bisqremote-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
