@@ -86,6 +86,7 @@
 			children = (
 				AA97BFD120D255670092050E /* Setup */,
 				BEFB45FC20C355870052C91A /* bisqremote.entitlements */,
+				AA811D8A20D2ABBC00F7CFBA /* constants.swift */,
 				BEFB45E920C34BC10052C91A /* AppDelegate.swift */,
 				BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */,
 				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
@@ -96,7 +97,6 @@
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
 				BEFB45F520C34BC10052C91A /* Ibisqremotefo.plist */,
 				AA811D8820D284B100F7CFBA /* SettingsViewController.swift */,
-				AA811D8A20D2ABBC00F7CFBA /* constants.swift */,
 			);
 			path = bisqremote;
 			sourceTree = "<group>";

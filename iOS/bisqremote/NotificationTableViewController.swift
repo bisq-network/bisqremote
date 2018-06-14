@@ -38,10 +38,10 @@ class NotificationTableViewController: UITableViewController {
         cell.timeEvent.text = dateformatterShort.string(from: notification.timestampEvent)
         if notification.read {
             cell.comment.font = UIFont.systemFont(ofSize: 16.0)
-            cell.okImage.image = UIImage(named: "ok_read.png")
+            cell.okImage.image = UIImage(named: "info_read.png")
         } else {
             cell.comment.font = UIFont.boldSystemFont(ofSize: 16.0)
-            cell.okImage.image = UIImage(named: "ok.png")
+            cell.okImage.image = UIImage(named: "info.png")
         }
 
         return cell

@@ -16,14 +16,20 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     @IBOutlet weak var qrImage: UIImageView!
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var selectMethodControl: UISegmentedControl!
-
+    @IBOutlet weak var constraintAboveImage: NSLayoutConstraint!
+    @IBOutlet weak var constraintBelowImage: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let font = UIFont.systemFont(ofSize: 17)
-        selectMethodControl.setTitleTextAttributes(
-            [NSAttributedStringKey.font: font],
-            for: .normal)
+        let h = UIScreen.main.bounds.height
+        if h < 600 {
+            constraintAboveImage.constant /= 2
+            constraintBelowImage.constant /= 2
+        }
+//        let font = UIFont.systemFont(ofSize: 17)
+//        selectMethodControl.setTitleTextAttributes(
+//            [NSAttributedStringKey.font: font],
+//            for: .normal)
         if let t = UserDefaults.standard.string(forKey: userDefaultApsToken) {
             apsToken = t
             qrImage.contentMode = .scaleAspectFill

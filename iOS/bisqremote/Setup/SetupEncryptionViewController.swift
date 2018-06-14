@@ -14,9 +14,16 @@ class SetupEncryptionViewController: UIViewController {
     @IBOutlet weak var encryptionKeyStatusLabel: UILabel!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var fakeButton: UIButton!
+    @IBOutlet weak var constraintAboveImage: NSLayoutConstraint!
+    @IBOutlet weak var constraintBelowImage: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let h = UIScreen.main.bounds.height
+        if h < 600 {
+            constraintAboveImage.constant /= 2
+            constraintBelowImage.constant /= 2
+        }
     }
 
     override func didReceiveMemoryWarning() {
