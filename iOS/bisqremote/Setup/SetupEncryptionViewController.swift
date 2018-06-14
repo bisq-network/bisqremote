@@ -12,18 +12,11 @@ class SetupEncryptionViewController: UIViewController {
 
     @IBOutlet weak var encryptionKeyStatusImage: UIImageView!
     @IBOutlet weak var encryptionKeyStatusLabel: UILabel!
-    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var fakeButton: UIButton!
-    @IBOutlet weak var constraintAboveImage: NSLayoutConstraint!
-    @IBOutlet weak var constraintBelowImage: NSLayoutConstraint!
+    @IBOutlet weak var nextButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let h = UIScreen.main.bounds.height
-        if h < 600 {
-            constraintAboveImage.constant /= 2
-            constraintBelowImage.constant /= 2
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,11 +32,11 @@ class SetupEncryptionViewController: UIViewController {
         }
         
         if (UserDefaults.standard.string(forKey: userDefaultSymmetricKey) != nil) {
-            nextButton.isHidden = false
+            nextButton.isEnabled = true
             encryptionKeyStatusImage.isHidden = false
             encryptionKeyStatusLabel.isHidden = false
         } else {
-            nextButton.isHidden = true
+            nextButton.isEnabled = false
             encryptionKeyStatusImage.isHidden = true
             encryptionKeyStatusLabel.isHidden = true
         }
@@ -58,7 +51,7 @@ class SetupEncryptionViewController: UIViewController {
     @IBAction func fakePressed(_ sender: Any) {
         UserDefaults.standard.set("fake aps token 82763459827364", forKey: userDefaultApsToken)
         UserDefaults.standard.set("fake encryption key 9876324598723", forKey: userDefaultSymmetricKey)
-        nextButton.isHidden = false
+        nextButton.isEnabled = true
         encryptionKeyStatusImage.isHidden = false
         encryptionKeyStatusLabel.isHidden = false
     }
@@ -71,7 +64,7 @@ class SetupEncryptionViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var title = "Setup Encryption"
+        var title = "Decryption"
         if segue.identifier == "scanQRsegue" {
             title = "Cancel"
         }
