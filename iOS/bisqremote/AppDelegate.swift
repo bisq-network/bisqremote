@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "listScreen") as! NotificationTableViewController
             let navigationController = application.windows[0].rootViewController as! UINavigationController
-            navigationController.pushViewController(vc, animated: true)
+            navigationController.setViewControllers([vc], animated: false)
         }
 
         return true

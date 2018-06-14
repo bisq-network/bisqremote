@@ -14,14 +14,9 @@ class NotificationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
-        if (NotificationArray.shared.countAll < 10) {
-            let x = Notification(raw: NotificationArray.exampleRawNotification())
-            NotificationArray.shared.addNotification(new: x)
-        }
     }
 
-    @IBAction func deleteAllPressed(_ sender: Any) {
-        NotificationArray.shared.deleteAll()
+    override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
@@ -115,7 +110,7 @@ class NotificationTableViewController: UITableViewController {
             
             tableView.reloadRows(at: [indexPath], with: .top)
         default:
-            fatalError("Unexpected destination: \(segue.destination)")
+            break
         }
     }
     

@@ -95,10 +95,10 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
+        UserDefaults.standard.set(true, forKey: userDefaultKeySetupDone)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "listScreen") as! NotificationTableViewController
-        navigationController?.pushViewController(vc, animated: true)
-        UserDefaults.standard.set(true, forKey: userDefaultKeySetupDone)
+        navigationController?.setViewControllers([vc], animated: true)
     }
     
     func webPagePressed(alert: UIAlertAction!) {

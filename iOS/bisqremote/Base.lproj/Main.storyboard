@@ -14,7 +14,7 @@
         <!--Welcome-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="startScreen" title="Welcome" id="BYZ-38-t0r" customClass="WelcomViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="welcomeScreen" title="Welcome" id="BYZ-38-t0r" customClass="WelcomViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -359,7 +359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXt-TP-YE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-89" y="433"/>
+            <point key="canvasLocation" x="-110" y="433"/>
         </scene>
         <!--Notification Detail View Controller-->
         <scene sceneID="FcW-U4-rc4">
@@ -370,25 +370,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geA-pf-XsK">
-                                <rect key="frame" x="20" y="50" width="335" height="21"/>
+                                <rect key="frame" x="20" y="94" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="event time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3t0-Gv-2ua">
-                                <rect key="frame" x="20" y="79" width="335" height="20"/>
+                                <rect key="frame" x="20" y="123" width="335" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="received time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meb-g0-7et">
-                                <rect key="frame" x="20" y="107" width="335" height="20"/>
+                                <rect key="frame" x="20" y="151" width="335" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="action description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-PA-fy8">
-                                <rect key="frame" x="10" y="231" width="345" height="36.5"/>
+                                <rect key="frame" x="10" y="275" width="345" height="36.5"/>
                                 <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="0.72848886986301364" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="mn4-jU-vY2"/>
@@ -397,7 +397,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transaction ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdd-8y-ixK">
-                                <rect key="frame" x="20" y="135" width="335" height="20"/>
+                                <rect key="frame" x="20" y="179" width="335" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -433,7 +433,56 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dwk-0C-F5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1519" y="-367"/>
+            <point key="canvasLocation" x="-798" y="-1049"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="jCL-pA-64i">
+            <objects>
+                <viewController id="wPz-Zx-mjx" customClass="SettingsViewController" customModule="bisqremote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TGc-Zw-hLf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUM-Ya-Cot">
+                                <rect key="frame" x="20" y="164" width="335" height="30"/>
+                                <state key="normal" title="Rerun Setup"/>
+                                <connections>
+                                    <action selector="rerunSetupPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="UT5-3S-7pF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quG-DG-hcM">
+                                <rect key="frame" x="20" y="214" width="335" height="30"/>
+                                <state key="normal" title="Add example notification"/>
+                                <connections>
+                                    <action selector="addNotificationPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="4bT-0d-Yxx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40K-Mw-FC7">
+                                <rect key="frame" x="20" y="264" width="335" height="30"/>
+                                <state key="normal" title="Delete all notifications"/>
+                                <connections>
+                                    <action selector="deleteAllPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="lAM-c6-UEJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="40K-Mw-FC7" secondAttribute="trailing" constant="20" id="6Ou-em-nZL"/>
+                            <constraint firstItem="JUM-Ya-Cot" firstAttribute="top" secondItem="kPY-40-qiv" secondAttribute="top" constant="100" id="OCI-hZ-A9s"/>
+                            <constraint firstItem="40K-Mw-FC7" firstAttribute="top" secondItem="quG-DG-hcM" secondAttribute="bottom" constant="20" id="g1I-mO-vRz"/>
+                            <constraint firstItem="40K-Mw-FC7" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="o1W-Ra-aAb"/>
+                            <constraint firstItem="quG-DG-hcM" firstAttribute="top" secondItem="JUM-Ya-Cot" secondAttribute="bottom" constant="20" id="rBe-Qw-6S9"/>
+                            <constraint firstItem="JUM-Ya-Cot" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="rqd-kh-8DI"/>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="quG-DG-hcM" secondAttribute="trailing" constant="20" id="uG5-ET-sYP"/>
+                            <constraint firstItem="quG-DG-hcM" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="waO-KE-tqX"/>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="JUM-Ya-Cot" secondAttribute="trailing" constant="20" id="yOu-az-bkl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kPY-40-qiv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y3e-e6-FwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-798" y="-349"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="twP-0d-2ee">
@@ -515,13 +564,17 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Notifications" id="MlT-U6-TNn">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="settings" id="kiK-bA-Pwn"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="settings" id="kiK-bA-Pwn">
+                            <connections>
+                                <segue destination="wPz-Zx-mjx" kind="show" id="6cH-5u-CMH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ckW-8Q-0Ls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2396" y="-367"/>
+            <point key="canvasLocation" x="-1585" y="-648"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0V1-hp-phb">
@@ -540,6 +593,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sYA-2c-bDg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2396" y="435"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SNW-23-41W">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fos-5B-N7r" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZGk-hf-EGe">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="edC-1E-qDP" kind="relationship" relationship="rootViewController" id="ebg-fP-2Qi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uyQ-0x-FXM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2396" y="-648"/>
         </scene>
     </scenes>
     <resources>
