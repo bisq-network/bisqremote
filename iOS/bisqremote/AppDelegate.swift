@@ -11,12 +11,12 @@ import UserNotifications
 
 let userDefaultKeySetupDone = "setup"
 let userDefaultSymmetricKey = "SymmetricKey"
+let userDefaultApsToken = "ApsToken"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var apsToken: String = "unknown"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window?.tintColor = UIColor(red: 37.0/255.0, green: 177.0/255.0, blue: 53.0/255.0, alpha: 1.0)
@@ -30,9 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if UserDefaults.standard.bool(forKey: userDefaultKeySetupDone) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let secondViewController = storyboard.instantiateViewController(withIdentifier: "listScreen") as! NotificationTableViewController
-            let rootViewController = self.window?.rootViewController as! UINavigationController
-            rootViewController.pushViewController(secondViewController, animated: true)
+            let vc = storyboard.instantiateViewController(withIdentifier: "listScreen") as! NotificationTableViewController
+            let navigationController = application.windows[0].rootViewController as! UINavigationController
+            navigationController.pushViewController(vc, animated: true)
         }
 
         return true
@@ -112,7 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return String(format: "%02.2hhx", data)
         }
         
-        apsToken = tokenParts.joined()
+        let apsToken = tokenParts.joined()
+        UserDefaults.standard.set(apsToken, forKey: userDefaultApsToken)
         print("### Device token: \n\(apsToken)")
         print("\n### Example notification:\n")
         print(NotificationArray.exampleAPS())

@@ -1,22 +1,22 @@
 //
-//  SetupViewController.swift
+//  SetupScanQRViewController.swift
 //  bisqremote
 //
-//  Created by Joachim Neumann on 12/06/2018.
+//  Created by Joachim Neumann on 14/06/2018.
 //  Copyright © 2018 joachim Neumann. All rights reserved.
 //
 
 import AVFoundation
 import UIKit
 
-class SetupViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class SetupScanQRViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.black
         captureSession = AVCaptureSession()
         
@@ -56,7 +56,7 @@ class SetupViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         captureSession.startRunning()
         
     }
-
+    
     func failed() {
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning the QR code.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -105,7 +105,6 @@ class SetupViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         guard x[0] == "bisq_key" else { return }
         guard x[1].count == 32 else { return }
         UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
-        UserDefaults.standard.set(true, forKey: userDefaultKeySetupDone)
         _ = navigationController?.popViewController(animated: true)
     }
     
@@ -116,15 +115,4 @@ class SetupViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

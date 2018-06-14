@@ -7,29 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AAE403A820CFF62500CCC879 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE403A720CFF62500CCC879 /* AboutViewController.swift */; };
-		AAEE3A2E20D076D900D52326 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEE3A2D20D076D900D52326 /* SetupViewController.swift */; };
+		AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD220D255960092050E /* WelcomViewController.swift */; };
+		AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */; };
+		AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */; };
+		AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */; };
 		BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */; };
 		BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */; };
 		BE92215420C49C6F00F8EB93 /* BisqNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92215320C49C6F00F8EB93 /* BisqNotification.swift */; };
 		BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */; };
 		BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45E920C34BC10052C91A /* AppDelegate.swift */; };
-		BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFB45EB20C34BC10052C91A /* MainViewController.swift */; };
 		BEFB45EF20C34BC10052C91A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45ED20C34BC10052C91A /* Main.storyboard */; };
 		BEFB45F120C34BC10052C91A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45F020C34BC10052C91A /* Assets.xcassets */; };
 		BEFB45F420C34BC10052C91A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AAE403A720CFF62500CCC879 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		AAEE3A2D20D076D900D52326 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		AA97BFD220D255960092050E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
+		AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEncryptionViewController.swift; sourceTree = "<group>"; };
+		AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScanQRViewController.swift; sourceTree = "<group>"; };
+		AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTransferNotificationTokenViewController.swift; sourceTree = "<group>"; };
 		BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		BE92215320C49C6F00F8EB93 /* BisqNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BisqNotification.swift; sourceTree = "<group>"; };
 		BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		BEFB45E620C34BC10052C91A /* bisqremote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bisqremote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFB45E920C34BC10052C91A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BEFB45EB20C34BC10052C91A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BEFB45EE20C34BC10052C91A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEFB45F020C34BC10052C91A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEFB45F320C34BC10052C91A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -48,6 +50,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA97BFD120D255670092050E /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				AA97BFD220D255960092050E /* WelcomViewController.swift */,
+				AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */,
+				AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */,
+				AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
 		BEFB45DD20C34BC10052C91A = {
 			isa = PBXGroup;
 			children = (
@@ -67,13 +80,11 @@
 		BEFB45E820C34BC10052C91A /* bisqremote */ = {
 			isa = PBXGroup;
 			children = (
+				AA97BFD120D255670092050E /* Setup */,
 				BEFB45FC20C355870052C91A /* bisqremote.entitlements */,
 				BEFB45E920C34BC10052C91A /* AppDelegate.swift */,
-				BEFB45EB20C34BC10052C91A /* MainViewController.swift */,
 				BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */,
 				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
-				AAE403A720CFF62500CCC879 /* AboutViewController.swift */,
-				AAEE3A2D20D076D900D52326 /* SetupViewController.swift */,
 				BE92215320C49C6F00F8EB93 /* BisqNotification.swift */,
 				BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */,
 				BEFB45ED20C34BC10052C91A /* Main.storyboard */,
@@ -164,13 +175,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE92215420C49C6F00F8EB93 /* BisqNotification.swift in Sources */,
+				AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */,
 				BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */,
 				BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */,
-				AAE403A820CFF62500CCC879 /* AboutViewController.swift in Sources */,
-				AAEE3A2E20D076D900D52326 /* SetupViewController.swift in Sources */,
-				BEFB45EC20C34BC10052C91A /* MainViewController.swift in Sources */,
 				BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */,
+				AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */,
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
+				AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */,
+				AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
