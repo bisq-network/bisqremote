@@ -20,6 +20,11 @@ public class Main {
 
         try {
 
+            /* test */
+            String base58 = Base58.encode(BisqNotification.getBytes("UTF-8"));
+            System.out.println(base58);
+
+
             /* generate the key */
             KeyGenerator keyPairGenerator = KeyGenerator.getInstance(SYM_KEY_ALGO);
             keyPairGenerator.init(SYM_KEY_BITS);
