@@ -54,7 +54,7 @@ import javafx.stage.WindowEvent;
 public class NotificationApp extends Application {
 
     private BisqNotification bisqNotification = new BisqNotification();
-    private static Webcam webcam;
+    public static Webcam webcam;
     private static Boolean running = true;
 
     public static void main(String[] args) {
@@ -75,29 +75,12 @@ public class NotificationApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 NotificationApp.running = false;
             }
         });
-
-
-        webcam.setViewSize(WebcamResolution.QVGA.getSize());
-
-        final WebcamPanel panel = new WebcamPanel(webcam);
-        panel.setFPSDisplayed(true);
-        panel.setImageSizeDisplayed(true);
-
-        JFrame window = new JFrame("Test webcam panel");
-        window.setLayout(new FlowLayout());
-        window.add(panel);
-        window.setResizable(true);
-        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        window.pack();
-        window.setVisible(true);
-
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane
@@ -110,10 +93,6 @@ public class NotificationApp extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-//        NotificationApp.running = false;
-//        buildin = Webcam.getWebcams().get(0); // build-in laptop camera
-//        BufferedImage image1 = buildin.getImage();
-    // do with image1 and image2 whatever you want
     }
 
 
@@ -150,67 +129,6 @@ public class NotificationApp extends Application {
 
     private void addUIControls(GridPane gridPane) {
 
-//        final Webcam webCam = Webcam.getDefault();
-//
-//        Task<Void> webCamTask = new Task<Void>() {
-//
-//            @Override
-//            protected Void call() throws Exception {
-//                Dimension[] sizes = webCam.getViewSizes();
-//                webCam.setViewSize(sizes[sizes.length - 1]);
-//                webCam.open();
-//
-//        try {
-//            ImageIO.write(webCam.getImage(), "JPG", new File("test.jpg"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//                return null;
-//            }
-//        };
-//
-//        Thread webCamThread = new Thread(webCamTask);
-//        webCamThread.setDaemon(true);
-//        webCamThread.start();
-
-//
-//        Webcam.getDiscoveryService().setEnabled(false);
-//        Webcam.getDiscoveryService().stop();
-//        Webcam webcam = Webcam.getDefault();
-//        webcam.open();
-//        try {
-//            ImageIO.write(webcam.getImage(), "JPG", new File("test.jpg"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        webcam.close();
-
-
-//        Webcam webcam = Webcam.getDefault();
-//        webcam.setViewSize(WebcamResolution.VGA.getSize());
-//
-//        WebcamPanel panel = new WebcamPanel(webcam);
-//        panel.setFPSDisplayed(true);
-//        panel.setDisplayDebugInfo(true);
-//        panel.setImageSizeDisplayed(true);
-//        panel.setMirrored(true);
-//        JFrame window = new JFrame("Test webcam panel");
-//        window.add(panel);
-//        window.setResizable(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        window.pack();
-//        window.setVisible(true);
-
-
-//        Webcam webcam = Webcam.getDefault();
-//        webcam.open();
-//        try {
-//            ImageIO.write(webcam.getImage(), "PNG", new File("hello-world.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         Integer rowindex = 0;
 
         Label headerSetup1Label = new Label("Setup - create key and show QR. The user needs to scan this code with his phones");
@@ -226,6 +144,7 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
         rowindex++;
+
         // QR code
         QR qr = new QR();
         ImageView iv = qr.imageView(
@@ -237,6 +156,16 @@ public class NotificationApp extends Application {
         gridPane.add(iv, 0, 2, 2, 1);
         GridPane.setHalignment(iv, HPos.CENTER);
 
+        // Webcam
+        rowindex++;
+        final Button webcamButton = new Button("Webcam");
+
+        webcamButton.setOnAction((event) -> {
+            System.out.println("webcam button");
+            new WebcamQRCodeExample();
+        });
+
+        gridPane.add(webcamButton, 0, 2, 2, 1);
 
         rowindex++;
         Label headerSendLabel = new Label("Send message");
