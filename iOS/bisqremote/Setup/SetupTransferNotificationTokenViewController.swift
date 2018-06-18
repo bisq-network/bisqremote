@@ -20,7 +20,6 @@ import UIKit
 import MessageUI
 
 class SetupTransferNotificationTokenViewController: UIViewController, MFMailComposeViewControllerDelegate {
-    var apsToken: String = "unknown"
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var rawText: UITextView!
     @IBOutlet weak var qrImage: UIImageView!
@@ -29,12 +28,11 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let t = UserDefaults.standard.string(forKey: userDefaultApsToken) {
-            apsToken = t
+        if let temp = UserDefaults.standard.string(forKey: userDefaultApsToken) {
             qrImage.contentMode = .scaleAspectFill
-            qrImage.image = generateQRCode(from: "BisqToken "+apsToken)
+            qrImage.image = generateQRCode(from: "BisqToken "+temp)
             qrImage.contentMode = .scaleAspectFill
-            rawText.text = apsToken
+            rawText.text = temp
         }
         setMethod(index: 0)
     }
@@ -91,13 +89,14 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     
     
     @IBAction func emailButtonPressed(_ sender: Any) {
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setSubject("Apple notification service token")
-            mail.setMessageBody("\(apsToken)", isHTML: false)
-            
-            present(mail, animated: true)
+        if let temp = UserDefaults.standard.string(forKey: userDefaultApsToken) {
+            if MFMailComposeViewController.canSendMail() {
+                let mail = MFMailComposeViewController()
+                mail.mailComposeDelegate = self
+                mail.setSubject("Apple notification service token")
+                mail.setMessageBody("Your Apple Notifications Token is:\n\n\(temp)", isHTML: false)
+                present(mail, animated: true)
+            }
         } else {
             // show failure alert
         }

@@ -84,14 +84,16 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
             }
 
             if (result != null) {
+                // We use the magic characters BisqToken and space to identify the
+                // Base58 encoded Apple Notification Service token
                 String[] QRStrings = result.getText().split(" ");
 
                 if (QRStrings.length == 2 && QRStrings[0].equals("BisqToken")) {
                     System.out.println(result.getText());
-                    Token.getInstance().string = QRStrings[1];
+                    Token.getInstance().apsToken = QRStrings[1];
                 } else {
                     System.out.println("wrong token: " + result.getText());
-                    Token.getInstance().string = "";
+                    Token.getInstance().apsToken = null;
                 }
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;

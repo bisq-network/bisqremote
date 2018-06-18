@@ -1,4 +1,3 @@
-//
 /*
  * This file is part of Bisq.
  *
@@ -146,13 +145,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenParts = deviceToken.map { data -> String in
-            return String(format: "%02.2hhx", data)
-        }
-        
-        let apsToken = tokenParts.joined()
+        let apsToken = Base58.base58FromBytes([UInt8](deviceToken))
+        print("as    Hex: "+deviceToken.hexDescription)
+
         UserDefaults.standard.set(apsToken, forKey: userDefaultApsToken)
-        print("### Device token: \n\(apsToken)")
+        print("as Base58: \(apsToken)")
         print("\n### Example notification:\n")
         print(NotificationArray.exampleAPS())
     }
@@ -160,6 +157,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
+    }
+}
+
+extension Data {
+    var hexDescription: String {
+        return reduce("") {$0 + String(format: "%02x", $1)}
+    }
+    var base58Description: String {
+        return Base58.base58FromBytes([UInt8](self))
     }
 }
 

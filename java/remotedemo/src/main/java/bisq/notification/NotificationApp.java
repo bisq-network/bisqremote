@@ -152,7 +152,7 @@ public class NotificationApp extends Application {
 
         final Button refreshButton = new Button("refresh");
         refreshButton.setOnAction((event) -> {
-            tokenTitleLabel.setText(Token.getInstance().string);
+            tokenTitleLabel.setText(Token.getInstance().apsToken);
         });
         gridPane.add(refreshButton, 0, rowindex, 1, 1);
         GridPane.setHalignment(refreshButton, HPos.LEFT);
