@@ -2,13 +2,13 @@ package bisq.notification;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -34,7 +34,6 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
 
         setLayout(new FlowLayout());
         setTitle("show the Bisq QR code on your phone");
-//        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -62,8 +61,9 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
     @Override
     public void run() {
         // check 10 times a second for the QR code
-         do {
-             try {
+        boolean run = true;
+        while (run) {
+            try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -90,8 +90,10 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
 
             if (result != null) {
                 System.out.println(result.getText());
+                dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                run = false;
             }
-        } while (true);
+        }
     }
 
     @Override

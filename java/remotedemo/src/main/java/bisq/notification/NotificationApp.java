@@ -55,32 +55,16 @@ public class NotificationApp extends Application {
 
     private BisqNotification bisqNotification = new BisqNotification();
     public static Webcam webcam;
-    private static Boolean running = true;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
         Webcam.getDiscoveryService().stop();
         webcam = Webcam.getDefault();
         launch(args);
-        while(running){
-            try {
-                Thread.currentThread().sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        webcam.close();
     }
 
     @Override
     public void start(Stage primaryStage) {
-
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                NotificationApp.running = false;
-            }
-        });
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane

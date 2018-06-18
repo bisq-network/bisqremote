@@ -25,12 +25,10 @@
       <file leaf-file-name="NotificationApp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bisq/notification/NotificationApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="942">
-              <caret line="244" selection-start-line="244" selection-end-line="244" />
+            <state relative-caret-position="-270">
+              <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2585#2586#0" expanded="true" />
-                <element signature="e#2648#2649#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -39,8 +37,8 @@
       <file leaf-file-name="WebcamQRCodeExample.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bisq/notification/WebcamQRCodeExample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+            <state relative-caret-position="413">
+              <caret line="96" column="9" selection-start-line="65" selection-start-column="20" selection-end-line="96" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1313#1542#0" expanded="true" />
@@ -420,32 +418,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bisq/notification/NotificationApp.java</url>
-          <line>188</line>
-          <properties />
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bisq/notification/NotificationApp.java</url>
-          <line>80</line>
-          <properties />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bisq/notification/WebcamQRCodeExample.java</url>
-          <line>98</line>
-          <properties />
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bisq/notification/WebcamQRCodeExample.java</url>
-          <line>94</line>
-          <properties />
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="20" />
     </breakpoint-manager>
   </component>
@@ -504,8 +476,6 @@
           <caret line="125" column="10" lean-forward="true" selection-start-line="125" selection-start-column="10" selection-end-line="125" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -523,8 +493,6 @@
           <caret line="135" selection-start-line="135" selection-end-line="135" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -562,8 +530,6 @@
           <caret line="135" selection-start-line="135" selection-end-line="135" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -601,8 +567,6 @@
           <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -643,8 +607,6 @@
           <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -765,20 +727,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bisq/notification/NotificationApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="942">
-          <caret line="244" selection-start-line="244" selection-end-line="244" />
+        <state relative-caret-position="-270">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2585#2586#0" expanded="true" />
-            <element signature="e#2648#2649#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bisq/notification/WebcamQRCodeExample.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+        <state relative-caret-position="413">
+          <caret line="96" column="9" selection-start-line="65" selection-start-column="20" selection-end-line="96" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1313#1542#0" expanded="true" />
