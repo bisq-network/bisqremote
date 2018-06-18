@@ -1,10 +1,20 @@
 //
-//  AppDelegate.swift
-//  
-//
-//  Created by Joachim Neumann on 03/06/2018.
-//  Copyright © 2018 joachim Neumann. All rights reserved.
-//
+/*
+ * This file is part of Bisq.
+ *
+ * Bisq is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * Bisq is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Bisq. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 import UIKit
 import UserNotifications
@@ -35,6 +45,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navigationController.setViewControllers([vc], animated: false)
         }
         
+        let x = "message"
+        let xx = x.utf8
+        let xxx =  Array(xx)
+        var enc = Base58.base58FromBytes(xxx)
+        print(x+" in base58="+enc)
+        enc = "2GT8sH7hrnuuhcMUR2byaMJUEouQ3xvjpRfYzix"
+        let b = Base58.bytesFromBase58(enc)
+        if let s = String(bytes: b, encoding: .utf8) {
+            print("and back="+s)
+            print("ok:"+String(s==x))
+        } else {
+            print("not a valid UTF-8 sequence")
+        }
+
         let plainText = "this is my plain text"
         let key = "simplekey"
         let iv = "1234123412341234"

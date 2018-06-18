@@ -13,6 +13,7 @@
 		AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */; };
 		AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */; };
 		AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */; };
+		AAB2ECE820D6FD31003BB50E /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB2ECE720D6FD31003BB50E /* Base58.swift */; };
 		AAECD5A420D309E800F80E3A /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECD5A220D309E800F80E3A /* CryptLib.m */; };
 		BE31BFC820C44A8D008F79C6 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */; };
 		BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */; };
@@ -31,6 +32,7 @@
 		AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEncryptionViewController.swift; sourceTree = "<group>"; };
 		AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScanQRViewController.swift; sourceTree = "<group>"; };
 		AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTransferNotificationTokenViewController.swift; sourceTree = "<group>"; };
+		AAB2ECE720D6FD31003BB50E /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bisqremote-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAECD5A220D309E800F80E3A /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
 		AAECD5A320D309E800F80E3A /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				AAECD5A320D309E800F80E3A /* CryptLib.h */,
 				AAECD5A220D309E800F80E3A /* CryptLib.m */,
 				AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */,
+				AAB2ECE720D6FD31003BB50E /* Base58.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -107,11 +110,11 @@
 				BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */,
 				BE92215320C49C6F00F8EB93 /* BisqNotification.swift */,
 				BE92215520C4AC0700F8EB93 /* NotificationDetailViewController.swift */,
+				AA811D8820D284B100F7CFBA /* SettingsViewController.swift */,
 				BEFB45ED20C34BC10052C91A /* Main.storyboard */,
 				BEFB45F020C34BC10052C91A /* Assets.xcassets */,
 				BEFB45F220C34BC10052C91A /* LaunchScreen.storyboard */,
 				BEFB45F520C34BC10052C91A /* Ibisqremotefo.plist */,
-				AA811D8820D284B100F7CFBA /* SettingsViewController.swift */,
 			);
 			path = bisqremote;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */,
 				BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */,
 				AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */,
+				AAB2ECE820D6FD31003BB50E /* Base58.swift in Sources */,
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
 				AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */,
 				AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */,
