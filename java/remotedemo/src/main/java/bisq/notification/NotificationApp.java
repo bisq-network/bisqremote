@@ -112,8 +112,8 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Symnmetric key: "+bisqNotification.key());
-        System.out.println("Symnmetric key: "+bisqNotification.key());
+        Label keyTitleLabel = new Label("Symmetric key: "+bisqNotification.key());
+        System.out.println("Symmetric key: "+bisqNotification.key());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 

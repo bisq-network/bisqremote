@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Base64;
 
 public class BisqNotification {
     private static final String  SYM_KEY_ALGO = "AES";
@@ -26,7 +27,7 @@ public class BisqNotification {
 
     public String key() {
         try {
-            return "bisq_key "+key.toString().getBytes("UTF-8");
+            return Base58.encode(key.getEncoded()) +" (Base58)";
         } catch (Exception e) {
             return "bisq_key error";
         }
