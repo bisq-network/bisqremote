@@ -15,7 +15,8 @@ import java.nio.charset.Charset;
 public class BisqNotification {
     private static final String  SYM_KEY_ALGO = "AES";
     private static final Integer SYM_KEY_BITS = 256;
-    private static final String SYM_CIPHER = "AES";
+    private static final String  SYM_CIPHER   = "AES";
+    private String notificationToken;
 
     private SecretKey key;
 
@@ -23,15 +24,14 @@ public class BisqNotification {
         key = generateSecretKey(SYM_KEY_BITS);
     }
 
-    public String base58() {
+    public String key() {
         try {
-            String ret = Base58.encode(key.toString().getBytes("UTF-8"));
-            return ret;
+            return "bisq_key "+key.toString().getBytes("UTF-8");
         } catch (Exception e) {
-            return "base58 error";
+            return "bisq_key error";
         }
-
     }
+
     private SecretKey generateSecretKey(int bits) {
         try {
             KeyGenerator keyPairGenerator = KeyGenerator.getInstance(SYM_KEY_ALGO);

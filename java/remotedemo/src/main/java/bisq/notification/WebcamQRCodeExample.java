@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -20,10 +19,9 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import javafx.scene.control.Label;
 
 public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFactory {
-
-    private static final long serialVersionUID = 6441489157408381878L;
 
     private Executor executor = Executors.newSingleThreadExecutor(this);
 
@@ -31,9 +29,8 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
 
     public WebcamQRCodeExample() {
         super();
-
         setLayout(new FlowLayout());
-        setTitle("show the Bisq QR code on your phone");
+        setTitle("Bisq Notification token");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -48,11 +45,9 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
         NotificationApp.webcam.setViewSize(sizes[sizes.length - 1]);
 
         panel = new WebcamPanel(NotificationApp.webcam);
-        panel.setPreferredSize(sizes[sizes.length - 1]);
-
         add(panel);
-
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
 
         executor.execute(this);
@@ -89,7 +84,15 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
             }
 
             if (result != null) {
-                System.out.println(result.getText());
+                String[] QRStrings = result.getText().split(" ");
+
+                if (QRStrings.length == 2 && QRStrings[0].equals("BisqToken")) {
+                    System.out.println(result.getText());
+                    Token.getInstance().string = QRStrings[1];
+                } else {
+                    System.out.println("wrong token: " + result.getText());
+                    Token.getInstance().string = "";
+                }
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;
             }

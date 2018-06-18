@@ -168,16 +168,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Kb-Ba-i6V">
-                                <rect key="frame" x="364" y="315" width="36" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="fake">
-                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="fakePressed:" destination="JyP-qo-d6l" eventType="touchUpInside" id="s4c-Nu-PmQ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -195,13 +185,10 @@
                             <constraint firstItem="wLF-PD-qZI" firstAttribute="trailing" secondItem="fS3-6z-SAJ" secondAttribute="trailing" constant="20" id="RiO-QB-k03"/>
                             <constraint firstItem="sxr-VS-cdY" firstAttribute="centerY" secondItem="X4k-92-zuz" secondAttribute="centerY" id="T30-kh-MZT"/>
                             <constraint firstItem="sxr-VS-cdY" firstAttribute="leading" secondItem="X4k-92-zuz" secondAttribute="trailing" constant="10" id="eX7-iN-wiT"/>
-                            <constraint firstItem="0Kb-Ba-i6V" firstAttribute="centerY" secondItem="dIw-al-XMF" secondAttribute="centerY" id="efx-ZN-PaL"/>
                             <constraint firstItem="X4k-92-zuz" firstAttribute="top" secondItem="dIw-al-XMF" secondAttribute="bottom" constant="50" id="gLF-YJ-Ir7"/>
                             <constraint firstItem="Wql-92-PMJ" firstAttribute="leading" secondItem="wLF-PD-qZI" secondAttribute="leading" constant="20" id="nXG-nu-ncq"/>
-                            <constraint firstItem="wLF-PD-qZI" firstAttribute="trailing" secondItem="0Kb-Ba-i6V" secondAttribute="trailing" constant="14" id="o8J-Ir-oUK"/>
                             <constraint firstItem="vDN-Fd-vzs" firstAttribute="leading" secondItem="wLF-PD-qZI" secondAttribute="leading" constant="20" id="p2w-4z-X4B"/>
                             <constraint firstItem="9FX-Rl-QgA" firstAttribute="centerY" secondItem="vDN-Fd-vzs" secondAttribute="centerY" id="pZ4-QY-CMA"/>
-                            <constraint firstItem="0Kb-Ba-i6V" firstAttribute="leading" secondItem="dIw-al-XMF" secondAttribute="trailing" constant="10" id="sv1-Sd-IhM"/>
                             <constraint firstItem="wLF-PD-qZI" firstAttribute="trailing" secondItem="Wql-92-PMJ" secondAttribute="trailing" constant="20" id="t3Y-ga-1bw"/>
                             <constraint firstAttribute="trailing" secondItem="9FX-Rl-QgA" secondAttribute="trailing" constant="15" id="t7n-ic-t1r"/>
                             <constraint firstItem="wLF-PD-qZI" firstAttribute="trailing" secondItem="sxr-VS-cdY" secondAttribute="trailing" constant="20" id="uAq-6c-pZc"/>
@@ -221,7 +208,6 @@
                     <connections>
                         <outlet property="encryptionKeyStatusImage" destination="X4k-92-zuz" id="ex7-1I-5fG"/>
                         <outlet property="encryptionKeyStatusLabel" destination="sxr-VS-cdY" id="PVN-2p-doc"/>
-                        <outlet property="fakeButton" destination="0Kb-Ba-i6V" id="oHc-To-AF5"/>
                         <outlet property="nextButton" destination="x5X-UH-6BZ" id="U9R-sr-PuH"/>
                     </connections>
                 </viewController>

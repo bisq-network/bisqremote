@@ -32,7 +32,7 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
         if let t = UserDefaults.standard.string(forKey: userDefaultApsToken) {
             apsToken = t
             qrImage.contentMode = .scaleAspectFill
-            qrImage.image = generateQRCode(from: apsToken)
+            qrImage.image = generateQRCode(from: "BisqToken "+apsToken)
             qrImage.contentMode = .scaleAspectFill
             rawText.text = apsToken
         }

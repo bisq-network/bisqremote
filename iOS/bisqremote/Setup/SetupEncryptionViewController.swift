@@ -22,7 +22,6 @@ class SetupEncryptionViewController: UIViewController {
 
     @IBOutlet weak var encryptionKeyStatusImage: UIImageView!
     @IBOutlet weak var encryptionKeyStatusLabel: UILabel!
-    @IBOutlet weak var fakeButton: UIButton!
     @IBOutlet weak var nextButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -35,12 +34,6 @@ class SetupEncryptionViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if FAKE_ENCRYPTION_KEY_BUTTON {
-            fakeButton.isHidden = false
-        } else {
-            fakeButton.isHidden = true
-        }
-        
         if (UserDefaults.standard.string(forKey: userDefaultSymmetricKey) != nil) {
             nextButton.isEnabled = true
             encryptionKeyStatusImage.isHidden = false
@@ -58,14 +51,6 @@ class SetupEncryptionViewController: UIViewController {
         }
     }
     
-    @IBAction func fakePressed(_ sender: Any) {
-        UserDefaults.standard.set("fake aps token 82763459827364", forKey: userDefaultApsToken)
-        UserDefaults.standard.set("fake encryption key 9876324598723", forKey: userDefaultSymmetricKey)
-        nextButton.isEnabled = true
-        encryptionKeyStatusImage.isHidden = false
-        encryptionKeyStatusLabel.isHidden = false
-    }
-    
     @IBAction func helpPressed(_ sender: Any) {
         let x = UIAlertController(title: "Encryption", message: "The notifications are encryped using symmetric encryption. The key is generated in the Bisq desktop app and you need to read it using the  QR code reader.", preferredStyle: .actionSheet)
         x.addAction(UIAlertAction(title: "about symmetric encryption", style: .default, handler: webPagePressed))
@@ -76,6 +61,9 @@ class SetupEncryptionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var title = "Decryption"
         if segue.identifier == "scanQRsegue" {
+            // remove key before scanning a new one. If the scan fails, we want to have no key
+            UserDefaults.standard.removeObject(forKey: userDefaultSymmetricKey)
+            UserDefaults.standard.synchronize()
             title = "Cancel"
         }
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)

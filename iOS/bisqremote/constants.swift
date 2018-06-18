@@ -17,5 +17,3 @@
  */
 
 import Foundation
-
-let FAKE_ENCRYPTION_KEY_BUTTON = true

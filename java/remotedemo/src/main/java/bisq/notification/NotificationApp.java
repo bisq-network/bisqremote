@@ -18,10 +18,7 @@ package bisq.notification;
  */
 
 
-import com.github.sarxos.webcam.WebcamResolution;
 import javafx.application.Application;
-import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +26,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -38,23 +34,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import javafx.stage.WindowEvent;
+
+import java.awt.Color;
 
 public class NotificationApp extends Application {
 
     private BisqNotification bisqNotification = new BisqNotification();
     public static Webcam webcam;
+    private String notificationToken = "unknown";
+    public Label tokenTitleLabel;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -115,41 +105,61 @@ public class NotificationApp extends Application {
 
         Integer rowindex = 0;
 
-        Label headerSetup1Label = new Label("Setup - create key and show QR. The user needs to scan this code with his phones");
+        Label headerSetup1Label = new Label("Setup Step 1: The user needs to scan the QR code with his phone");
         headerSetup1Label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSetup1Label, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSetup1Label, HPos.LEFT);
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Symnmetric key: "+bisqNotification.base58());
-        System.out.println("Symnmetric key: "+bisqNotification.base58());
+        Label keyTitleLabel = new Label("Symnmetric key: "+bisqNotification.key());
+        System.out.println("Symnmetric key: "+bisqNotification.key());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
         rowindex++;
-
         // QR code
         QR qr = new QR();
         ImageView iv = qr.imageView(
-                bisqNotification.base58(),
+                bisqNotification.key(),
                 300,
                 300,
                 Color.BLACK,
                 new Color(244, 244, 244));
-        gridPane.add(iv, 0, 2, 2, 1);
+        gridPane.add(iv, 0, rowindex, 2, 1);
         GridPane.setHalignment(iv, HPos.CENTER);
+
+        rowindex++;
+        Label headerSetup2Label = new Label("Setup Step 2: Bisq needs to read the Notification token from the phone");
+        headerSetup2Label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        gridPane.add(headerSetup2Label, 0, rowindex, 2, 1);
+        GridPane.setHalignment(headerSetup2Label, HPos.LEFT);
+        GridPane.setMargin(headerSetup2Label, new Insets(5, 0, 0, 0));
 
         // Webcam
         rowindex++;
-        final Button webcamButton = new Button("Webcam");
+        final Button webcamButton = new Button("Open Webcam");
 
         webcamButton.setOnAction((event) -> {
-            System.out.println("webcam button");
+            System.out.println("WebCam button");
             new WebcamQRCodeExample();
         });
 
-        gridPane.add(webcamButton, 0, 2, 2, 1);
+        gridPane.add(webcamButton, 0, rowindex, 2, 1);
+        GridPane.setHalignment(webcamButton, HPos.CENTER);
+
+        rowindex++;
+
+        final Button refreshButton = new Button("refresh");
+        refreshButton.setOnAction((event) -> {
+            tokenTitleLabel.setText(Token.getInstance().string);
+        });
+        gridPane.add(refreshButton, 0, rowindex, 1, 1);
+        GridPane.setHalignment(refreshButton, HPos.LEFT);
+
+        tokenTitleLabel = new Label("Bisq Notification Token: "+notificationToken);
+        gridPane.add(tokenTitleLabel, 1, rowindex, 1, 1);
+        GridPane.setHalignment(tokenTitleLabel, HPos.LEFT);
 
         rowindex++;
         Label headerSendLabel = new Label("Send message");

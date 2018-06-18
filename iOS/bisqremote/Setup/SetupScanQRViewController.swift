@@ -110,10 +110,10 @@ class SetupScanQRViewController: UIViewController, AVCaptureMetadataOutputObject
     
     func found(code: String) {
         let x = code.split(separator: " ")
-        guard x.count == 2 else { return }
-        guard x[0].count > 0 else { return }
-        guard x[0] == "bisq_key" else { return }
-        guard x[1].count == 32 else { return }
+        guard x.count == 2       else { _ = navigationController?.popViewController(animated: true); return }
+        guard x[0].count > 0     else { _ = navigationController?.popViewController(animated: true); return }
+        guard x[0] == "bisq_key" else { _ = navigationController?.popViewController(animated: true); return }
+        guard x[1].count == 11   else { _ = navigationController?.popViewController(animated: true); return }
         UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
         _ = navigationController?.popViewController(animated: true)
     }
