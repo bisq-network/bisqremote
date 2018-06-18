@@ -18,7 +18,10 @@ package bisq.notification;
  */
 
 
+import com.github.sarxos.webcam.WebcamResolution;
 import javafx.application.Application;
+import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,18 +37,67 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import java.awt.Color;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import javafx.stage.WindowEvent;
 
 public class NotificationApp extends Application {
 
     private BisqNotification bisqNotification = new BisqNotification();
+    private static Webcam webcam;
+    private static Boolean running = true;
 
     public static void main(String[] args) {
+        Webcam.getDiscoveryService().setEnabled(true);
+        Webcam.getDiscoveryService().stop();
+        webcam = Webcam.getDefault();
         launch(args);
+        while(running){
+            try {
+                Thread.currentThread().sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        webcam.close();
     }
 
     @Override
     public void start(Stage primaryStage) {
+
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                NotificationApp.running = false;
+            }
+        });
+
+
+        webcam.setViewSize(WebcamResolution.QVGA.getSize());
+
+        final WebcamPanel panel = new WebcamPanel(webcam);
+        panel.setFPSDisplayed(true);
+        panel.setImageSizeDisplayed(true);
+
+        JFrame window = new JFrame("Test webcam panel");
+        window.setLayout(new FlowLayout());
+        window.add(panel);
+        window.setResizable(true);
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        window.pack();
+        window.setVisible(true);
+
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane
@@ -58,6 +110,10 @@ public class NotificationApp extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
+//        NotificationApp.running = false;
+//        buildin = Webcam.getWebcams().get(0); // build-in laptop camera
+//        BufferedImage image1 = buildin.getImage();
+    // do with image1 and image2 whatever you want
     }
 
 
@@ -93,6 +149,68 @@ public class NotificationApp extends Application {
     }
 
     private void addUIControls(GridPane gridPane) {
+
+//        final Webcam webCam = Webcam.getDefault();
+//
+//        Task<Void> webCamTask = new Task<Void>() {
+//
+//            @Override
+//            protected Void call() throws Exception {
+//                Dimension[] sizes = webCam.getViewSizes();
+//                webCam.setViewSize(sizes[sizes.length - 1]);
+//                webCam.open();
+//
+//        try {
+//            ImageIO.write(webCam.getImage(), "JPG", new File("test.jpg"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//                return null;
+//            }
+//        };
+//
+//        Thread webCamThread = new Thread(webCamTask);
+//        webCamThread.setDaemon(true);
+//        webCamThread.start();
+
+//
+//        Webcam.getDiscoveryService().setEnabled(false);
+//        Webcam.getDiscoveryService().stop();
+//        Webcam webcam = Webcam.getDefault();
+//        webcam.open();
+//        try {
+//            ImageIO.write(webcam.getImage(), "JPG", new File("test.jpg"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        webcam.close();
+
+
+//        Webcam webcam = Webcam.getDefault();
+//        webcam.setViewSize(WebcamResolution.VGA.getSize());
+//
+//        WebcamPanel panel = new WebcamPanel(webcam);
+//        panel.setFPSDisplayed(true);
+//        panel.setDisplayDebugInfo(true);
+//        panel.setImageSizeDisplayed(true);
+//        panel.setMirrored(true);
+//        JFrame window = new JFrame("Test webcam panel");
+//        window.add(panel);
+//        window.setResizable(true);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        window.pack();
+//        window.setVisible(true);
+
+
+//        Webcam webcam = Webcam.getDefault();
+//        webcam.open();
+//        try {
+//            ImageIO.write(webcam.getImage(), "PNG", new File("hello-world.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         Integer rowindex = 0;
 
         Label headerSetup1Label = new Label("Setup - create key and show QR. The user needs to scan this code with his phones");
@@ -118,6 +236,7 @@ public class NotificationApp extends Application {
                 new Color(244, 244, 244));
         gridPane.add(iv, 0, 2, 2, 1);
         GridPane.setHalignment(iv, HPos.CENTER);
+
 
         rowindex++;
         Label headerSendLabel = new Label("Send message");

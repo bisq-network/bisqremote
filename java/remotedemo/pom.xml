@@ -25,14 +25,24 @@
             <version>20.0</version>
         </dependency>
         <dependency>
-            <groupId>net.glxn</groupId>
-            <artifactId>qrgen</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.bitcoinj</groupId>
             <artifactId>bitcoinj-core</artifactId>
             <version>0.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.12</version>
         </dependency>
     </dependencies>
 </project>
