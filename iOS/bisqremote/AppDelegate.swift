@@ -70,8 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let decryptedString = cryptoLib.decryptCipherText(with: encryptedString, key: key, iv: iv)
         print("decryptedString \(decryptedString! as String)")
 
-        
-        
         return true
     }
 
@@ -89,6 +87,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let message = userInfo as? [String: AnyObject] {
             let aps = message["aps"] as! [String: AnyObject]
             NotificationArray.shared.addFromJSON(new: aps["bisqNotification"])
+            let navigationController = application.windows[0].rootViewController as! UINavigationController
+            if let topController = navigationController.topViewController {
+                if let vc = topController as? NotificationTableViewController {
+                    vc.reload()
+                }
+            }
         }
     }
 

@@ -26,8 +26,11 @@ class NotificationTableViewController: UITableViewController {
         dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    func reload() {
         tableView.reloadData()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        reload()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
