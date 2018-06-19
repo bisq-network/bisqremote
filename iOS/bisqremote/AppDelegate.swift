@@ -32,9 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
 
         // Check if launched from a notification
-        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-            let aps = notification["aps"] as! [String: AnyObject]
-            NotificationArray.shared.addFromJSON(new: aps["bisqNotification"])
+        if let message = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+            if let bisqNotification = message["bisqNotification"] as? String {
+                NotificationArray.shared.addFromString(new: bisqNotification)
+            }
         }
 
         if UserDefaults.standard.bool(forKey: userDefaultKeySetupDone) {
