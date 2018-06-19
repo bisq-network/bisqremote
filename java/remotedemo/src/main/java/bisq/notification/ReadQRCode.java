@@ -19,15 +19,14 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import javafx.scene.control.Label;
 
-public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFactory {
+public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
 
     private Executor executor = Executors.newSingleThreadExecutor(this);
 
     private WebcamPanel panel = null;
 
-    public WebcamQRCodeExample() {
+    public ReadQRCode() {
         super();
         setLayout(new FlowLayout());
         setTitle("Bisq Notification token");
@@ -84,26 +83,18 @@ public class WebcamQRCodeExample extends JFrame implements Runnable, ThreadFacto
             }
 
             if (result != null) {
-                // We use the magic characters BisqToken and space to identify the
-                // Base58 encoded Apple Notification Service token
-                String[] QRStrings = result.getText().split(" ");
-
-                if (QRStrings.length == 2 && QRStrings[0].equals("BisqToken")) {
-                    System.out.println(result.getText());
-                    Token.getInstance().apsToken = QRStrings[1];
-                } else {
-                    System.out.println("wrong token: " + result.getText());
-                    Token.getInstance().apsToken = null;
-                }
+                // TODO update GUI in main thread
+                BisqToken.getInstance().fromString(result.getText());
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;
             }
         }
     }
 
+    // TODO handle multi-threading correctly
     @Override
     public Thread newThread(Runnable r) {
-        Thread t = new Thread(r, "example-runner");
+        Thread t = new Thread(r, "readQR-runner");
         t.setDaemon(true);
         return t;
     }

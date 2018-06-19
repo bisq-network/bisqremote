@@ -95,6 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
             }
+            if let encrypted = message["encrypted"] as? String {
+                print(encrypted)
+            }
         }
     }
 

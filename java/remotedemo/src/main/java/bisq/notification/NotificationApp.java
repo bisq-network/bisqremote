@@ -18,14 +18,6 @@ package bisq.notification;
  */
 
 
-import com.google.gson.Gson;
-import com.turo.pushy.apns.ApnsClient;
-import com.turo.pushy.apns.ApnsClientBuilder;
-import com.turo.pushy.apns.PushNotificationResponse;
-import com.turo.pushy.apns.util.ApnsPayloadBuilder;
-import com.turo.pushy.apns.util.SimpleApnsPushNotification;
-import com.turo.pushy.apns.util.TokenUtil;
-import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -46,9 +38,7 @@ import javafx.stage.Stage;
 import com.github.sarxos.webcam.Webcam;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
 
@@ -123,22 +113,40 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Symmetric key: "+bisqNotification.key());
-        System.out.println("Symmetric key: "+bisqNotification.key());
+        Label keyTitleLabel = new Label("Symmetric key: "+BisqKey.getInstance().asBase58());
+        System.out.println("Symmetric key: "+BisqKey.getInstance().asBase58());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
         rowindex++;
         // QR code
         QR qr = new QR();
-        ImageView iv = qr.imageView(
-                bisqNotification.key(),
+        AtomicReference<ImageView> iv = new AtomicReference<>(qr.imageView(
+                BisqKey.getInstance().asBase58(),
                 300,
                 300,
                 Color.BLACK,
-                new Color(244, 244, 244));
-        gridPane.add(iv, 0, rowindex, 2, 1);
-        GridPane.setHalignment(iv, HPos.CENTER);
+                new Color(244, 244, 244)));
+        gridPane.add(iv.get(), 0, rowindex, 1, 1);
+        GridPane.setHalignment(iv.get(), HPos.RIGHT);
+
+        final Button newKeyButton = new Button("new key (only for new mobile phone)");
+        newKeyButton.setOnAction((event) -> {
+            BisqKey.getInstance().newKey();
+            keyTitleLabel.setText("Symmetric key: "+BisqKey.getInstance().asBase58());
+            iv.set(qr.imageView(
+                    BisqKey.getInstance().asBase58(),
+                    300,
+                    300,
+                    Color.BLACK,
+                    new Color(244, 244, 244)));
+            gridPane.getChildren().remove(iv);
+            gridPane.add(iv.get(), 0, 2, 1, 1);
+            GridPane.setHalignment(iv.get(), HPos.RIGHT);
+        });
+
+        gridPane.add(newKeyButton, 1, rowindex, 1, 1);
+        GridPane.setHalignment(newKeyButton, HPos.CENTER);
 
         rowindex++;
         Label headerSetup2Label = new Label("Setup Step 2: Bisq needs to read the Notification token from the phone");
@@ -152,8 +160,7 @@ public class NotificationApp extends Application {
         final Button webcamButton = new Button("Open Webcam");
 
         webcamButton.setOnAction((event) -> {
-            System.out.println("WebCam button");
-            new WebcamQRCodeExample();
+            new ReadQRCode();
         });
 
         gridPane.add(webcamButton, 0, rowindex, 1, 1);
@@ -161,17 +168,25 @@ public class NotificationApp extends Application {
 
         final Button refreshButton = new Button("refresh");
         refreshButton.setOnAction((event) -> {
-            tokenBase58Label.setText(Token.getInstance().apsToken);
-            tokenHexLabel.setText(Token.getInstance().asHex());
+            tokenBase58Label.setText(BisqToken.getInstance().asBase58());
+            tokenHexLabel.setText(BisqToken.getInstance().asHex());
         });
         gridPane.add(refreshButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(refreshButton, HPos.LEFT);
 
         rowindex++;
+        Label bundleIdentifierTitleLabel = new Label("bundle identifier:");
+        gridPane.add(bundleIdentifierTitleLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(bundleIdentifierTitleLabel, HPos.RIGHT);
+        Label bundleIdentifierLabel = new Label(BisqToken.getInstance().bundleidentifier);
+        gridPane.add(bundleIdentifierLabel, 1, rowindex, 1, 1);
+        GridPane.setHalignment(bundleIdentifierLabel, HPos.LEFT);
+
+        rowindex++;
         Label tokenBase58TitleLabel = new Label("as Base58:");
         gridPane.add(tokenBase58TitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(tokenBase58TitleLabel, HPos.RIGHT);
-        tokenBase58Label = new Label();
+        tokenBase58Label = new Label(BisqToken.getInstance().asBase58());
         gridPane.add(tokenBase58Label, 1, rowindex, 1, 1);
         GridPane.setHalignment(tokenBase58Label, HPos.LEFT);
 
@@ -179,16 +194,16 @@ public class NotificationApp extends Application {
         Label tokenHexTitleLabel = new Label("as Hex:");
         gridPane.add(tokenHexTitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(tokenHexTitleLabel, HPos.RIGHT);
-        tokenHexLabel = new Label();
+        tokenHexLabel = new Label(BisqToken.getInstance().asHex());
         gridPane.add(tokenHexLabel, 1, rowindex, 1, 1);
         GridPane.setHalignment(tokenHexLabel, HPos.LEFT);
 
         rowindex++;
-        Label headerSendLabel = new Label("Send message");
-        headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        Label headerSendLabel = new Label("Usage: send message");
+        headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSendLabel, 0, rowindex, 2, 1);
-        GridPane.setHalignment(headerSendLabel, HPos.CENTER);
-        GridPane.setMargin(headerSendLabel, new Insets(20, 0, 20, 0));
+        GridPane.setHalignment(headerSendLabel, HPos.LEFT);
+        GridPane.setMargin(headerSendLabel, new Insets(5, 0, 0, 0));
 
         rowindex++;
         Label notificationTypeLabel = new Label("Message Type: ");
@@ -202,7 +217,7 @@ public class NotificationApp extends Application {
         Label titleLabel = new Label("Headline: ");
         gridPane.add(titleLabel, 0, rowindex);
 
-        TextField titleField = new TextField("Test headline");
+        TextField titleField = new TextField("Test title");
         titleField.setPrefHeight(40);
         gridPane.add(titleField, 1, rowindex);
 
@@ -210,9 +225,17 @@ public class NotificationApp extends Application {
         Label messageLabel = new Label("Message text: ");
         gridPane.add(messageLabel, 0, rowindex);
 
-        TextField messageField = new TextField("Test msg");
+        TextField messageField = new TextField("Test message");
         messageField.setPrefHeight(40);
         gridPane.add(messageField, 1, rowindex);
+
+        rowindex++;
+        Label actionRequiredLabel = new Label("Action Required: ");
+        gridPane.add(actionRequiredLabel, 0, rowindex);
+
+        TextField actionRequiredField = new TextField("Test action");
+        actionRequiredField.setPrefHeight(40);
+        gridPane.add(actionRequiredField, 1, rowindex);
 
         rowindex++;
         Button sendButton = new Button("Send");
@@ -225,9 +248,10 @@ public class NotificationApp extends Application {
 
         sendButton.setOnAction(event -> {
             // send to apple server
-            bisqNotification.object.notificationType = notificationTypeField.getText();
-            bisqNotification.object.title = titleField.getText();
-            bisqNotification.object.message = messageField.getText();
+            bisqNotification.notificationType = notificationTypeField.getText();
+            bisqNotification.title = titleField.getText();
+            bisqNotification.message = messageField.getText();
+            bisqNotification.actionRequired = actionRequiredField.getText();
             bisqNotification.send();
         });
     }

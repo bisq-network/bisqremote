@@ -36,7 +36,6 @@ public class QR {
                     }
                 }
             }
-            System.out.println("Success...");
         } catch (WriterException ex) {
         }
 

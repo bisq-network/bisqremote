@@ -7,37 +7,31 @@ import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
 import com.turo.pushy.apns.util.ApnsPayloadBuilder;
 import com.turo.pushy.apns.util.SimpleApnsPushNotification;
-import com.turo.pushy.apns.util.TokenUtil;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
+import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.Base58;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.io.File;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 
-public class BisqNotification {
-    public BisqNotifcationObject object;
-    private static final String  SYM_KEY_ALGO = "AES";
-    private static final Integer SYM_KEY_BITS = 256;
+public class BisqNotification extends BisqNotifcationObject {
+
     private static final String  SYM_CIPHER   = "AES";
 
-    private SecretKey key;
+    private SecretKey secretKey;
 
     public BisqNotification() {
-        key = generateSecretKey(SYM_KEY_BITS);
-        object = new BisqNotifcationObject();
+        super();
     }
 
-    public String key() {
-        try {
-            return Base58.encode(key.getEncoded()) +" (Base58)";
-        } catch (Exception e) {
-            return "bisq_key error";
-        }
-    }
+
 
     public void send() {
         try {
@@ -54,11 +48,12 @@ public class BisqNotification {
             payloadBuilder.setAlertBody("Bisq notifcation");
 
             Gson gson = new Gson();
-            String json = gson.toJson(object);
+            String json = gson.toJson((BisqNotifcationObject) this);
             payloadBuilder.addCustomProperty("bisqNotification", json);
+//            payloadBuilder.addCustomProperty("encrypted", "sldkfsldk");
 
             final String payload = payloadBuilder.buildWithDefaultMaximumLength();
-            final String token = TokenUtil.sanitizeTokenString("c0e7a47701ba2ebbb25c104796e65a0ac04ca77fc6c09d66ab9dede8ddebf3ca");
+            final String token = BisqToken.getInstance().asHex();
 
             pushNotification = new SimpleApnsPushNotification(token, "com.joachimneumann.bisqremotetest", payload);
 
@@ -87,45 +82,35 @@ public class BisqNotification {
         }
     }
 
-
-    private SecretKey generateSecretKey(int bits) {
-        try {
-            KeyGenerator keyPairGenerator = KeyGenerator.getInstance(SYM_KEY_ALGO);
-            keyPairGenerator.init(bits);
-            return keyPairGenerator.generateKey();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String getEncryptedDataAsHex(String json) {
-        byte[] payload = json.getBytes(Charset.forName("UTF-8"));
-        SecretKey secretKey = generateSecretKey(256);
-        byte[] encryptedPayload = encrypt(payload, secretKey);
-        //byte[] decryptedPayload = decrypt(encryptedPayload, secretKey);
-
-        String hex = BaseEncoding.base16().lowerCase().encode(encryptedPayload);
-        System.out.println("hex = " + hex);
-        return hex;
-    }
-
-    private byte[] encrypt(byte[] payload, SecretKey secretKey) {
-        try {
-            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return cipher.doFinal(payload);
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private byte[] decrypt(byte[] encryptedPayload, SecretKey secretKey) {
-        try {
-            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return cipher.doFinal(encryptedPayload);
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
+//
+//    private String getEncryptedDataAsHex(String json) {
+//        byte[] payload = json.getBytes(Charset.forName("UTF-8"));
+//        SecretKey secretKey = generateSecretKey(SYM_KEY_BITS);
+//        byte[] encryptedPayload = encrypt(payload, secretKey);
+//        //byte[] decryptedPayload = decrypt(encryptedPayload, secretKey);
+//
+//        String hex = BaseEncoding.base16().lowerCase().encode(encryptedPayload);
+//        System.out.println("hex = " + hex);
+//        return hex;
+//    }
+//
+//    private byte[] encrypt(byte[] payload, SecretKey secretKey) {
+//        try {
+//            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
+//            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+//            return cipher.doFinal(payload);
+//        } catch (Throwable e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    private byte[] decrypt(byte[] encryptedPayload, SecretKey secretKey) {
+//        try {
+//            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
+//            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+//            return cipher.doFinal(encryptedPayload);
+//        } catch (Throwable e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
