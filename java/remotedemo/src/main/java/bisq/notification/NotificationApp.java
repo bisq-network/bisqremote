@@ -191,12 +191,12 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSendLabel, new Insets(20, 0, 20, 0));
 
         rowindex++;
-        Label typeLabel = new Label("Message Type: ");
-        gridPane.add(typeLabel, 0, rowindex);
+        Label notificationTypeLabel = new Label("Message Type: ");
+        gridPane.add(notificationTypeLabel, 0, rowindex);
 
-        TextField typeField = new TextField("Test type");
-        typeField.setPrefHeight(40);
-        gridPane.add(typeField, 1, rowindex);
+        TextField notificationTypeField = new TextField("Test type");
+        notificationTypeField.setPrefHeight(40);
+        gridPane.add(notificationTypeField, 1, rowindex);
 
         rowindex++;
         Label titleLabel = new Label("Headline: ");
@@ -225,61 +225,10 @@ public class NotificationApp extends Application {
 
         sendButton.setOnAction(event -> {
             // send to apple server
-            sendNotification(typeField.getText(), titleField.getText(), messageField.getText());
+            bisqNotification.object.notificationType = notificationTypeField.getText();
+            bisqNotification.object.title = titleField.getText();
+            bisqNotification.object.message = messageField.getText();
+            bisqNotification.send();
         });
     }
-
-    private void sendNotification(String type, String title, String message) {
-        try {
-            ApnsClient apnsClient;
-            apnsClient = new ApnsClientBuilder()
-                    .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
-                    .setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
-                    .build();
-
-            PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse = null;
-            SimpleApnsPushNotification pushNotification;
-
-            BisqNotifcationObject bisqNotifcationObject = new BisqNotifcationObject();
-            bisqNotifcationObject.notificationType = type;
-            bisqNotifcationObject.title = title;
-            bisqNotifcationObject.message = message;
-
-            ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
-            payloadBuilder.setAlertBody("Bisq notifcation");
-
-            Gson gson = new Gson();
-            String json = gson.toJson(bisqNotifcationObject);
-            payloadBuilder.addCustomProperty("bisqNotification", json);
-
-            final String payload = payloadBuilder.buildWithDefaultMaximumLength();
-            final String token = TokenUtil.sanitizeTokenString("c0e7a47701ba2ebbb25c104796e65a0ac04ca77fc6c09d66ab9dede8ddebf3ca");
-
-            pushNotification = new SimpleApnsPushNotification(token, "com.joachimneumann.bisqremotetest", payload);
-
-            PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>>
-                    sendNotificationFuture = apnsClient.sendNotification(pushNotification);
-
-            pushNotificationResponse = sendNotificationFuture.get();
-            if (pushNotificationResponse.isAccepted()) {
-                System.out.println("Push notification accepted by APNs gateway.");
-            } else {
-                System.out.println("Notification rejected by the APNs gateway: " +
-                        pushNotificationResponse.getRejectionReason());
-
-                if (pushNotificationResponse.getTokenInvalidationTimestamp() != null) {
-                    System.out.println("\t…and the token is invalid as of " +
-                            pushNotificationResponse.getTokenInvalidationTimestamp());
-                }
-            }
-        } catch (final ExecutionException e) {
-            System.err.println("Failed to send push notification.");
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

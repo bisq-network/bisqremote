@@ -1,7 +1,5 @@
 package bisq.notification;
 
-import java.util.Date;
-
 public class BisqNotifcationObject {
     String timestampEvent = "2018-06-19 11:58:41";
     String transactionID = "234523423";
