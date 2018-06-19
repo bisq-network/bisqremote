@@ -64,7 +64,7 @@ class RawNotification: Codable {
         case TYPE_TRADE_ACCEPTED:
             break
         default:
-            print("wrong notificationType \(notificationTypeCandidate)")
+            print("unknown notificationType \(notificationTypeCandidate)")
         }
         notificationType = notificationTypeCandidate
         title = try container.decode(String.self, forKey: .title)

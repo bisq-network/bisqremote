@@ -47,7 +47,7 @@ class NotificationTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of NotificationTableViewCell.")
         }
         let notification = NotificationArray.shared.at(n:indexPath.row)
-        cell.comment.text = "\(notification.notificationType)"
+        cell.comment.text = "\(notification.title)"
         cell.timeEvent.text = dateformatterShort.string(from: notification.timestampEvent)
         if notification.read {
             cell.comment.font = UIFont.systemFont(ofSize: 16.0)

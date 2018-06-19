@@ -364,7 +364,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="action description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-PA-fy8">
-                                <rect key="frame" x="10" y="275" width="384" height="36.666666666666686"/>
+                                <rect key="frame" x="16" y="259.33333333333331" width="378" height="36.666666666666686"/>
                                 <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="0.72848886986301364" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="mn4-jU-vY2"/>
@@ -378,6 +378,15 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="message" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATy-Bu-hqK">
+                                <rect key="frame" x="16" y="207" width="378" height="36.333333333333343"/>
+                                <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="oJp-uT-Gwv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -387,29 +396,33 @@
                             <constraint firstItem="3t0-Gv-2ua" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="9nO-uO-13o"/>
                             <constraint firstItem="Mdd-8y-ixK" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="8" id="Acu-Dx-HK1"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="top" secondItem="qFD-Tm-O6F" secondAttribute="top" constant="30" id="CyO-vW-Prt"/>
-                            <constraint firstItem="bKp-PA-fy8" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="10" id="DOx-lo-I3X"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="16" id="DOx-lo-I3X"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="Mdd-8y-ixK" secondAttribute="trailing" constant="20" id="KDa-EG-7Rk"/>
+                            <constraint firstItem="ATy-Bu-hqK" firstAttribute="top" secondItem="Mdd-8y-ixK" secondAttribute="bottom" constant="8" id="KLr-8b-OEH"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="meb-g0-7et" secondAttribute="trailing" constant="20" id="KXj-md-ldW"/>
-                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="Mdd-8y-ixK" secondAttribute="bottom" constant="76" id="Lvw-HE-62l"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="ATy-Bu-hqK" secondAttribute="bottom" constant="16" id="R3t-RI-JGu"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="bKp-PA-fy8" secondAttribute="trailing" constant="20" id="Svz-br-hwQ"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="centerX" secondItem="upf-5O-NMz" secondAttribute="centerX" id="VYU-Kv-0Te"/>
                             <constraint firstItem="3t0-Gv-2ua" firstAttribute="top" secondItem="geA-pf-XsK" secondAttribute="bottom" constant="8" id="aAY-b5-DcT"/>
                             <constraint firstItem="meb-g0-7et" firstAttribute="top" secondItem="3t0-Gv-2ua" secondAttribute="bottom" constant="8" id="geY-nF-sXg"/>
                             <constraint firstItem="meb-g0-7et" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="jXw-EW-B5v"/>
+                            <constraint firstItem="ATy-Bu-hqK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="16" id="mRE-CJ-PDX"/>
+                            <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="ATy-Bu-hqK" secondAttribute="trailing" constant="20" id="nNq-5c-hJd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qFD-Tm-O6F"/>
                     </view>
                     <connections>
-                        <outlet property="actionMessage" destination="bKp-PA-fy8" id="GrK-cN-SXq"/>
+                        <outlet property="actionTextview" destination="bKp-PA-fy8" id="GrK-cN-SXq"/>
                         <outlet property="eventTimeLabel" destination="3t0-Gv-2ua" id="mLa-X2-fLN"/>
+                        <outlet property="messageTextView" destination="ATy-Bu-hqK" id="bAW-fG-LEJ"/>
                         <outlet property="receiveTimelabel" destination="meb-g0-7et" id="bUU-q5-jTd"/>
-                        <outlet property="textLabel" destination="geA-pf-XsK" id="EPz-Ah-ECc"/>
+                        <outlet property="titleLabel" destination="geA-pf-XsK" id="vWv-IQ-TBz"/>
                         <outlet property="transactionID" destination="Mdd-8y-ixK" id="CiF-LC-c3m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dwk-0C-F5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-798" y="-1049"/>
+            <point key="canvasLocation" x="-798.55072463768124" y="-1049.1847826086957"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="jCL-pA-64i">

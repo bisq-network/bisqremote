@@ -22,28 +22,39 @@ class NotificationDetailViewController: UIViewController {
     let dateformatterShort = DateFormatter()
 
     var notification: Notification?
-    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var receiveTimelabel: UILabel!
-    @IBOutlet weak var actionMessage: UITextView!
     @IBOutlet weak var transactionID: UILabel!
-    
+    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var actionTextview: UITextView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionMessage.layer.cornerRadius = 10
+        actionTextview.layer.cornerRadius = 10
+        messageTextView.layer.cornerRadius = 10
         dateformatterShort.dateFormat = "yyyy-MM-dd HH:mm"
         if let n = notification {
-            textLabel.text = n.notificationType
+            titleLabel.text = n.title
+            if n.message.count > 0 {
+                messageTextView.isHidden = false
+                messageTextView.text = n.message
+                messageTextView.layoutIfNeeded()
+            } else {
+                messageTextView.isHidden = true
+            }
+
+            messageTextView.text = n.message
             eventTimeLabel.text   = "event:    "+dateformatterShort.string(from: n.timestampEvent)
             receiveTimelabel.text = "received: "+dateformatterShort.string(from: n.timestampReceived)
             transactionID.text = "transaction ID: "+n.transactionID
             if n.actionRequired.count > 0 {
-                actionMessage.isHidden = false
-                actionMessage.text = n.actionRequired
-                actionMessage.layoutIfNeeded()
-                actionMessage.backgroundColor = UIColor(red: 255.0/255.0, green: 126.0/255.0, blue: 121.0/255.0, alpha: 0.5)
+                actionTextview.isHidden = false
+                actionTextview.text = n.actionRequired
+                actionTextview.layoutIfNeeded()
+                actionTextview.backgroundColor = UIColor(red: 255.0/255.0, green: 126.0/255.0, blue: 121.0/255.0, alpha: 0.5)
             } else {
-                actionMessage.isHidden = true
+                actionTextview.isHidden = true
             }
         }
     }
