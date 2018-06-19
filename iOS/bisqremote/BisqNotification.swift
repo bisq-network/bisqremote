@@ -62,10 +62,11 @@ class RawNotification: Codable {
         let notificationTypeCandidate = try container.decode(String.self, forKey: .notificationType)
         switch notificationTypeCandidate {
         case TYPE_TRADE_ACCEPTED:
-            notificationType = TYPE_TRADE_ACCEPTED
+            break
         default:
-            fatalError("wrong notificationType \(notificationTypeCandidate)")
+            print("wrong notificationType \(notificationTypeCandidate)")
         }
+        notificationType = notificationTypeCandidate
         title = try container.decode(String.self, forKey: .title)
         message = try container.decode(String.self, forKey: .message)
         actionRequired = try container.decode(String.self, forKey: .actionRequired)

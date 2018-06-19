@@ -18,6 +18,14 @@ package bisq.notification;
  */
 
 
+import com.google.gson.Gson;
+import com.turo.pushy.apns.ApnsClient;
+import com.turo.pushy.apns.ApnsClientBuilder;
+import com.turo.pushy.apns.PushNotificationResponse;
+import com.turo.pushy.apns.util.ApnsPayloadBuilder;
+import com.turo.pushy.apns.util.SimpleApnsPushNotification;
+import com.turo.pushy.apns.util.TokenUtil;
+import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -38,6 +46,9 @@ import javafx.stage.Stage;
 import com.github.sarxos.webcam.Webcam;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class NotificationApp extends Application {
 
@@ -220,15 +231,55 @@ public class NotificationApp extends Application {
 
     private void sendNotification(String type, String title, String message) {
         try {
-            BisqNotifcationObject o = new BisqNotifcationObject();
-            o.notificationType = type;
-            o.title = title;
-            o.message = message;
+            ApnsClient apnsClient;
+            apnsClient = new ApnsClientBuilder()
+                    .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+                    .setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
+                    .build();
+
+            PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse = null;
+            SimpleApnsPushNotification pushNotification;
+
+            BisqNotifcationObject bisqNotifcationObject = new BisqNotifcationObject();
+            bisqNotifcationObject.notificationType = type;
+            bisqNotifcationObject.title = title;
+            bisqNotifcationObject.message = message;
+
+            ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
+            payloadBuilder.setAlertBody("Bisq notifcation");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(bisqNotifcationObject);
+            payloadBuilder.addCustomProperty("bisqNotification", json);
+
+            final String payload = payloadBuilder.buildWithDefaultMaximumLength();
+            final String token = TokenUtil.sanitizeTokenString("c0e7a47701ba2ebbb25c104796e65a0ac04ca77fc6c09d66ab9dede8ddebf3ca");
+
+            pushNotification = new SimpleApnsPushNotification(token, "com.joachimneumann.bisqremotetest", payload);
+
+            PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>>
+                    sendNotificationFuture = apnsClient.sendNotification(pushNotification);
+
+            pushNotificationResponse = sendNotificationFuture.get();
+            if (pushNotificationResponse.isAccepted()) {
+                System.out.println("Push notification accepted by APNs gateway.");
+            } else {
+                System.out.println("Notification rejected by the APNs gateway: " +
+                        pushNotificationResponse.getRejectionReason());
+
+                if (pushNotificationResponse.getTokenInvalidationTimestamp() != null) {
+                    System.out.println("\t…and the token is invalid as of " +
+                            pushNotificationResponse.getTokenInvalidationTimestamp());
+                }
+            }
+        } catch (final ExecutionException e) {
+            System.err.println("Failed to send push notification.");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 
 }
