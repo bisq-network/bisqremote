@@ -1,6 +1,14 @@
 package bisq.notification;
 
 import com.google.common.io.BaseEncoding;
+import com.google.gson.Gson;
+import com.turo.pushy.apns.ApnsClient;
+import com.turo.pushy.apns.ApnsClientBuilder;
+import com.turo.pushy.apns.PushNotificationResponse;
+import com.turo.pushy.apns.util.ApnsPayloadBuilder;
+import com.turo.pushy.apns.util.SimpleApnsPushNotification;
+import com.turo.pushy.apns.util.TokenUtil;
+import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 import org.bitcoinj.core.Base58;
 import org.json.simple.JSONObject;
 
@@ -11,7 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Base64;
+import java.util.concurrent.ExecutionException;
 
 public class BisqNotification {
     private static final String  SYM_KEY_ALGO = "AES";
@@ -23,7 +31,72 @@ public class BisqNotification {
 
     public BisqNotification() {
         key = generateSecretKey(SYM_KEY_BITS);
+
+        try {
+            final PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse;
+            {
+                PushNotificationResponse<SimpleApnsPushNotification> temp;
+                try {
+                    temp = sendNotificationFuture.get();
+                } catch (InterruptedException e) {
+                    temp = null;
+                    e.printStackTrace();
+                }
+                pushNotificationResponse = temp;
+            }
+
+            if (pushNotificationResponse.isAccepted()) {
+                System.out.println("Push notification accepted by APNs gateway.");
+            } else {
+                System.out.println("Notification rejected by the APNs gateway: " +
+                        pushNotificationResponse.getRejectionReason());
+
+                if (pushNotificationResponse.getTokenInvalidationTimestamp() != null) {
+                    System.out.println("\t…and the token is invalid as of " +
+                            pushNotificationResponse.getTokenInvalidationTimestamp());
+                }
+            }
+        } catch (final ExecutionException e) {
+            System.err.println("Failed to send push notification.");
+            e.printStackTrace();
+        }
+
     }
+
+    final ApnsClient apnsClient; {
+        ApnsClient temp;
+        try {
+            temp = new ApnsClientBuilder()
+                        .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+                        .setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
+                        .build();
+        } catch (IOException e) {
+            temp = null;
+            e.printStackTrace();
+        }
+        apnsClient = temp;
+    }
+
+
+    final SimpleApnsPushNotification pushNotification; {
+        final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
+        payloadBuilder.setAlertBody("Bisq notifcation");
+
+        BisqNotifcationObject bisqNotifcationObject = new BisqNotifcationObject();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(bisqNotifcationObject);
+        payloadBuilder.addCustomProperty("bisqNotification", json);
+
+        final String payload = payloadBuilder.buildWithDefaultMaximumLength();
+        final String token = TokenUtil.sanitizeTokenString("c0e7a47701ba2ebbb25c104796e65a0ac04ca77fc6c09d66ab9dede8ddebf3ca");
+
+        pushNotification = new SimpleApnsPushNotification(token, "com.joachimneumann.bisqremotetest", payload);
+    }
+
+    final PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>>
+            sendNotificationFuture = apnsClient.sendNotification(pushNotification);
+
 
     public String key() {
         try {

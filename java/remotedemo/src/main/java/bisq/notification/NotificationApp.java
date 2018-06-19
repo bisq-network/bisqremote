@@ -43,8 +43,8 @@ public class NotificationApp extends Application {
 
     private BisqNotification bisqNotification = new BisqNotification();
     public static Webcam webcam;
-    private String notificationToken = "unknown";
-    public Label tokenTitleLabel;
+    public Label tokenBase58Label;
+    public Label tokenHexLabel;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -145,21 +145,32 @@ public class NotificationApp extends Application {
             new WebcamQRCodeExample();
         });
 
-        gridPane.add(webcamButton, 0, rowindex, 2, 1);
+        gridPane.add(webcamButton, 0, rowindex, 1, 1);
         GridPane.setHalignment(webcamButton, HPos.CENTER);
-
-        rowindex++;
 
         final Button refreshButton = new Button("refresh");
         refreshButton.setOnAction((event) -> {
-            tokenTitleLabel.setText(Token.getInstance().apsToken);
+            tokenBase58Label.setText(Token.getInstance().apsToken);
+            tokenHexLabel.setText(Token.getInstance().asHex());
         });
-        gridPane.add(refreshButton, 0, rowindex, 1, 1);
+        gridPane.add(refreshButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(refreshButton, HPos.LEFT);
 
-        tokenTitleLabel = new Label("Bisq Notification Token: "+notificationToken);
-        gridPane.add(tokenTitleLabel, 1, rowindex, 1, 1);
-        GridPane.setHalignment(tokenTitleLabel, HPos.LEFT);
+        rowindex++;
+        Label tokenBase58TitleLabel = new Label("as Base58:");
+        gridPane.add(tokenBase58TitleLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(tokenBase58TitleLabel, HPos.RIGHT);
+        tokenBase58Label = new Label();
+        gridPane.add(tokenBase58Label, 1, rowindex, 1, 1);
+        GridPane.setHalignment(tokenBase58Label, HPos.LEFT);
+
+        rowindex++;
+        Label tokenHexTitleLabel = new Label("as Hex:");
+        gridPane.add(tokenHexTitleLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(tokenHexTitleLabel, HPos.RIGHT);
+        tokenHexLabel = new Label();
+        gridPane.add(tokenHexLabel, 1, rowindex, 1, 1);
+        GridPane.setHalignment(tokenHexLabel, HPos.LEFT);
 
         rowindex++;
         Label headerSendLabel = new Label("Send message");
@@ -177,20 +188,20 @@ public class NotificationApp extends Application {
         gridPane.add(typeField, 1, rowindex);
 
         rowindex++;
-        Label headlineLabel = new Label("Headline: ");
-        gridPane.add(headlineLabel, 0, rowindex);
+        Label titleLabel = new Label("Headline: ");
+        gridPane.add(titleLabel, 0, rowindex);
 
-        TextField headlineField = new TextField("Test headline");
-        headlineField.setPrefHeight(40);
-        gridPane.add(headlineField, 1, rowindex);
+        TextField titleField = new TextField("Test headline");
+        titleField.setPrefHeight(40);
+        gridPane.add(titleField, 1, rowindex);
 
         rowindex++;
-        Label msgLabel = new Label("Message text: ");
-        gridPane.add(msgLabel, 0, rowindex);
+        Label messageLabel = new Label("Message text: ");
+        gridPane.add(messageLabel, 0, rowindex);
 
-        TextField msgField = new TextField("Test msg");
-        msgField.setPrefHeight(40);
-        gridPane.add(msgField, 1, rowindex);
+        TextField messageField = new TextField("Test msg");
+        messageField.setPrefHeight(40);
+        gridPane.add(messageField, 1, rowindex);
 
         rowindex++;
         Button sendButton = new Button("Send");
@@ -201,27 +212,22 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(sendButton, HPos.CENTER);
         GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
 
-//        sendButton.setOnAction(event -> {
-//            // send to apple server
-//            showMsg(typeField.getText(), headlineField.getText(), msgField.getText());
-//        });
+        sendButton.setOnAction(event -> {
+            // send to apple server
+            sendNotification(typeField.getText(), titleField.getText(), messageField.getText());
+        });
     }
-//
-//    private void showMsg(String type, String headline, String msg) {
-//        try {
-//            // build json...
-//            String url = "https://www.apple.com";
-//            String appleKey = "key...";
-//            String json = getJson(type, headline, msg);
-//            String hexData = getEncryptedDataAsHex(json);
-//            String urlParameters = "hexData=" + URLEncoder.encode(hexData, "UTF-8") +
-//                    "&appleKey=" + URLEncoder.encode(appleKey, "UTF-8");
-//            String result = executePost(url, urlParameters);
-//            System.out.print("result = " + result);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    private void sendNotification(String type, String title, String message) {
+        try {
+            BisqNotifcationObject o = new BisqNotifcationObject();
+            o.notificationType = type;
+            o.title = title;
+            o.message = message;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

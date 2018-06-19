@@ -243,15 +243,33 @@ class NotificationArray {
         return x
     }
     
-    func addFromJSON(new: AnyObject?) {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: new!)
-            let raw = try decoder.decode(RawNotification.self, from: jsonData)
-            if raw.version >= 1 {
-                addNotification(new: Notification(raw: raw))
+    func addFromString(new: String) {
+        // let test "{\"timestampEvent\" : \"2018-06-19 12:00:50\",\"transactionID\" : \"293842038402983\",\"title\" : \"example title\",\"message\" : \"example message\",\"notificationType\" : \"TRADE_ACCEPTED\",\"actionRequired\" : \"You need to make the bank transfer to receive your BTC\",\"version\" : 1}"
+        if let data = new.data(using: .utf8) {
+            do {
+                let raw = try decoder.decode(RawNotification.self, from:data)
+                if raw.version >= 1 {
+                    addNotification(new: Notification(raw: raw))
+                }
+            } catch {
+                print("could not add notification")
             }
-        } catch {
-            print("could not add notification")
+        }
+    }
+
+    func addFromJSON(new: AnyObject?) {
+        if new != nil {
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: new!)
+                let raw = try decoder.decode(RawNotification.self, from: jsonData)
+                if raw.version >= 1 {
+                    addNotification(new: Notification(raw: raw))
+                }
+            } catch {
+                print("could not add notification")
+            }
+        } else {
+            print("missing object bisqNotification")
         }
     }
 

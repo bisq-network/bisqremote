@@ -85,12 +85,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let message = userInfo as? [String: AnyObject] {
-            let aps = message["aps"] as! [String: AnyObject]
-            NotificationArray.shared.addFromJSON(new: aps["bisqNotification"])
-            let navigationController = application.windows[0].rootViewController as! UINavigationController
-            if let topController = navigationController.topViewController {
-                if let vc = topController as? NotificationTableViewController {
-                    vc.reload()
+            if let bisqNotification = message["bisqNotification"] as? String {
+                NotificationArray.shared.addFromString(new: bisqNotification)
+                let navigationController = application.windows[0].rootViewController as! UINavigationController
+                if let topController = navigationController.topViewController {
+                    if let vc = topController as? NotificationTableViewController {
+                        vc.reload()
+                    }
                 }
             }
         }
