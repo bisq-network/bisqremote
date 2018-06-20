@@ -439,36 +439,46 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUM-Ya-Cot">
-                                <rect key="frame" x="20" y="164" width="280" height="30"/>
+                                <rect key="frame" x="20" y="84" width="280" height="30"/>
                                 <state key="normal" title="Rerun Setup"/>
                                 <connections>
                                     <action selector="rerunSetupPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="UT5-3S-7pF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quG-DG-hcM">
-                                <rect key="frame" x="20" y="214" width="280" height="30"/>
+                                <rect key="frame" x="20" y="134" width="280" height="30"/>
                                 <state key="normal" title="Add example notification"/>
                                 <connections>
                                     <action selector="addNotificationPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="4bT-0d-Yxx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40K-Mw-FC7">
-                                <rect key="frame" x="20" y="264" width="280" height="30"/>
+                                <rect key="frame" x="20" y="184" width="280" height="30"/>
                                 <state key="normal" title="Delete all notifications"/>
                                 <connections>
                                     <action selector="deleteAllPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="lAM-c6-UEJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JRw-Oc-zVD">
+                                <rect key="frame" x="20" y="234" width="280" height="30"/>
+                                <state key="normal" title="Mark all as read"/>
+                                <connections>
+                                    <action selector="markAllAsReadPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="5Gz-PS-RfH"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="40K-Mw-FC7" secondAttribute="trailing" constant="20" id="6Ou-em-nZL"/>
-                            <constraint firstItem="JUM-Ya-Cot" firstAttribute="top" secondItem="kPY-40-qiv" secondAttribute="top" constant="100" id="OCI-hZ-A9s"/>
+                            <constraint firstItem="JRw-Oc-zVD" firstAttribute="top" secondItem="40K-Mw-FC7" secondAttribute="bottom" constant="20" id="IZ6-RU-3ma"/>
+                            <constraint firstItem="JUM-Ya-Cot" firstAttribute="top" secondItem="kPY-40-qiv" secondAttribute="top" constant="20" id="OCI-hZ-A9s"/>
                             <constraint firstItem="40K-Mw-FC7" firstAttribute="top" secondItem="quG-DG-hcM" secondAttribute="bottom" constant="20" id="g1I-mO-vRz"/>
+                            <constraint firstItem="JRw-Oc-zVD" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="gEl-yy-CgX"/>
                             <constraint firstItem="40K-Mw-FC7" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="o1W-Ra-aAb"/>
                             <constraint firstItem="quG-DG-hcM" firstAttribute="top" secondItem="JUM-Ya-Cot" secondAttribute="bottom" constant="20" id="rBe-Qw-6S9"/>
                             <constraint firstItem="JUM-Ya-Cot" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="rqd-kh-8DI"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="quG-DG-hcM" secondAttribute="trailing" constant="20" id="uG5-ET-sYP"/>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="JRw-Oc-zVD" secondAttribute="trailing" constant="20" id="vjc-e9-BpS"/>
                             <constraint firstItem="quG-DG-hcM" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="waO-KE-tqX"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="JUM-Ya-Cot" secondAttribute="trailing" constant="20" id="yOu-az-bkl"/>
                         </constraints>

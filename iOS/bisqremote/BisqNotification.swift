@@ -283,6 +283,12 @@ class NotificationArray {
         array.removeAll()
     }
     
+    func markAllAsRead() {
+        for n in array {
+            n.read = true
+        }
+    }
+    
     func remove(n: Int) {
         array.remove(at: n)
         save()

@@ -35,6 +35,9 @@ class SettingsViewController: UIViewController {
         NotificationArray.shared.addNotification(new: x)
     }
     
+    @IBAction func markAllAsReadPressed(_ sender: Any) {
+        NotificationArray.shared.markAllAsRead()
+    }
     @IBAction func deleteAllPressed(_ sender: Any) {
         NotificationArray.shared.deleteAll()
     }
