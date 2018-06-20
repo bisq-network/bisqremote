@@ -23,6 +23,7 @@ class SetupScanQRViewController: UIViewController, AVCaptureMetadataOutputObject
     
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var badCodeAlert: UIAlertController = UIAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,20 +103,28 @@ class SetupScanQRViewController: UIViewController, AVCaptureMetadataOutputObject
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            found(code: stringValue)
+            let x = stringValue.split(separator: " ")
+            guard x.count == 2           else { badCode(); return }
+            guard x[0].count > 0         else { badCode(); return }
+            guard x[0] == BISQ_KEY_MAGIC else { badCode(); return }
+            guard x[1].count == 44       else { badCode(); return }
+            UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
+            navigationController?.popViewController(animated: true)
         }
-        
         dismiss(animated: true)
     }
     
     func found(code: String) {
-        let x = code.split(separator: " ")
-        guard x.count == 2       else { _ = navigationController?.popViewController(animated: true); return }
-        guard x[0].count > 0     else { _ = navigationController?.popViewController(animated: true); return }
-        guard x[0] == "bisq_key" else { _ = navigationController?.popViewController(animated: true); return }
-        guard x[1].count == 11   else { _ = navigationController?.popViewController(animated: true); return }
-        UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
-        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func badCode() {
+        badCodeAlert = UIAlertController(title: "Wrong Code", message: "The QR code is not valid", preferredStyle: .alert)
+        self.present(badCodeAlert, animated: true, completion: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.badCodeAlert.dismiss(animated: false, completion: nil)
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
     }
     
     override var prefersStatusBarHidden: Bool {

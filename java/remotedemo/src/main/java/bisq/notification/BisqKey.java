@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 
 public class BisqKey {
     private static final String BISQ_KEY_FILENAME = "SecretKey.txt";
-    private static final String BISQ_KEY_MAGIC = "BisqKey";
+    public static final String BISQ_KEY_MAGIC = "BisqKey";
     private static final String  SYM_KEY_ALGO = "AES";
     private static final Integer SYM_KEY_BITS = 256;
 
@@ -52,7 +52,7 @@ public class BisqKey {
         try {
             bytes = Base58.decode(secretKeyBase58);
             if (bytes.length != 32) {
-                throw new AddressFormatException("key read has zero length");
+                throw new AddressFormatException("key read has not length 32 bytes");
             };
             secretKey = new SecretKeySpec(bytes, 0, bytes.length, SYM_KEY_ALGO);
         } catch (AddressFormatException e) {
@@ -70,20 +70,6 @@ public class BisqKey {
         }
     }
 
-    public void fromString(String s) {
-        String[] stringArray = s.split(" ");
-
-        if (stringArray.length == 3 && stringArray[0].equals(BISQ_KEY_MAGIC)) {
-            secretKeyBase58 = stringArray[1];
-            secretKeyFromBase58();
-        } else {
-            System.out.println("wrong key: " + s);
-            secretKeyBase58 = "";
-            secretKey = null;
-        }
-        save();
-    }
-
     public void newKey() {
         secretKey = generateSecretKey(SYM_KEY_BITS);
         try {
@@ -96,6 +82,10 @@ public class BisqKey {
 
     public String asBase58() {
         return secretKeyBase58;
+    }
+
+    public String base58WithMagic() {
+        return BISQ_KEY_MAGIC+" "+secretKeyBase58;
     }
 
 

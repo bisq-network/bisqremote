@@ -17,3 +17,5 @@
  */
 
 import Foundation
+
+let BISQ_KEY_MAGIC: String = "BisqKey"

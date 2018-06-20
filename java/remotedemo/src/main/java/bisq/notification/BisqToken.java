@@ -18,7 +18,7 @@ public class BisqToken {
 
     private static BisqToken instance;
 
-    private String apsTokenBase58;
+    public String apsTokenBase58;
     public String bundleidentifier;
 
     private BisqToken() {
@@ -54,7 +54,7 @@ public class BisqToken {
         save();
     }
 
-    private void save() {
+    public void save() {
         // TODO change to proper mechanism to store the BisqToken persistently
         try {
             PrintStream out = new PrintStream(new FileOutputStream(APS_TOKEN_FILENAME));
@@ -78,7 +78,6 @@ public class BisqToken {
         }
 
         String hex = BaseEncoding.base16().lowerCase().encode(binary);
-        System.out.println("hex = " + hex);
         return hex;
     }
 

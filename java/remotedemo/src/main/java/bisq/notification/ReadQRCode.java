@@ -19,15 +19,18 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import javafx.application.Platform;
 
 public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
 
     private Executor executor = Executors.newSingleThreadExecutor(this);
 
     private WebcamPanel panel = null;
+    private NotificationApp app;
 
-    public ReadQRCode() {
+    public ReadQRCode(NotificationApp app_) {
         super();
+        app = app_;
         setLayout(new FlowLayout());
         setTitle("Bisq Notification token");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -48,7 +51,6 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
         executor.execute(this);
     }
 
@@ -87,6 +89,11 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
                 BisqToken.getInstance().fromString(result.getText());
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;
+                Platform.runLater(
+                        () -> {
+                            app.updateToken();
+                        }
+                );
             }
         }
     }

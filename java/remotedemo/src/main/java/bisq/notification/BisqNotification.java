@@ -1,6 +1,5 @@
 package bisq.notification;
 
-import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
@@ -8,17 +7,8 @@ import com.turo.pushy.apns.PushNotificationResponse;
 import com.turo.pushy.apns.util.ApnsPayloadBuilder;
 import com.turo.pushy.apns.util.SimpleApnsPushNotification;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.Base58;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 
 public class BisqNotification extends BisqNotifcationObject {
