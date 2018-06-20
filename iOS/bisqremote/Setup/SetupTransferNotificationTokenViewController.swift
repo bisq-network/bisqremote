@@ -118,8 +118,8 @@ class SetupTransferNotificationTokenViewController: UIViewController, MFMailComp
     }
     
     @IBAction func helpPressed(_ sender: Any) {
-        let x = UIAlertController(title: "iOS Notification Service", message: "This app can receive iOS notifications from Apple, whihc are triggered by the Bisq desktop app. In order to identify your phone to the Bisq desktop app, the Bisq desktop app needs to know the notification token, wich the mobile app has already received from Apple.", preferredStyle: .actionSheet)
-        x.addAction(UIAlertAction(title: "About the Apple notificaiton token", style: .default, handler: webPagePressed))
+        let x = UIAlertController(title: "iOS Notification Service", message: "This app can receive iOS notifications from Apple, whihc are triggered by the Bisq desktop app. In order to identify your phone to the Bisq desktop app, the Bisq desktop app needs to know the notification token, which the mobile app has already received from the Apple Notification Service.", preferredStyle: .actionSheet)
+        x.addAction(UIAlertAction(title: "About the Apple Notification Token", style: .default, handler: webPagePressed))
         x.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(x, animated: true) {}
     }

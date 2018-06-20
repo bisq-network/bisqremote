@@ -348,24 +348,22 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geA-pf-XsK">
                                 <rect key="frame" x="20" y="94" width="280" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="event time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3t0-Gv-2ua">
-                                <rect key="frame" x="20" y="123" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <rect key="frame" x="20" y="236" width="280" height="14"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="received time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meb-g0-7et">
-                                <rect key="frame" x="20" y="151" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <rect key="frame" x="20" y="258" width="280" height="14"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="action description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKp-PA-fy8">
-                                <rect key="frame" x="16" y="259.5" width="284" height="36.5"/>
+                                <rect key="frame" x="16" y="183.5" width="284" height="36.5"/>
                                 <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="0.72848886986301364" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="mn4-jU-vY2"/>
@@ -374,13 +372,12 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="transaction ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdd-8y-ixK">
-                                <rect key="frame" x="20" y="179" width="280" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <rect key="frame" x="20" y="280" width="280" height="14"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="message" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATy-Bu-hqK">
-                                <rect key="frame" x="16" y="207" width="284" height="36.5"/>
+                                <rect key="frame" x="16" y="131" width="284" height="36.5"/>
                                 <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="oJp-uT-Gwv"/>
@@ -395,20 +392,20 @@
                             <constraint firstItem="geA-pf-XsK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="504-3V-xSC"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="3t0-Gv-2ua" secondAttribute="trailing" constant="20" id="9Zd-6m-d6t"/>
                             <constraint firstItem="3t0-Gv-2ua" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="9nO-uO-13o"/>
-                            <constraint firstItem="Mdd-8y-ixK" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="8" id="Acu-Dx-HK1"/>
+                            <constraint firstItem="meb-g0-7et" firstAttribute="top" secondItem="3t0-Gv-2ua" secondAttribute="bottom" constant="8" id="Chf-4h-LoH"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="top" secondItem="qFD-Tm-O6F" secondAttribute="top" constant="30" id="CyO-vW-Prt"/>
                             <constraint firstItem="bKp-PA-fy8" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="16" id="DOx-lo-I3X"/>
+                            <constraint firstItem="3t0-Gv-2ua" firstAttribute="top" secondItem="bKp-PA-fy8" secondAttribute="bottom" constant="16" id="IvO-ts-A54"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="Mdd-8y-ixK" secondAttribute="trailing" constant="20" id="KDa-EG-7Rk"/>
-                            <constraint firstItem="ATy-Bu-hqK" firstAttribute="top" secondItem="Mdd-8y-ixK" secondAttribute="bottom" constant="8" id="KLr-8b-OEH"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="meb-g0-7et" secondAttribute="trailing" constant="20" id="KXj-md-ldW"/>
-                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="ATy-Bu-hqK" secondAttribute="bottom" constant="16" id="R3t-RI-JGu"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="bKp-PA-fy8" secondAttribute="trailing" constant="20" id="Svz-br-hwQ"/>
                             <constraint firstItem="geA-pf-XsK" firstAttribute="centerX" secondItem="upf-5O-NMz" secondAttribute="centerX" id="VYU-Kv-0Te"/>
-                            <constraint firstItem="3t0-Gv-2ua" firstAttribute="top" secondItem="geA-pf-XsK" secondAttribute="bottom" constant="8" id="aAY-b5-DcT"/>
-                            <constraint firstItem="meb-g0-7et" firstAttribute="top" secondItem="3t0-Gv-2ua" secondAttribute="bottom" constant="8" id="geY-nF-sXg"/>
+                            <constraint firstItem="bKp-PA-fy8" firstAttribute="top" secondItem="ATy-Bu-hqK" secondAttribute="bottom" constant="16" id="aPn-V5-s9A"/>
                             <constraint firstItem="meb-g0-7et" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="20" id="jXw-EW-B5v"/>
+                            <constraint firstItem="Mdd-8y-ixK" firstAttribute="top" secondItem="meb-g0-7et" secondAttribute="bottom" constant="8" id="knX-Xd-uvs"/>
                             <constraint firstItem="ATy-Bu-hqK" firstAttribute="leading" secondItem="qFD-Tm-O6F" secondAttribute="leading" constant="16" id="mRE-CJ-PDX"/>
                             <constraint firstItem="qFD-Tm-O6F" firstAttribute="trailing" secondItem="ATy-Bu-hqK" secondAttribute="trailing" constant="20" id="nNq-5c-hJd"/>
+                            <constraint firstItem="ATy-Bu-hqK" firstAttribute="top" secondItem="geA-pf-XsK" secondAttribute="bottom" constant="16" id="pIn-0a-1qU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qFD-Tm-O6F"/>
                     </view>
