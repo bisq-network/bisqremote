@@ -23,6 +23,22 @@ public class BisqNotification extends BisqNotifcationObject {
         super();
         bisqToken = t;
         bisqKey = k;
+
+        try {
+            String input = "message";
+            System.out.println("input:" + input);
+            String cipher = null;
+            cipher = CryptoHelper.encrypt(input);
+            System.out.println("cipher:" + cipher);
+            //cipher = "cSeTlY/nakstEWZ9EOzi2A==";
+            //System.out.println("cipher:" + cipher);
+            String output = CryptoHelper.decrypt(cipher);
+            System.out.println("output:" + output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

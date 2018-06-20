@@ -17,6 +17,7 @@
 
 import UIKit
 import UserNotifications
+import CryptoSwift
 
 let userDefaultKeySetupDone = "setup"
 let userDefaultSymmetricKey = "SymmetricKey"
@@ -45,6 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navigationController.setViewControllers([vc], animated: false)
         }
         
+        let input:String = "message";
+        debugPrint("input:" + input);
+        let cipher:String = CryptoHelper.encrypt(input:input)!;
+        debugPrint("cipher:" + cipher);
+        //cipher = "kb1TyFRUcMaY6Z1vCRravA==";
+        //debugPrint("cipher:" + cipher);
+        let output:String = CryptoHelper.decrypt(input:cipher)!;
+        debugPrint("output:" + output);
+
         return true
     }
 
