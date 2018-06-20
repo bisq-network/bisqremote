@@ -63,7 +63,7 @@ public class NotificationApp extends Application {
     public void start(Stage primaryStage) {
         bisqToken = new BisqToken();
         bisqKey = new BisqKey();
-        bisqNotification = new BisqNotification(bisqToken);
+        bisqNotification = new BisqNotification(bisqToken, bisqKey);
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane

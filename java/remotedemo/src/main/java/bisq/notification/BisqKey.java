@@ -20,7 +20,7 @@ public class BisqKey {
     private static final Integer SYM_KEY_BITS = 256;
 
     private String secretKeyBase58;
-    private SecretKey secretKey;
+    public SecretKey secretKey;
 
     public BisqKey() {
         readBase58();

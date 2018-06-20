@@ -7,6 +7,8 @@ import com.turo.pushy.apns.PushNotificationResponse;
 import com.turo.pushy.apns.util.ApnsPayloadBuilder;
 import com.turo.pushy.apns.util.SimpleApnsPushNotification;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
+
+import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import java.io.*;
 import java.util.concurrent.ExecutionException;
@@ -15,11 +17,12 @@ public class BisqNotification extends BisqNotifcationObject {
 
     private static final String  SYM_CIPHER   = "AES";
 
-    private SecretKey secretKey;
     private BisqToken bisqToken;
-    public BisqNotification(BisqToken t) {
+    private BisqKey bisqKey;
+    public BisqNotification(BisqToken t, BisqKey k) {
         super();
         bisqToken = t;
+        bisqKey = k;
     }
 
 
@@ -40,7 +43,11 @@ public class BisqNotification extends BisqNotifcationObject {
             Gson gson = new Gson();
             String json = gson.toJson((BisqNotifcationObject) this);
             payloadBuilder.addCustomProperty("bisqNotification", json);
-//            payloadBuilder.addCustomProperty("encrypted", "sldkfsldk");
+
+            byte[] encryptionPayload = "test string".getBytes();
+            byte[] encrypted = encrypt(encryptionPayload, bisqKey.secretKey);
+
+            payloadBuilder.addCustomProperty("encrypted", encrypted);
 
             final String payload = payloadBuilder.buildWithDefaultMaximumLength();
             final String token = bisqToken.asHex();
@@ -84,15 +91,15 @@ public class BisqNotification extends BisqNotifcationObject {
 //        return hex;
 //    }
 //
-//    private byte[] encrypt(byte[] payload, SecretKey secretKey) {
-//        try {
-//            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
-//            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-//            return cipher.doFinal(payload);
-//        } catch (Throwable e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private byte[] encrypt(byte[] payload, SecretKey secretKey) {
+        try {
+            Cipher cipher = Cipher.getInstance(SYM_CIPHER);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return cipher.doFinal(payload);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
 //
 //    private byte[] decrypt(byte[] encryptedPayload, SecretKey secretKey) {
 //        try {
