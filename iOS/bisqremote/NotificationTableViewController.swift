@@ -111,6 +111,7 @@ class NotificationTableViewController: UITableViewController {
             
             let selectedNotification = NotificationArray.shared.at(n: indexPath.row)
             detailViewController.notification = selectedNotification
+            detailViewController.index = indexPath.row
             selectedNotification.read = true
             NotificationArray.shared.save()
             

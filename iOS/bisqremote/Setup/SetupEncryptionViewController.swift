@@ -26,6 +26,10 @@ class SetupEncryptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if targetEnvironment(simulator)
+            // running in a simulator
+            UserDefaults.standard.set("fake encryotion key", forKey: userDefaultSymmetricKey)
+        #endif
     }
 
     override func didReceiveMemoryWarning() {

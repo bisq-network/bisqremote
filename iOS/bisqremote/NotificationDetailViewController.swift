@@ -20,7 +20,7 @@ import UIKit
 
 class NotificationDetailViewController: UIViewController {
     let dateformatterShort = DateFormatter()
-
+    var index: Int = 0
     var notification: Notification?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
@@ -58,5 +58,9 @@ class NotificationDetailViewController: UIViewController {
             }
         }
     }
-
+    @IBAction func deletePressed(_ sender: Any) {
+        NotificationArray.shared.remove(n: index)
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
