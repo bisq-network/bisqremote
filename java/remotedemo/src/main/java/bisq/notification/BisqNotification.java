@@ -16,11 +16,11 @@ public class BisqNotification extends BisqNotifcationObject {
     private static final String  SYM_CIPHER   = "AES";
 
     private SecretKey secretKey;
-
-    public BisqNotification() {
+    private BisqToken bisqToken;
+    public BisqNotification(BisqToken t) {
         super();
+        bisqToken = t;
     }
-
 
 
     public void send() {
@@ -43,7 +43,7 @@ public class BisqNotification extends BisqNotifcationObject {
 //            payloadBuilder.addCustomProperty("encrypted", "sldkfsldk");
 
             final String payload = payloadBuilder.buildWithDefaultMaximumLength();
-            final String token = BisqToken.getInstance().asHex();
+            final String token = bisqToken.asHex();
 
             pushNotification = new SimpleApnsPushNotification(token, "com.joachimneumann.bisqremotetest", payload);
 

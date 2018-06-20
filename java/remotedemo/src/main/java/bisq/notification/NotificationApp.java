@@ -45,8 +45,9 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
-
-    private BisqNotification bisqNotification = new BisqNotification();
+    private BisqToken bisqToken;
+    private BisqKey bisqKey;
+    private BisqNotification bisqNotification;
     public static Webcam webcam;
     public TextField bundleIdentifierTextField;
     public TextField tokenBase58TextField;
@@ -60,6 +61,9 @@ public class NotificationApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        bisqToken = new BisqToken();
+        bisqKey = new BisqKey();
+        bisqNotification = new BisqNotification(bisqToken);
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane
@@ -107,8 +111,8 @@ public class NotificationApp extends Application {
     }
 
     public void updateToken() {
-        bundleIdentifierTextField.setText(BisqToken.getInstance().bundleidentifier);
-        tokenBase58TextField.setText(BisqToken.getInstance().asBase58());
+        bundleIdentifierTextField.setText(bisqToken.bundleidentifier);
+        tokenBase58TextField.setText(bisqToken.asBase58());
     }
 
     private void addUIControls(GridPane gridPane) {
@@ -122,8 +126,8 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Encryption key: "+BisqKey.getInstance().asBase58());
-        System.out.println("Encryption key: "+BisqKey.getInstance().asBase58());
+        Label keyTitleLabel = new Label("Encryption key: "+bisqKey.asBase58());
+        System.out.println("Encryption key: "+bisqKey.asBase58());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
@@ -131,7 +135,7 @@ public class NotificationApp extends Application {
         // QR code
         QR qr = new QR();
         AtomicReference<ImageView> iv = new AtomicReference<>(qr.imageView(
-                BisqKey.getInstance().base58WithMagic(),
+                bisqKey.base58WithMagic(),
                 300,
                 300,
                 Color.BLACK,
@@ -141,10 +145,10 @@ public class NotificationApp extends Application {
 
         final Button newKeyButton = new Button("new key (only for new mobile phone)");
         newKeyButton.setOnAction((event) -> {
-            BisqKey.getInstance().newKey();
-            keyTitleLabel.setText("Encryption key: "+BisqKey.getInstance().asBase58());
+            bisqKey.newKey();
+            keyTitleLabel.setText("Encryption key: "+bisqKey.asBase58());
             iv.set(qr.imageView(
-                    BisqKey.getInstance().base58WithMagic(),
+                    bisqKey.base58WithMagic(),
                     300,
                     300,
                     Color.BLACK,
@@ -168,7 +172,7 @@ public class NotificationApp extends Application {
         rowindex++;
         final Button webcamButton = new Button("Use the Webcam of your computer");
         webcamButton.setOnAction((event) -> {
-            new ReadQRCode(this);
+            new ReadQRCode(this, bisqToken);
         });
 
         gridPane.add(webcamButton, 0, rowindex, 2, 1);
@@ -178,26 +182,26 @@ public class NotificationApp extends Application {
         Label bundleIdentifierTitleLabel = new Label("bundle identifier:");
         gridPane.add(bundleIdentifierTitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(bundleIdentifierTitleLabel, HPos.RIGHT);
-        bundleIdentifierTextField = new TextField(BisqToken.getInstance().bundleidentifier);
+        bundleIdentifierTextField = new TextField(bisqToken.bundleidentifier);
         bundleIdentifierTextField.setPromptText("Enter the bundle identifier");
         gridPane.add(bundleIdentifierTextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(bundleIdentifierTextField, HPos.LEFT);
         bundleIdentifierTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            BisqToken.getInstance().bundleidentifier = newValue;
-            BisqToken.getInstance().save();
+            bisqToken.bundleidentifier = newValue;
+            bisqToken.save();
         });
 
         rowindex++;
         Label tokenBase58TitleLabel = new Label("as Base58:");
         gridPane.add(tokenBase58TitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(tokenBase58TitleLabel, HPos.RIGHT);
-        tokenBase58TextField = new TextField(BisqToken.getInstance().asBase58());
+        tokenBase58TextField = new TextField(bisqToken.asBase58());
         tokenBase58TextField.setPromptText("Enter Token in Base58 format");
         gridPane.add(tokenBase58TextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(tokenBase58TextField, HPos.LEFT);
         tokenBase58TextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            BisqToken.getInstance().apsTokenBase58 = newValue;
-            BisqToken.getInstance().save();
+            bisqToken.apsTokenBase58 = newValue;
+            bisqToken.save();
         });
 
         rowindex++;

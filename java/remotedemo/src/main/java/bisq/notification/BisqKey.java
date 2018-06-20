@@ -19,12 +19,10 @@ public class BisqKey {
     private static final String  SYM_KEY_ALGO = "AES";
     private static final Integer SYM_KEY_BITS = 256;
 
-    private static BisqKey instance;
-
     private String secretKeyBase58;
     private SecretKey secretKey;
 
-    private BisqKey() {
+    public BisqKey() {
         readBase58();
         secretKeyFromBase58();
     }
@@ -97,12 +95,5 @@ public class BisqKey {
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static synchronized BisqKey getInstance(){
-        if(instance == null){
-            instance = new BisqKey();
-        }
-        return instance;
     }
 }

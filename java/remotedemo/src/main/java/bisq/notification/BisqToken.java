@@ -16,12 +16,10 @@ public class BisqToken {
     private static final String APS_TOKEN_MAGIC = "BisqToken";
     private static final String APS_TOKEN_FILENAME = "apsToken.txt";
 
-    private static BisqToken instance;
-
     public String apsTokenBase58;
     public String bundleidentifier;
 
-    private BisqToken() {
+    public BisqToken() {
         try {
             // TODO change to proper mechanism to store the BisqToken persistently
             String fromFile = new String(Files.readAllBytes(Paths.get(APS_TOKEN_FILENAME)));
@@ -80,12 +78,4 @@ public class BisqToken {
         String hex = BaseEncoding.base16().lowerCase().encode(binary);
         return hex;
     }
-
-    public static synchronized BisqToken getInstance(){
-        if(instance == null){
-            instance = new BisqToken();
-        }
-        return instance;
-    }
-
 }
