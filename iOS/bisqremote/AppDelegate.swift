@@ -45,32 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navigationController.setViewControllers([vc], animated: false)
         }
         
-        let x = "message"
-        let xx = x.utf8
-        let xxx =  Array(xx)
-        var enc = Base58.base58FromBytes(xxx)
-        print(x+" in base58="+enc)
-        enc = "2GT8sH7hrnuuhcMUR2byaMJUEouQ3xvjpRfYzix"
-        let b = Base58.bytesFromBase58(enc)
-        if let s = String(bytes: b, encoding: .utf8) {
-            print("and back="+s)
-            print("ok:"+String(s==x))
-        } else {
-            print("not a valid UTF-8 sequence")
-        }
-
-        let plainText = "this is my plain text"
-        let key = "simplekey"
-        let iv = "1234123412341234"
-        
-        let cryptoLib = CryptLib();
-        
-        let encryptedString = cryptoLib.encryptPlainText(with: plainText, key: key, iv: iv)
-        print("encryptedString \(encryptedString! as String)")
-        
-        let decryptedString = cryptoLib.decryptCipherText(with: encryptedString, key: key, iv: iv)
-        print("decryptedString \(decryptedString! as String)")
-
         return true
     }
 
