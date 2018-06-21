@@ -24,6 +24,8 @@ java/remotedemo/*.txt
 /out
 .idea
 
+key.txt
+
 *.iml
 *.spvchain
 *.wallet
