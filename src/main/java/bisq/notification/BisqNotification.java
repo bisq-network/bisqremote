@@ -38,7 +38,7 @@ public class BisqNotification extends BisqNotificationObject {
 
             File p12File = new File(resource.getFile());
             apnsClient = new ApnsClientBuilder()
-                    .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
                     .setClientCredentials(p12File, "")
                     .build();
 
