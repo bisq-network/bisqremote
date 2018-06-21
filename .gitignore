@@ -6,3 +6,45 @@ java/*/.idea
 java/*/target
 java/remotedemo/.idea/workspace.xml
 java/remotedemo/*.txt
+
+
+# IDEA
+.idea
+*.iml
+
+# macOS
+.DS_Store
+
+# Vim
+*.sw?
+
+/docs
+/log
+/bin
+/out
+.idea
+
+key.txt
+
+*.iml
+*.spvchain
+*.wallet
+*.ser
+*.log
+*.sw[op]
+.DS_Store
+
+build
+.classpath
+.project
+.settings
+*.java.hsp
+*.~ava
+/bundles
+/bisq*
+/xchange
+desktop.ini
+*/target/*
+*.class
+deploy
+releases/*

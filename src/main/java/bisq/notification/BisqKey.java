@@ -1,7 +1,5 @@
 package bisq.notification;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64; // TODO import java.util.Base64;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

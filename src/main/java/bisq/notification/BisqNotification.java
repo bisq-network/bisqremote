@@ -1,20 +1,18 @@
 package bisq.notification;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
 import com.turo.pushy.apns.util.ApnsPayloadBuilder;
 import com.turo.pushy.apns.util.SimpleApnsPushNotification;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
-import static java.nio.charset.StandardCharsets.*;
 
-import java.io.*;
-import java.util.UUID;
+import java.io.File;
 import java.util.concurrent.ExecutionException;
+
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BisqNotification extends BisqNotifcationObject {
     private BisqToken bisqToken;
