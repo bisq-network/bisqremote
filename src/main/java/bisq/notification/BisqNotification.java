@@ -7,6 +7,8 @@ import com.turo.pushy.apns.PushNotificationResponse;
 import com.turo.pushy.apns.util.ApnsPayloadBuilder;
 import com.turo.pushy.apns.util.SimpleApnsPushNotification;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -16,6 +18,7 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BisqNotification extends BisqNotificationObject {
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private BisqToken bisqToken;
     private BisqKey bisqKey;
 
@@ -32,17 +35,16 @@ public class BisqNotification extends BisqNotificationObject {
             ClassLoader classLoader = getClass().getClassLoader();
             URL resource = classLoader.getResource("push_certificate.production.p12");
             if (resource == null) {
-                System.out.println("Error: push_certificate.production.p12 does not exist ");
+                logger.error("push_certificate.production.p12 does not exist ");
                 return;
             }
 
             File p12File = new File(resource.getFile());
+            logger.info("Using certification file {}.", p12File.getAbsolutePath());
             apnsClient = new ApnsClientBuilder()
                     .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
                     .setClientCredentials(p12File, "")
                     .build();
-
-            //.setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
 
             PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse = null;
             SimpleApnsPushNotification pushNotification;
