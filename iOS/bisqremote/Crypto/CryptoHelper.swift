@@ -40,7 +40,7 @@ class CryptoHelper{
             let decrypted = try aes.decrypt(db)
             return String(data: Data(decrypted), encoding: .utf8)
         } catch {
-            fatalError("could not decrypt")
+            print("could not decrypt "+input)
         }
         return nil
     }
