@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA57D90020DBEE74000FA5DA /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57D8FF20DBEE74000FA5DA /* Base58.swift */; };
 		AA811D8920D284B100F7CFBA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA811D8820D284B100F7CFBA /* SettingsViewController.swift */; };
 		AA811D8B20D2ABBC00F7CFBA /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA811D8A20D2ABBC00F7CFBA /* constants.swift */; };
 		AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD220D255960092050E /* WelcomViewController.swift */; };
 		AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */; };
 		AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */; };
 		AA97BFDB20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */; };
-		AAB2ECE820D6FD31003BB50E /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB2ECE720D6FD31003BB50E /* Base58.swift */; };
-		AAECD5A420D309E800F80E3A /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECD5A220D309E800F80E3A /* CryptLib.m */; };
 		AAF7B46520DAF789008237EA /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4F080920DAF66A007C1A89 /* CryptoSwift.framework */; };
 		AAF7B46720DAF7F1008237EA /* CryptoSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4F080920DAF66A007C1A89 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AAF7B46920DAFD8A008237EA /* CryptoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF7B46820DAFD8A008237EA /* CryptoHelper.swift */; };
@@ -88,16 +87,13 @@
 
 /* Begin PBXFileReference section */
 		AA4F080020DAF66A007C1A89 /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = ../../CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
+		AA57D8FF20DBEE74000FA5DA /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		AA811D8820D284B100F7CFBA /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		AA811D8A20D2ABBC00F7CFBA /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		AA97BFD220D255960092050E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
 		AA97BFD620D257400092050E /* SetupEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEncryptionViewController.swift; sourceTree = "<group>"; };
 		AA97BFD820D25C930092050E /* SetupScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScanQRViewController.swift; sourceTree = "<group>"; };
 		AA97BFDA20D2694C0092050E /* SetupTransferNotificationTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTransferNotificationTokenViewController.swift; sourceTree = "<group>"; };
-		AAB2ECE720D6FD31003BB50E /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
-		AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bisqremote-Bridging-Header.h"; sourceTree = "<group>"; };
-		AAECD5A220D309E800F80E3A /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
-		AAECD5A320D309E800F80E3A /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
 		AAF7B46820DAFD8A008237EA /* CryptoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelper.swift; sourceTree = "<group>"; };
 		BE31BFC720C44A8D008F79C6 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		BE92214F20C49B9B00F8EB93 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
@@ -150,10 +146,7 @@
 		AAECD59E20D3098300F80E3A /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				AAECD5A320D309E800F80E3A /* CryptLib.h */,
-				AAECD5A220D309E800F80E3A /* CryptLib.m */,
-				AAECD5A120D309E700F80E3A /* bisqremote-Bridging-Header.h */,
-				AAB2ECE720D6FD31003BB50E /* Base58.swift */,
+				AA57D8FF20DBEE74000FA5DA /* Base58.swift */,
 				AAF7B46820DAFD8A008237EA /* CryptoHelper.swift */,
 			);
 			path = Crypto;
@@ -339,12 +332,11 @@
 				BE92215620C4AC0700F8EB93 /* NotificationDetailViewController.swift in Sources */,
 				BE92215020C49B9B00F8EB93 /* NotificationTableViewController.swift in Sources */,
 				AA97BFD920D25C930092050E /* SetupScanQRViewController.swift in Sources */,
+				AA57D90020DBEE74000FA5DA /* Base58.swift in Sources */,
 				AAF7B46920DAFD8A008237EA /* CryptoHelper.swift in Sources */,
-				AAB2ECE820D6FD31003BB50E /* Base58.swift in Sources */,
 				BEFB45EA20C34BC10052C91A /* AppDelegate.swift in Sources */,
 				AA97BFD320D255960092050E /* WelcomViewController.swift in Sources */,
 				AA97BFD720D257400092050E /* SetupEncryptionViewController.swift in Sources */,
-				AAECD5A420D309E800F80E3A /* CryptLib.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +502,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "bisqremote/Crypto/bisqremote-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -535,7 +527,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.joachimneumann.bisqremotetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "bisqremote/Crypto/bisqremote-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

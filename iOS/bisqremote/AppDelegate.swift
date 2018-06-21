@@ -205,8 +205,5 @@ extension Data {
     var hexDescription: String {
         return reduce("") {$0 + String(format: "%02x", $1)}
     }
-    var base58Description: String {
-        return Base58.base58FromBytes([UInt8](self))
-    }
 }
 
