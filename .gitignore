@@ -1,9 +1,6 @@
-*/*.xcodeproj/project.xcworkspace/xcuserdata
-*/xcuserdata/*.xcuserdatad
-*iOS/*.xcodeproj/xcuserdata/*.xcuserdatad
-
 java/*/.idea
 java/*/target
+/target/classes
 java/remotedemo/.idea/workspace.xml
 java/remotedemo/*.txt
 
