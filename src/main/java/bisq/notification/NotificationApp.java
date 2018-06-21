@@ -18,6 +18,7 @@ package bisq.notification;
  */
 
 
+import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -34,14 +35,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-
-import com.github.sarxos.webcam.Webcam;
-
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
