@@ -240,34 +240,34 @@ public class NotificationApp extends Application {
         gridPane.add(actionRequiredField, 1, rowindex);
 
         rowindex++;
-        Button sendPlaintextButton = new Button("Send plaintext");
-        sendPlaintextButton.setDefaultButton(true);
-        gridPane.add(sendPlaintextButton, 0, rowindex, 1, 1);
-        GridPane.setHalignment(sendPlaintextButton, HPos.CENTER);
-        GridPane.setMargin(sendPlaintextButton, new Insets(20, 0, 20, 0));
+        Button sendButton = new Button("Send Notification");
+        sendButton.setDefaultButton(true);
+        gridPane.add(sendButton, 0, rowindex, 2, 1);
+        GridPane.setHalignment(sendButton, HPos.CENTER);
+        GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
 
-        sendPlaintextButton.setOnAction(event -> {
+        sendButton.setOnAction(event -> {
             // send to apple server
             bisqNotification.notificationType = notificationTypeField.getText();
             bisqNotification.title = titleField.getText();
             bisqNotification.message = messageField.getText();
             bisqNotification.actionRequired = actionRequiredField.getText();
-            bisqNotification.send(false);
+            bisqNotification.prepareToSend(true);
         });
 
-        Button sendEencryptedButton = new Button("Send encrypted");
-        sendEencryptedButton.setDefaultButton(true);
-        gridPane.add(sendEencryptedButton, 1, rowindex, 1, 1);
-        GridPane.setHalignment(sendEencryptedButton, HPos.CENTER);
-        GridPane.setMargin(sendEencryptedButton, new Insets(20, 0, 20, 0));
+        rowindex++;
+        Button sendEncryptedButtonDevelopment = new Button("Send to iOS App running from Xcode (Apple development APNS Server)");
+        gridPane.add(sendEncryptedButtonDevelopment, 0, rowindex, 2, 1);
+        GridPane.setHalignment(sendEncryptedButtonDevelopment, HPos.CENTER);
+        GridPane.setMargin(sendEncryptedButtonDevelopment, new Insets(0, 0, 20, 0));
 
-        sendEencryptedButton.setOnAction(event -> {
+        sendEncryptedButtonDevelopment.setOnAction(event -> {
             // send to apple server
             bisqNotification.notificationType = notificationTypeField.getText();
             bisqNotification.title = titleField.getText();
             bisqNotification.message = messageField.getText();
             bisqNotification.actionRequired = actionRequiredField.getText();
-            bisqNotification.send(true);
+            bisqNotification.prepareToSend(false);
         });
     }
 }
