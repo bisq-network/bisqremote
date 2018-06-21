@@ -281,6 +281,7 @@ class NotificationArray {
     
     func deleteAll() {
         array.removeAll()
+        save()
     }
     
     func markAllAsRead() {

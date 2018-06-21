@@ -8,6 +8,18 @@ public class BisqNotifcationObject {
     String notificationType = "TRADE_ACCEPTED";
     String actionRequired = "FROM JAVA! You need to make the bank transfer to receive your BTC";
     int version = 1;
-    BisqNotifcationObject() {
+
+    public BisqNotifcationObject() {
+    }
+
+    public BisqNotifcationObject(BisqNotifcationObject template){
+        // this constructor is used to strip variables from the subclass BisqNotifcation
+        timestampEvent=template.timestampEvent;
+        transactionID=template.transactionID;
+        title=template.title;
+        message=template.message;
+        notificationType=template.notificationType;
+        actionRequired=template.actionRequired;
+        version=template.version;
     }
 }

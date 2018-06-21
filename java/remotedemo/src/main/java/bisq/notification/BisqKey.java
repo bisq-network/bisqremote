@@ -1,99 +1,102 @@
 package bisq.notification;
 
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.Base58;
+import com.sun.org.apache.xml.internal.security.utils.Base64; // TODO import java.util.Base64;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class BisqKey {
-    private static final String BISQ_KEY_FILENAME = "SecretKey.txt";
+    private static final String BISQ_KEY_FILENAME = "key.txt";
     public static final String BISQ_KEY_MAGIC = "BisqKey";
-    private static final String  SYM_KEY_ALGO = "AES";
-    private static final Integer SYM_KEY_BITS = 256;
+    public static final String BISQ_MESSAGE_MAGIC = "BisqEncrypted";
 
-    private String secretKeyBase58;
-    public SecretKey secretKey;
+    private String key;
+    private CryptoHelper cryptoHelper;
 
     public BisqKey() {
-        readBase58();
-        secretKeyFromBase58();
+        readOrCreateKey();
+        cryptoHelper = new CryptoHelper(key);
     }
 
-    private void readBase58() {
+    public String encryptBisqMessage(String message) {
+        try {
+            // generate 16 random characters for iv
+            String uuid = UUID.randomUUID().toString();
+            uuid = uuid.replace("-", "");
+            String tempIV = uuid.substring(0, 16);
+
+            StringBuffer padded = new StringBuffer(message);
+            while (padded.length() % 16 != 0)
+            {
+                padded.append(" ");
+            }
+            message = padded.toString();
+
+            String cipher = cryptoHelper.encrypt(message, tempIV);
+            String combined =  BISQ_MESSAGE_MAGIC+" "+tempIV+" "+cipher;
+
+            System.out.println("combined: "+combined);
+            return combined;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error in encryptBisqMessage";
+        }
+    }
+
+
+    public String key() {
+        return key;
+    }
+
+    private void readOrCreateKey() {
         // TODO change to proper mechanism to store the BisqKey persistently
         String fromFile = null;
         try {
             fromFile = new String(Files.readAllBytes(Paths.get(BISQ_KEY_FILENAME)));
             String[] fromFileArray = fromFile.split(" ");
             if (fromFileArray.length != 2) {
+                System.out.println("invalid "+BISQ_KEY_MAGIC+" format");
                 throw new IOException("invalid "+BISQ_KEY_MAGIC+" format");
             }
             if (!fromFileArray[0].equals(BISQ_KEY_MAGIC)) {
+                System.out.println("invalid "+BISQ_KEY_MAGIC+" format");
                 throw new IOException("invalid "+BISQ_KEY_MAGIC+" format");
             }
-            secretKeyBase58 = fromFileArray[1];
+            if (fromFileArray[1].length() != 32) {
+                System.out.println("invalid "+BISQ_KEY_MAGIC+" format");
+                throw new IOException("invalid "+BISQ_KEY_MAGIC+" format");
+            }
+            key = fromFileArray[1];
         } catch (IOException e) {
             newKey();
         }
     }
 
-    private void secretKeyFromBase58() {
-        byte[] bytes = new byte[0];
-        try {
-            bytes = Base58.decode(secretKeyBase58);
-            if (bytes.length != 32) {
-                throw new AddressFormatException("key read has not length 32 bytes");
-            };
-            secretKey = new SecretKeySpec(bytes, 0, bytes.length, SYM_KEY_ALGO);
-        } catch (AddressFormatException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void save() {
+    private void saveKey() {
         // TODO change to proper mechanism to store the BisqKey persistently
         try {
             PrintStream out = new PrintStream(new FileOutputStream(BISQ_KEY_FILENAME));
-            out.print(BISQ_KEY_MAGIC+" "+secretKeyBase58);
+            out.print(withMagic());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public void newKey() {
-        secretKey = generateSecretKey(SYM_KEY_BITS);
-        try {
-            secretKeyBase58 = Base58.encode(secretKey.getEncoded());
-        } catch (Exception e) {
-            secretKeyBase58 = "";
-        }
-        save();
+        String uuid = UUID.randomUUID().toString();
+        key = uuid.replace("-", "");
+        System.out.println(key.length());
+        saveKey();
     }
 
-    public String asBase58() {
-        return secretKeyBase58;
+    public String withMagic() {
+        return BISQ_KEY_MAGIC+" "+key;
     }
 
-    public String base58WithMagic() {
-        return BISQ_KEY_MAGIC+" "+secretKeyBase58;
-    }
-
-
-    private SecretKey generateSecretKey(int bits) {
-        try {
-            KeyGenerator keyPairGenerator = KeyGenerator.getInstance(SYM_KEY_ALGO);
-            keyPairGenerator.init(bits);
-            return keyPairGenerator.generateKey();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

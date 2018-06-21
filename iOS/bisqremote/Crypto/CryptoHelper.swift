@@ -10,27 +10,37 @@ import CryptoSwift
 
 class CryptoHelper{
     
-    private static let key = "1234567890abcder";//16 char secret key
+    public static var iv: String = ""// required 16 char secret key
+    public static var key = "sdlkghjdsflkg"
     
     public static func encrypt(input:String)->String?{
-        do{
-            let encrypted: Array<UInt8> = try AES(key: key, iv: key, padding: .pkcs5).encrypt(Array(input.utf8))
-            
+        do {
+            if iv.count != 16 {
+                fatalError("iv not 16 characters")
+            }
+            let encrypted: Array<UInt8> = try AES(key: key, iv: iv, padding: .noPadding).encrypt(Array(input.utf8))
             return encrypted.toBase64()
-        }catch{
-            
+        } catch {
+            fatalError("could not encrypt")
         }
         return nil
     }
     
     public static func decrypt(input:String)->String?{
-        do{
-            let d=Data(base64Encoded: input)
-            let decrypted = try AES(key: key, iv: key, padding: .pkcs5).decrypt(
-                d!.bytes)
+        do {
+            if iv.count != 16 {
+                fatalError("iv not 16 characters")
+            }
+            let d = Data(base64Encoded: input, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+            if d == nil {
+                fatalError("message not Base64")
+            }
+            let aes: AES = try AES(key: key, iv: iv, padding: .pkcs5)
+            let db = d!.bytes
+            let decrypted = try aes.decrypt(db)
             return String(data: Data(decrypted), encoding: .utf8)
-        }catch{
-            
+        } catch {
+            fatalError("could not decrypt")
         }
         return nil
     }

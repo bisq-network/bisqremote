@@ -18,4 +18,9 @@
 
 import Foundation
 
+let userDefaultKeySetupDone = "setup"
+let userDefaultSymmetricKey = "SymmetricKey"
+let userDefaultApsToken = "ApsToken"
 let BISQ_KEY_MAGIC: String = "BisqKey"
+let BISQ_MESSAGE_MAGIC: String = "BisqEncrypted"
+

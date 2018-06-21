@@ -20,8 +20,13 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var keyLabel: UILabel!
+    @IBOutlet weak var tokenLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        keyLabel.text = "Key:   "+UserDefaults.standard.string(forKey: userDefaultSymmetricKey)!.prefix(8)+"..."
+        tokenLabel.text = "Token: "+UserDefaults.standard.string(forKey: userDefaultApsToken)!.prefix(8)+"..."
     }
 
     @IBAction func rerunSetupPressed(_ sender: Any) {

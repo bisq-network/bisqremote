@@ -13,38 +13,40 @@ public class CryptoHelper {
     private IvParameterSpec ivspec;
     private SecretKeySpec keyspec;
     private Cipher cipher;
-    private final static String SecretKey = "1234567890abcder";//16 char secret key
+    private String key; // 32 character key - exchanged with phones that receive the message
 
-    public CryptoHelper() {
-        ivspec = new IvParameterSpec(SecretKey.getBytes());
+    public CryptoHelper(String key_) {
+        key = key_;
 
-        keyspec = new SecretKeySpec(SecretKey.getBytes(), "AES");
+        keyspec = new SecretKeySpec(key.getBytes(), "AES");
 
         try {
-            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher = Cipher.getInstance("AES/CBC/NOPadding");
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public static String encrypt(String valueToEncrypt) throws Exception {
-        CryptoHelper enc = new CryptoHelper();
-        return Base64.encode(enc.encryptInternal(valueToEncrypt));
+    public String encrypt(String valueToEncrypt, String iv) throws Exception {
+        if ( iv.length() != 16) { throw new Exception( "iv not 16 characters"); }
+        ivspec = new IvParameterSpec(iv.getBytes());
+        return Base64.encode(encryptInternal(valueToEncrypt, ivspec));
     }
 
-    public static String decrypt(String valueToDecrypt) throws Exception {
-        CryptoHelper enc = new CryptoHelper();
-        return new String(enc.decryptInternal(valueToDecrypt));
+    public String decrypt(String valueToDecrypt, String iv) throws Exception {
+        if ( iv.length() != 16) { throw new Exception( "iv not 16 characters"); }
+        ivspec = new IvParameterSpec(iv.getBytes());
+        return new String(decryptInternal(valueToDecrypt, ivspec));
     }
 
-    private byte[] encryptInternal(String text) throws Exception {
+    private byte[] encryptInternal(String text, IvParameterSpec ivspec) throws Exception {
         if (text == null || text.length() == 0) {
             throw new Exception("Empty string");
         }
+
+        if (key.length() != 32) { throw new Exception("key not 32 characters"); }
 
         byte[] encrypted = null;
         try {
@@ -56,10 +58,12 @@ public class CryptoHelper {
         return encrypted;
     }
 
-    private byte[] decryptInternal(String code) throws Exception {
+    private byte[] decryptInternal(String code, IvParameterSpec ivspec) throws Exception {
         if (code == null || code.length() == 0) {
             throw new Exception("Empty string");
         }
+
+        if (key.length() != 32) { throw new Exception("key not 32 characters"); }
 
         byte[] decrypted = null;
         try {

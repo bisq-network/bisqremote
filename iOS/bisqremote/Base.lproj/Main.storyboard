@@ -466,24 +466,46 @@
                                     <action selector="markAllAsReadPressed:" destination="wPz-Zx-mjx" eventType="touchUpInside" id="5Gz-PS-RfH"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9I6-Nn-yMF">
+                                <rect key="frame" x="20" y="284" width="280" height="14"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBP-eV-zO1">
+                                <rect key="frame" x="20" y="318" width="280" height="14"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="9I6-Nn-yMF" secondAttribute="trailing" constant="20" id="2eP-Qm-mCp"/>
+                            <constraint firstItem="uBP-eV-zO1" firstAttribute="top" secondItem="9I6-Nn-yMF" secondAttribute="bottom" constant="20" id="3dt-ad-NOs"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="40K-Mw-FC7" secondAttribute="trailing" constant="20" id="6Ou-em-nZL"/>
+                            <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="uBP-eV-zO1" secondAttribute="trailing" constant="20" id="Ex4-kB-JmK"/>
                             <constraint firstItem="JRw-Oc-zVD" firstAttribute="top" secondItem="40K-Mw-FC7" secondAttribute="bottom" constant="20" id="IZ6-RU-3ma"/>
                             <constraint firstItem="JUM-Ya-Cot" firstAttribute="top" secondItem="kPY-40-qiv" secondAttribute="top" constant="20" id="OCI-hZ-A9s"/>
+                            <constraint firstItem="9I6-Nn-yMF" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="eCn-6B-nTI"/>
                             <constraint firstItem="40K-Mw-FC7" firstAttribute="top" secondItem="quG-DG-hcM" secondAttribute="bottom" constant="20" id="g1I-mO-vRz"/>
                             <constraint firstItem="JRw-Oc-zVD" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="gEl-yy-CgX"/>
+                            <constraint firstItem="uBP-eV-zO1" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="igK-UB-Vb0"/>
                             <constraint firstItem="40K-Mw-FC7" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="o1W-Ra-aAb"/>
                             <constraint firstItem="quG-DG-hcM" firstAttribute="top" secondItem="JUM-Ya-Cot" secondAttribute="bottom" constant="20" id="rBe-Qw-6S9"/>
                             <constraint firstItem="JUM-Ya-Cot" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="rqd-kh-8DI"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="quG-DG-hcM" secondAttribute="trailing" constant="20" id="uG5-ET-sYP"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="JRw-Oc-zVD" secondAttribute="trailing" constant="20" id="vjc-e9-BpS"/>
                             <constraint firstItem="quG-DG-hcM" firstAttribute="leading" secondItem="kPY-40-qiv" secondAttribute="leading" constant="20" id="waO-KE-tqX"/>
+                            <constraint firstItem="9I6-Nn-yMF" firstAttribute="top" secondItem="JRw-Oc-zVD" secondAttribute="bottom" constant="20" id="xFc-lx-Peg"/>
                             <constraint firstItem="kPY-40-qiv" firstAttribute="trailing" secondItem="JUM-Ya-Cot" secondAttribute="trailing" constant="20" id="yOu-az-bkl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kPY-40-qiv"/>
                     </view>
+                    <connections>
+                        <outlet property="keyLabel" destination="9I6-Nn-yMF" id="pc4-AM-SUk"/>
+                        <outlet property="tokenLabel" destination="uBP-eV-zO1" id="QzQ-Wt-uyM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y3e-e6-FwU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

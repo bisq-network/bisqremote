@@ -126,8 +126,7 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Encryption key: "+bisqKey.asBase58());
-        System.out.println("Encryption key: "+bisqKey.asBase58());
+        Label keyTitleLabel = new Label("Encryption key: "+bisqKey.key());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
@@ -135,7 +134,7 @@ public class NotificationApp extends Application {
         // QR code
         QR qr = new QR();
         AtomicReference<ImageView> iv = new AtomicReference<>(qr.imageView(
-                bisqKey.base58WithMagic(),
+                bisqKey.withMagic(),
                 300,
                 300,
                 Color.BLACK,
@@ -146,9 +145,9 @@ public class NotificationApp extends Application {
         final Button newKeyButton = new Button("new key (only for new mobile phone)");
         newKeyButton.setOnAction((event) -> {
             bisqKey.newKey();
-            keyTitleLabel.setText("Encryption key: "+bisqKey.asBase58());
+            keyTitleLabel.setText("Encryption key: "+bisqKey.key());
             iv.set(qr.imageView(
-                    bisqKey.base58WithMagic(),
+                    bisqKey.withMagic(),
                     300,
                     300,
                     Color.BLACK,
@@ -244,21 +243,34 @@ public class NotificationApp extends Application {
         gridPane.add(actionRequiredField, 1, rowindex);
 
         rowindex++;
-        Button sendButton = new Button("Send");
-        sendButton.setPrefHeight(40);
-        sendButton.setDefaultButton(true);
-        sendButton.setPrefWidth(100);
-        gridPane.add(sendButton, 0, rowindex, 2, 1);
-        GridPane.setHalignment(sendButton, HPos.CENTER);
-        GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
+        Button sendPlaintextButton = new Button("Send plaintext");
+        sendPlaintextButton.setDefaultButton(true);
+        gridPane.add(sendPlaintextButton, 0, rowindex, 1, 1);
+        GridPane.setHalignment(sendPlaintextButton, HPos.CENTER);
+        GridPane.setMargin(sendPlaintextButton, new Insets(20, 0, 20, 0));
 
-        sendButton.setOnAction(event -> {
+        sendPlaintextButton.setOnAction(event -> {
             // send to apple server
             bisqNotification.notificationType = notificationTypeField.getText();
             bisqNotification.title = titleField.getText();
             bisqNotification.message = messageField.getText();
             bisqNotification.actionRequired = actionRequiredField.getText();
-            bisqNotification.send();
+            bisqNotification.send(false);
+        });
+
+        Button sendEencryptedButton = new Button("Send encrypted");
+        sendEencryptedButton.setDefaultButton(true);
+        gridPane.add(sendEencryptedButton, 1, rowindex, 1, 1);
+        GridPane.setHalignment(sendEencryptedButton, HPos.CENTER);
+        GridPane.setMargin(sendEencryptedButton, new Insets(20, 0, 20, 0));
+
+        sendEencryptedButton.setOnAction(event -> {
+            // send to apple server
+            bisqNotification.notificationType = notificationTypeField.getText();
+            bisqNotification.title = titleField.getText();
+            bisqNotification.message = messageField.getText();
+            bisqNotification.actionRequired = actionRequiredField.getText();
+            bisqNotification.send(true);
         });
     }
 }

@@ -107,7 +107,7 @@ class SetupScanQRViewController: UIViewController, AVCaptureMetadataOutputObject
             guard x.count == 2           else { badCode(); return }
             guard x[0].count > 0         else { badCode(); return }
             guard x[0] == BISQ_KEY_MAGIC else { badCode(); return }
-            guard x[1].count == 44       else { badCode(); return }
+            guard x[1].count == 32       else { badCode(); return }
             UserDefaults.standard.set(x[1], forKey: userDefaultSymmetricKey)
             navigationController?.popViewController(animated: true)
         }
