@@ -34,11 +34,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private BisqToken bisqToken;
     private BisqKey bisqKey;
     private BisqNotification bisqNotification;
@@ -120,7 +123,7 @@ public class NotificationApp extends Application {
         GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label keyTitleLabel = new Label("Encryption key: "+bisqKey.key());
+        Label keyTitleLabel = new Label("Encryption key: " + bisqKey.key());
         gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
 
@@ -139,7 +142,7 @@ public class NotificationApp extends Application {
         final Button newKeyButton = new Button("new key (only for new mobile phone)");
         newKeyButton.setOnAction((event) -> {
             bisqKey.newKey();
-            keyTitleLabel.setText("Encryption key: "+bisqKey.key());
+            keyTitleLabel.setText("Encryption key: " + bisqKey.key());
             iv.set(qr.imageView(
                     bisqKey.withMagic(),
                     300,
