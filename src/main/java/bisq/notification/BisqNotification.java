@@ -9,14 +9,16 @@ import com.turo.pushy.apns.util.SimpleApnsPushNotification;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 
 import java.io.File;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class BisqNotification extends BisqNotifcationObject {
+public class BisqNotification extends BisqNotificationObject {
     private BisqToken bisqToken;
     private BisqKey bisqKey;
+
     public BisqNotification(BisqToken t, BisqKey k) {
         super();
         bisqToken = t;
@@ -27,10 +29,20 @@ public class BisqNotification extends BisqNotifcationObject {
     public void send(Boolean encrypt) {
         try {
             ApnsClient apnsClient;
+            ClassLoader classLoader = getClass().getClassLoader();
+            URL resource = classLoader.getResource("push_certificate.production.p12");
+            if (resource == null) {
+                System.out.println("Error: push_certificate.production.p12 does not exist ");
+                return;
+            }
+
+            File p12File = new File(resource.getFile());
             apnsClient = new ApnsClientBuilder()
                     .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
-                    .setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
+                    .setClientCredentials(p12File, "")
                     .build();
+
+            //.setClientCredentials(new File("/Users/joachim/SpiderOak Hive/keys/push_certificate.production.p12"), "")
 
             PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse = null;
             SimpleApnsPushNotification pushNotification;
@@ -38,7 +50,7 @@ public class BisqNotification extends BisqNotifcationObject {
             ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
             payloadBuilder.setAlertBody("Bisq notifcation");
             Gson gson = new Gson();
-            BisqNotifcationObject mini = new BisqNotifcationObject(this);
+            BisqNotificationObject mini = new BisqNotificationObject(this);
             String json = gson.toJson(mini);
             byte[] ptext = json.getBytes(ISO_8859_1);
             json = new String(ptext, UTF_8);

@@ -1,6 +1,6 @@
 package bisq.notification;
 
-public class BisqNotifcationObject {
+public class BisqNotificationObject {
     String timestampEvent = "2018-06-19 11:58:41";
     String transactionID = "234523423";
     String title = "example Title";
@@ -9,10 +9,10 @@ public class BisqNotifcationObject {
     String actionRequired = "FROM JAVA! You need to make the bank transfer to receive your BTC";
     int version = 1;
 
-    public BisqNotifcationObject() {
+    public BisqNotificationObject() {
     }
 
-    public BisqNotifcationObject(BisqNotifcationObject template){
+    public BisqNotificationObject(BisqNotificationObject template) {
         // this constructor is used to strip variables from the subclass BisqNotifcation
         timestampEvent=template.timestampEvent;
         transactionID=template.transactionID;

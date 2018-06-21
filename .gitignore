@@ -25,6 +25,7 @@ java/remotedemo/*.txt
 .idea
 
 key.txt
+apsToken.txt
 
 *.iml
 *.spvchain
