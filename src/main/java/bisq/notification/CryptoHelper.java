@@ -1,6 +1,7 @@
 package bisq.notification;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.org.apache.xml.internal.security.utils.XMLUtils;
 
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.Cipher;
@@ -30,15 +31,21 @@ public class CryptoHelper {
     }
 
     public String encrypt(String valueToEncrypt, String iv) throws Exception {
+        while (valueToEncrypt.length() % 16 != 0) { valueToEncrypt = valueToEncrypt + " "; }
+
         if ( iv.length() != 16) { throw new Exception( "iv not 16 characters"); }
         ivspec = new IvParameterSpec(iv.getBytes());
-        return Base64.encode(encryptInternal(valueToEncrypt, ivspec));
+        byte[] encryptedBytes = encryptInternal(valueToEncrypt, ivspec);
+        String encryptedBase64 = Base64.encode(encryptedBytes);
+        return encryptedBase64;
     }
 
     public String decrypt(String valueToDecrypt, String iv) throws Exception {
         if ( iv.length() != 16) { throw new Exception( "iv not 16 characters"); }
         ivspec = new IvParameterSpec(iv.getBytes());
-        return new String(decryptInternal(valueToDecrypt, ivspec));
+        byte[] decryptedBytes = decryptInternal(valueToDecrypt, ivspec);
+        String decryptedString = new String(decryptedBytes);
+        return decryptedString;
     }
 
     private byte[] encryptInternal(String text, IvParameterSpec ivspec) throws Exception {

@@ -2,7 +2,7 @@ java/*/.idea
 java/*/target
 /target/classes
 java/remotedemo/.idea/workspace.xml
-java/remotedemo/*.txt
+*.txt
 
 
 # IDEA

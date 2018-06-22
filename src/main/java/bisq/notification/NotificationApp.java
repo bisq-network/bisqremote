@@ -42,12 +42,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
-    private BisqToken bisqToken;
-    private BisqKey bisqKey;
+    private Phone phone;
     private BisqNotification bisqNotification;
     public static Webcam webcam;
-    public TextField bundleIdentifierTextField;
-    public TextField tokenBase58TextField;
+    public TextField phoneTextField;
+    private boolean listenTophoneTextFieldChanges;
+    private Button webcamButton;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -58,9 +58,10 @@ public class NotificationApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        bisqToken = new BisqToken();
-        bisqKey = new BisqKey();
-        bisqNotification = new BisqNotification(bisqToken, bisqKey);
+        phone = new Phone();
+        if (phone.isInitialized) {
+            bisqNotification = new BisqNotification(phone);
+        }
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane
@@ -107,98 +108,44 @@ public class NotificationApp extends Application {
         return gridPane;
     }
 
-    public void updateToken() {
-        bundleIdentifierTextField.setText(bisqToken.bundleidentifier);
-        tokenBase58TextField.setText(bisqToken.asBase58());
-    }
-
     private void addUIControls(GridPane gridPane) {
 
         Integer rowindex = 0;
 
-        Label headerSetup1Label = new Label("Setup Step 1: The user needs the encryption key in his phone");
-        headerSetup1Label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridPane.add(headerSetup1Label, 0, rowindex, 2, 1);
-        GridPane.setHalignment(headerSetup1Label, HPos.LEFT);
-        GridPane.setMargin(headerSetup1Label, new Insets(5, 0, 0, 0));
-
-        rowindex++;
-        Label keyTitleLabel = new Label("Encryption key: " + bisqKey.key());
-        gridPane.add(keyTitleLabel, 0, rowindex, 2, 1);
-        GridPane.setHalignment(keyTitleLabel, HPos.LEFT);
-
-        rowindex++;
-        // QR code
-        QR qr = new QR();
-        AtomicReference<ImageView> iv = new AtomicReference<>(qr.imageView(
-                bisqKey.withMagic(),
-                300,
-                300,
-                Color.BLACK,
-                new Color(244, 244, 244)));
-        gridPane.add(iv.get(), 0, rowindex, 1, 1);
-        GridPane.setHalignment(iv.get(), HPos.RIGHT);
-
-        final Button newKeyButton = new Button("new key (only for new mobile phone)");
-        newKeyButton.setOnAction((event) -> {
-            bisqKey.newKey();
-            keyTitleLabel.setText("Encryption key: " + bisqKey.key());
-            iv.set(qr.imageView(
-                    bisqKey.withMagic(),
-                    300,
-                    300,
-                    Color.BLACK,
-                    new Color(244, 244, 244)));
-            gridPane.getChildren().remove(iv);
-            gridPane.add(iv.get(), 0, 2, 1, 1);
-            GridPane.setHalignment(iv.get(), HPos.RIGHT);
-        });
-
-        gridPane.add(newKeyButton, 1, rowindex, 1, 1);
-        GridPane.setHalignment(newKeyButton, HPos.CENTER);
-
-        rowindex++;
-        Label headerSetup2Label = new Label("Setup Step 2: Bisq needs the Apple Notification Token from the phone");
-        headerSetup2Label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridPane.add(headerSetup2Label, 0, rowindex, 2, 1);
-        GridPane.setHalignment(headerSetup2Label, HPos.LEFT);
-        GridPane.setMargin(headerSetup2Label, new Insets(5, 0, 0, 0));
+        Label headerSetupLabel = new Label("Setup Read the QR code from your phone");
+        headerSetupLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        gridPane.add(headerSetupLabel, 0, rowindex, 2, 1);
+        GridPane.setHalignment(headerSetupLabel, HPos.LEFT);
+        GridPane.setMargin(headerSetupLabel, new Insets(5, 0, 0, 0));
 
         // Webcam
         rowindex++;
-        final Button webcamButton = new Button("Use the Webcam of your computer");
+        webcamButton = new Button("Use the Webcam of your computer");
         webcamButton.setOnAction((event) -> {
-            new ReadQRCode(this, bisqToken);
+            this.webcamButton.setDisable(true);
+            new ReadQRCode(this, this.phone);
         });
-
         gridPane.add(webcamButton, 0, rowindex, 2, 1);
         GridPane.setHalignment(webcamButton, HPos.CENTER);
 
         rowindex++;
-        Label bundleIdentifierTitleLabel = new Label("bundle identifier:");
-        gridPane.add(bundleIdentifierTitleLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(bundleIdentifierTitleLabel, HPos.RIGHT);
-        bundleIdentifierTextField = new TextField(bisqToken.bundleidentifier);
-        bundleIdentifierTextField.setPromptText("Enter the bundle identifier");
-        gridPane.add(bundleIdentifierTextField, 1, rowindex, 1, 1);
-        GridPane.setHalignment(bundleIdentifierTextField, HPos.LEFT);
-        bundleIdentifierTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            bisqToken.bundleidentifier = newValue;
-            bisqToken.save();
+        Label phoneTitleLabel = new Label("phone string:");
+        gridPane.add(phoneTitleLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(phoneTitleLabel, HPos.RIGHT);
+        phoneTextField = new TextField();
+        phoneTextField.setPromptText("Enter phone string from email");
+        gridPane.add(phoneTextField, 1, rowindex, 1, 1);
+        GridPane.setHalignment(phoneTextField, HPos.LEFT);
+        phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (listenTophoneTextFieldChanges) {
+                this.phone.fromString(newValue);
+                this.phone.save();
+            }
         });
-
-        rowindex++;
-        Label tokenBase58TitleLabel = new Label("as Base58:");
-        gridPane.add(tokenBase58TitleLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(tokenBase58TitleLabel, HPos.RIGHT);
-        tokenBase58TextField = new TextField(bisqToken.asBase58());
-        tokenBase58TextField.setPromptText("Enter Token in Base58 format");
-        gridPane.add(tokenBase58TextField, 1, rowindex, 1, 1);
-        GridPane.setHalignment(tokenBase58TextField, HPos.LEFT);
-        tokenBase58TextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            bisqToken.apsTokenBase58 = newValue;
-            bisqToken.save();
-        });
+        listenTophoneTextFieldChanges = true;
+        if (phone.isInitialized) {
+            phoneTextField.setText(phone.description());
+        }
 
         rowindex++;
         Label headerSendLabel = new Label("Usage: send message");
@@ -270,4 +217,13 @@ public class NotificationApp extends Application {
             bisqNotification.prepareToSend(false);
         });
     }
+
+    public void updateGUI() {
+        listenTophoneTextFieldChanges = false;
+        phoneTextField.setText(phone.description());
+        listenTophoneTextFieldChanges = true;
+        this.webcamButton.setDisable(false);
+        bisqNotification = new BisqNotification(phone);
+    }
+
 }

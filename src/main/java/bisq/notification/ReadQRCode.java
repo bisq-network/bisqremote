@@ -27,12 +27,12 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
 
     private WebcamPanel panel = null;
     private NotificationApp app;
-    private BisqToken bisqToken;
+    private Phone phone;
 
-    public ReadQRCode(NotificationApp app_, BisqToken t) {
+    public ReadQRCode(NotificationApp app_, Phone phone_) {
         super();
         app = app_;
-        bisqToken = t;
+        phone = phone_;
         setLayout(new FlowLayout());
         setTitle("Bisq Notification token");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -88,12 +88,14 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
 
             if (result != null) {
                 // TODO update GUI in main thread
-                bisqToken.fromString(result.getText());
+                String QRstring = result.getText();
+                phone.fromString(QRstring);
+                phone.save();
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;
                 Platform.runLater(
                         () -> {
-                            app.updateToken();
+                            app.updateGUI();
                         }
                 );
             }
