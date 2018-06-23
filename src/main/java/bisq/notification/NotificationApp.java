@@ -112,15 +112,14 @@ public class NotificationApp extends Application {
 
         Integer rowindex = 0;
 
-        Label headerSetupLabel = new Label("Setup Read the QR code from your phone");
+        Label headerSetupLabel = new Label("Register your phone");
         headerSetupLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSetupLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSetupLabel, HPos.LEFT);
         GridPane.setMargin(headerSetupLabel, new Insets(5, 0, 0, 0));
 
-        // Webcam
         rowindex++;
-        webcamButton = new Button("Use the Webcam of your computer");
+        webcamButton = new Button("Use Webcam");
         webcamButton.setOnAction((event) -> {
             this.webcamButton.setDisable(true);
             new ReadQRCode(this, this.phone);
@@ -129,11 +128,11 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(webcamButton, HPos.CENTER);
 
         rowindex++;
-        Label phoneTitleLabel = new Label("phone string:");
+        Label phoneTitleLabel = new Label("Bisq Phone ID:");
         gridPane.add(phoneTitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(phoneTitleLabel, HPos.RIGHT);
         phoneTextField = new TextField();
-        phoneTextField.setPromptText("Enter phone string from email");
+        phoneTextField.setPromptText("copy the string from the email");
         gridPane.add(phoneTextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(phoneTextField, HPos.LEFT);
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -148,11 +147,11 @@ public class NotificationApp extends Application {
         }
 
         rowindex++;
-        Label headerSendLabel = new Label("Usage: send message");
+        Label headerSendLabel = new Label("Send message");
         headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSendLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSendLabel, HPos.LEFT);
-        GridPane.setMargin(headerSendLabel, new Insets(5, 0, 0, 0));
+        GridPane.setMargin(headerSendLabel, new Insets(35, 0, 0, 0));
 
         rowindex++;
         Label notificationTypeLabel = new Label("Message Type: ");
