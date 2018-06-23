@@ -10,7 +10,7 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BisqNotification extends BisqNotificationObject {
-    public static final String BISQ_MESSAGE_IOS_MAGIC = "BisqMessage_iOS";
+    public static final String BISQ_MESSAGE_IOS_MAGIC = "BisqMessageiOS";
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
     private BisqNotificationServer bisqNotificationServer;
@@ -49,7 +49,7 @@ public class BisqNotification extends BisqNotificationObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String combined =  BISQ_MESSAGE_IOS_MAGIC+"@"+iv+"@"+cipher;
+        String combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR+iv+Phone.PHONE_SEPARATOR+cipher;
         System.out.println("combined = "+combined);
 
         try {

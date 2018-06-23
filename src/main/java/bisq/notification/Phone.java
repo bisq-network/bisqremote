@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 
 public class Phone {
     private static final String PHONE_MAGIC_IOS = "BisqPhoneiOS";
+    static final String PHONE_SEPARATOR = "_";
     private static final String PHONE_FILENAME = "Phone.txt";
 
     public String key;
@@ -36,7 +37,7 @@ public class Phone {
     }
 
     public void fromString(String s) {
-        String[] a = s.split("@");
+        String[] a = s.split(PHONE_SEPARATOR);
         try {
             if (a.length != 3) {
                 throw new IOException("invalid " + PHONE_FILENAME + " format");
@@ -63,7 +64,7 @@ public class Phone {
     }
 
     public String description() {
-         return PHONE_MAGIC_IOS+"@"+key+"@"+apsToken;
+         return PHONE_MAGIC_IOS+PHONE_SEPARATOR+key+PHONE_SEPARATOR+apsToken;
     }
 
     public void save() {
