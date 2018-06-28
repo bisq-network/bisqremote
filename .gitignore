@@ -4,6 +4,11 @@ java/*/target
 java/remotedemo/.idea/workspace.xml
 *.txt
 
+# Push certificate iOS
+src/main/resources/push_certificate.production.p12
+
+# Push certificate Android
+src/main/resources/serviceAccountKey.json
 
 # IDEA
 .idea
