@@ -1,5 +1,11 @@
 package bisq.notification;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -10,7 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
@@ -21,17 +29,41 @@ public class BisqNotificationServer {
     private ApnsClient apnsClientDevelopment;
     private ApnsPayloadBuilder payloadBuilder;
     public static final String IOS_BUNDLE_IDENTIFIER = "com.joachimneumann.bisqremotetest";
+    public static final String IOS_CERTIFICATE_FILE = "push_certificate.production.p12";
+    public static final String ANDROID_CERTIFICATE_FILE = "serviceAccountKey.json";
+    public static final String ANDROID_DATABASE_URL = "https://bisqremotetest.firebaseio.com";
 
     BisqNotificationServer(Boolean production) {
         try {
+
             ClassLoader classLoader = getClass().getClassLoader();
-            URL resource = classLoader.getResource("push_certificate.production.p12");
-            if (resource == null) {
-                throw new IOException("push_certificate.production.p12 does not exist");
+
+
+            // ***
+            // *** Android
+            // ***
+            InputStream resource_Android = classLoader.getResourceAsStream(ANDROID_CERTIFICATE_FILE);
+            if (resource_Android == null) {
+                throw new IOException(ANDROID_CERTIFICATE_FILE+" does not exist");
             }
 
-            File p12File = new File(resource.getFile());
-            logger.info("Using certification file {}.", p12File.getAbsolutePath());
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(resource_Android))
+                    .setDatabaseUrl(ANDROID_DATABASE_URL)
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+
+            // ***
+            // *** iOS
+            // ***
+            URL resource_iOS = classLoader.getResource(IOS_CERTIFICATE_FILE);
+            if (resource_iOS == null) {
+                throw new IOException(IOS_CERTIFICATE_FILE+" does not exist");
+            }
+
+            File p12File = new File(resource_iOS.getFile());
+            logger.info("Using iOS certification file {}.", p12File.getAbsolutePath());
             apnsClientProduction = new ApnsClientBuilder()
                     .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
                     .setClientCredentials(p12File, "")
@@ -42,10 +74,12 @@ public class BisqNotificationServer {
                     .build();
         } catch (IOException e) {
             e.printStackTrace();
+//        } catch (FirebaseMessagingException e) {
+//            e.printStackTrace();
         }
     }
 
-    public void overTor_____sendMessage(String apsTokenHex, String encryptedMessage, Boolean production) {
+    public void overTor_____sendiOSMessage(String apsTokenHex, String encryptedMessage, Boolean production) {
         SimpleApnsPushNotification pushNotification;
         payloadBuilder = new ApnsPayloadBuilder();
         payloadBuilder.setAlertBody("Bisq notifcation");
@@ -78,6 +112,24 @@ public class BisqNotificationServer {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage) {
+            Message message = Message.builder()
+                    .putData("score", "850")
+                    .putData("time", "2:45")
+                    .setToken(apsTokenHex)
+                    .build();
+
+        String response = null;
+        try {
+            response = FirebaseMessaging.getInstance().send(message);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        // Response is a message ID string.
+            System.out.println("Sent message: " + response);
 
     }
 }

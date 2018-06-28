@@ -10,7 +10,8 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BisqNotification extends BisqNotificationObject {
-    public static final String BISQ_MESSAGE_IOS_MAGIC = "BisqMessageiOS";
+    public static final String BISQ_MESSAGE_IOS_MAGIC     = "BisqMessageiOS";
+    public static final String BISQ_MESSAGE_ANDROID_MAGIC = "BisqMessageAndroid";
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
     private BisqNotificationServer bisqNotificationServer;
@@ -49,18 +50,26 @@ public class BisqNotification extends BisqNotificationObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR+iv+Phone.PHONE_SEPARATOR+cipher;
-        System.out.println("combined = "+combined);
-
-        try {
-            String decipher = cryptoHelper.decrypt(cipher, iv);
-            System.out.println("decipher = |"+decipher+"|");
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        String combined;
+        if (phone.os == Phone.OS.iOS) {
+            combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, production);
+        } else if (phone.os == Phone.OS.Android) {
+            combined =  BISQ_MESSAGE_ANDROID_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, combined);
+        } else {
+            combined = null;
         }
 
+        if (combined != null) {
+            System.out.println("combined = "+combined);
+            try {
+                String decipher = cryptoHelper.decrypt(cipher, iv);
+                System.out.println("decipher = |"+decipher+"|");
 
-        bisqNotificationServer.overTor_____sendMessage(phone.apsToken, combined, production);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
