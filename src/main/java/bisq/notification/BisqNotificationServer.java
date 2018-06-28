@@ -33,11 +33,10 @@ public class BisqNotificationServer {
     public static final String ANDROID_CERTIFICATE_FILE = "serviceAccountKey.json";
     public static final String ANDROID_DATABASE_URL = "https://bisqremotetest.firebaseio.com";
 
-    BisqNotificationServer(Boolean production) {
+    BisqNotificationServer() {
         try {
 
             ClassLoader classLoader = getClass().getClassLoader();
-
 
             // ***
             // *** Android
@@ -45,14 +44,14 @@ public class BisqNotificationServer {
             InputStream resource_Android = classLoader.getResourceAsStream(ANDROID_CERTIFICATE_FILE);
             if (resource_Android == null) {
                 throw new IOException(ANDROID_CERTIFICATE_FILE+" does not exist");
+            } else {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(resource_Android))
+                        .setDatabaseUrl(ANDROID_DATABASE_URL)
+                        .build();
+
+                FirebaseApp.initializeApp(options);
             }
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(resource_Android))
-                    .setDatabaseUrl(ANDROID_DATABASE_URL)
-                    .build();
-
-            FirebaseApp.initializeApp(options);
 
             // ***
             // *** iOS
@@ -60,18 +59,19 @@ public class BisqNotificationServer {
             URL resource_iOS = classLoader.getResource(IOS_CERTIFICATE_FILE);
             if (resource_iOS == null) {
                 throw new IOException(IOS_CERTIFICATE_FILE+" does not exist");
+            } else {
+                File p12File = new File(resource_iOS.getFile());
+                logger.info("Using iOS certification file {}.", p12File.getAbsolutePath());
+                apnsClientProduction = new ApnsClientBuilder()
+                        .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
+                        .setClientCredentials(p12File, "")
+                        .build();
+                apnsClientDevelopment = new ApnsClientBuilder()
+                        .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+                        .setClientCredentials(p12File, "")
+                        .build();
             }
 
-            File p12File = new File(resource_iOS.getFile());
-            logger.info("Using iOS certification file {}.", p12File.getAbsolutePath());
-            apnsClientProduction = new ApnsClientBuilder()
-                    .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
-                    .setClientCredentials(p12File, "")
-                    .build();
-            apnsClientDevelopment = new ApnsClientBuilder()
-                    .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
-                    .setClientCredentials(p12File, "")
-                    .build();
         } catch (IOException e) {
             e.printStackTrace();
 //        } catch (FirebaseMessagingException e) {

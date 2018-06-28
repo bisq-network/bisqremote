@@ -19,8 +19,8 @@ public class BisqNotification extends BisqNotificationObject {
 
     public BisqNotification(Phone phone_) {
         super();
-        bisqNotificationServer = new BisqNotificationServer(false);
         phone = phone_;
+        bisqNotificationServer = new BisqNotificationServer();
         cryptoHelper = new CryptoHelper(phone.key);
     }
 

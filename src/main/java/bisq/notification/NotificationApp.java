@@ -44,6 +44,8 @@ public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
     private BisqNotification bisqNotification;
+    private Button sendButton;
+    private Button sendButtonDevelopment;
     public static Webcam webcam;
     public TextField phoneTextField;
     private boolean listenTophoneTextFieldChanges;
@@ -186,7 +188,7 @@ public class NotificationApp extends Application {
         gridPane.add(actionRequiredField, 1, rowindex);
 
         rowindex++;
-        Button sendButton = new Button("Send Notification");
+        sendButton = new Button("Send Notification");
         sendButton.setDefaultButton(true);
         gridPane.add(sendButton, 0, rowindex, 2, 1);
         GridPane.setHalignment(sendButton, HPos.CENTER);
@@ -202,12 +204,12 @@ public class NotificationApp extends Application {
         });
 
         rowindex++;
-        Button sendEncryptedButtonDevelopment = new Button("Send to iOS App running from Xcode (Apple development APNS Server)");
-        gridPane.add(sendEncryptedButtonDevelopment, 0, rowindex, 2, 1);
-        GridPane.setHalignment(sendEncryptedButtonDevelopment, HPos.CENTER);
-        GridPane.setMargin(sendEncryptedButtonDevelopment, new Insets(0, 0, 20, 0));
+        sendButtonDevelopment = new Button("Send to iOS App running from Xcode (Apple development APNS Server)");
+        gridPane.add(sendButtonDevelopment, 0, rowindex, 2, 1);
+        GridPane.setHalignment(sendButtonDevelopment, HPos.CENTER);
+        GridPane.setMargin(sendButtonDevelopment, new Insets(0, 0, 20, 0));
 
-        sendEncryptedButtonDevelopment.setOnAction(event -> {
+        sendButtonDevelopment.setOnAction(event -> {
             // send to apple server
             bisqNotification.notificationType = notificationTypeField.getText();
             bisqNotification.title = titleField.getText();
@@ -215,14 +217,33 @@ public class NotificationApp extends Application {
             bisqNotification.actionRequired = actionRequiredField.getText();
             bisqNotification.prepareToSend(false);
         });
+
+        updateGUI();
     }
 
     public void updateGUI() {
+        switch (phone.os) {
+            case iOS:
+                sendButton.setDisable(false);
+                sendButton.setText("send to iPhone");
+                sendButtonDevelopment.setText("send to iPhone running from Xcode");
+                break;
+            case Android:
+                sendButton.setDisable(false);
+                sendButton.setText("send to Android phone");
+                sendButtonDevelopment.setVisible(false);
+                break;
+            case undefined:
+                sendButton.setText("send");
+                sendButton.setDisable(true);
+                sendButtonDevelopment.setVisible(false);
+                break;
+        }
+
         listenTophoneTextFieldChanges = false;
         phoneTextField.setText(phone.description());
         listenTophoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
-        bisqNotification = new BisqNotification(phone);
     }
 
 }
