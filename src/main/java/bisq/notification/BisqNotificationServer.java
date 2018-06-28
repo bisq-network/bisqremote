@@ -117,8 +117,7 @@ public class BisqNotificationServer {
 
     public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage) {
             Message message = Message.builder()
-                    .putData("score", "850")
-                    .putData("time", "2:45")
+                    .putData("encrypted", encryptedMessage)
                     .setToken(apsTokenHex)
                     .build();
 
