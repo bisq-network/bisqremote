@@ -60,21 +60,21 @@
             <version>2.0.8.Final</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j-api</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.5.5</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j-api</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
+            <!--<version>1.5.5</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>6.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-messaging</artifactId>
-            <version>9.0.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.firebase</groupId>-->
+            <!--<artifactId>firebase-messaging</artifactId>-->
+            <!--<version>9.0.1</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 </project>
