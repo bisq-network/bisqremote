@@ -47,7 +47,7 @@ build
 /bisq*
 /xchange
 desktop.ini
-*/target/*
+target/*
 *.class
 deploy
 releases/*
