@@ -123,7 +123,8 @@ public class BisqNotificationServer {
 
         String response = null;
         try {
-            response = FirebaseMessaging.getInstance().send(message);
+            FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
+            response = firebaseMessaging.send(message);
         } catch (FirebaseMessagingException e) {
             e.printStackTrace();
         }

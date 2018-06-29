@@ -195,7 +195,7 @@ public class NotificationApp extends Application {
         GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
 
         sendButton.setOnAction(event -> {
-            // send to apple server
+            // send to notification server
             bisqNotification.notificationType = notificationTypeField.getText();
             bisqNotification.title = titleField.getText();
             bisqNotification.message = messageField.getText();

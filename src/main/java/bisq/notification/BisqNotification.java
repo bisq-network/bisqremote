@@ -47,6 +47,9 @@ public class BisqNotification extends BisqNotificationObject {
         String cipher = null;
         try {
             cipher = cryptoHelper.encrypt(json, iv);
+            logger.info("key = "+phone.key);
+            logger.info("iv = "+iv);
+            logger.info("encryptedJson = "+cipher);
         } catch (Exception e) {
             e.printStackTrace();
         }
