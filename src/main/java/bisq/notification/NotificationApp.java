@@ -62,7 +62,7 @@ public class NotificationApp extends Application {
     public void start(Stage primaryStage) {
         phone = new Phone();
         if (phone.isInitialized) {
-            bisqNotification = new BisqNotification(phone);
+            if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
         }
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
@@ -140,6 +140,7 @@ public class NotificationApp extends Application {
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (listenTophoneTextFieldChanges) {
                 this.phone.fromString(newValue);
+                if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
                 this.phone.save();
             }
         });
@@ -244,6 +245,7 @@ public class NotificationApp extends Application {
         phoneTextField.setText(phone.description());
         listenTophoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
+        if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
     }
 
 }

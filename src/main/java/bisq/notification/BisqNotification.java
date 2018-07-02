@@ -66,6 +66,7 @@ public class BisqNotification extends BisqNotificationObject {
 
         if (combined != null) {
             System.out.println("combined = "+combined);
+            System.out.println("token = "+phone.notificationToken);
             try {
                 String decipher = cryptoHelper.decrypt(cipher, iv);
                 System.out.println("decipher = |"+decipher+"|");

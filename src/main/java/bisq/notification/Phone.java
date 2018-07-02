@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 public class Phone {
     private static final String PHONE_MAGIC_IOS     = "BisqPhoneiOS";
     private static final String PHONE_MAGIC_ANDROID = "BisqPhoneAndroid";
-    static final String PHONE_SEPARATOR_SPLIT   = "\\|"; // see https://stackoverflow.com/questions/5675704/java-string-split-not-returning-the-right-values
+    static final String PHONE_SEPARATOR_ESCAPED   = "\\|"; // see https://stackoverflow.com/questions/5675704/java-string-split-not-returning-the-right-values
     static final String PHONE_SEPARATOR_WRITING = "|";
     private static final String PHONE_FILENAME = "BisqPhoneID.txt";
 
@@ -47,7 +47,7 @@ public class Phone {
     }
 
     public void fromString(String s) {
-        String[] a = s.split(PHONE_SEPARATOR_SPLIT);
+        String[] a = s.split(PHONE_SEPARATOR_ESCAPED);
         try {
             if (a.length != 3) {
                 throw new IOException("invalid Bisq Phone ID format: not three sections separated by _");
