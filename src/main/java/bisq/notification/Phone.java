@@ -19,6 +19,7 @@ public class Phone {
     static final String PHONE_SEPARATOR_ESCAPED   = "\\|"; // see https://stackoverflow.com/questions/5675704/java-string-split-not-returning-the-right-values
     static final String PHONE_SEPARATOR_WRITING = "|";
     private static final String PHONE_FILENAME = "BisqPhoneID.txt";
+    private CryptoHelper cryptoHelper;
 
     public enum OS {
         iOS, Android, undefined
@@ -30,6 +31,24 @@ public class Phone {
     public Boolean isInitialized;
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
+
+    public String encrypt(String cipher, String iv) {
+        try {
+            return cryptoHelper.encrypt(cipher, iv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String decrypt(String cipher, String iv) {
+        try {
+            return cryptoHelper.decrypt(cipher, iv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public Phone() {
         isInitialized = false;
@@ -47,6 +66,7 @@ public class Phone {
     }
 
     public void fromString(String s) {
+        logger.info(s);
         String[] a = s.split(PHONE_SEPARATOR_ESCAPED);
         try {
             if (a.length != 3) {
@@ -71,12 +91,14 @@ public class Phone {
             key = a[1];
             notificationToken = a[2];
             isInitialized = true;
+            cryptoHelper = new CryptoHelper(key);
         }
         catch (IOException e) {
             key = "";
             notificationToken = "";
             isInitialized = false;
             logger.error(e.getMessage());
+            cryptoHelper = null;
         }
     }
 

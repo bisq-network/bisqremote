@@ -14,12 +14,9 @@ public class CryptoHelper {
     private IvParameterSpec ivspec;
     private SecretKeySpec keyspec;
     private Cipher cipher;
-    private String key; // 32 character key - exchanged with phones that receive the message
 
     public CryptoHelper(String key_) {
-        key = key_;
-
-        keyspec = new SecretKeySpec(key.getBytes(), "AES");
+        updateKey(key_);
 
         try {
             cipher = Cipher.getInstance("AES/CBC/NOPadding");
@@ -28,6 +25,17 @@ public class CryptoHelper {
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateKey(String key_) {
+        if (key_.length() != 32) {
+            try {
+                throw new Exception("key not 32 characters");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        keyspec = new SecretKeySpec(key_.getBytes(), "AES");
     }
 
     public String encrypt(String valueToEncrypt, String iv) throws Exception {
@@ -53,8 +61,6 @@ public class CryptoHelper {
             throw new Exception("Empty string");
         }
 
-        if (key.length() != 32) { throw new Exception("key not 32 characters"); }
-
         byte[] encrypted = null;
         try {
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
@@ -69,8 +75,6 @@ public class CryptoHelper {
         if (code == null || code.length() == 0) {
             throw new Exception("Empty string");
         }
-
-        if (key.length() != 32) { throw new Exception("key not 32 characters"); }
 
         byte[] decrypted = null;
         try {

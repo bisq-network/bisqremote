@@ -87,7 +87,6 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
             }
 
             if (result != null) {
-                // TODO update GUI in main thread
                 String QRstring = result.getText();
                 phone.fromString(QRstring);
                 phone.save();

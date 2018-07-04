@@ -15,13 +15,11 @@ public class BisqNotification extends BisqNotificationObject {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
     private BisqNotificationServer bisqNotificationServer;
-    private CryptoHelper cryptoHelper;
 
     public BisqNotification(Phone phone_) {
         super();
         phone = phone_;
         bisqNotificationServer = new BisqNotificationServer();
-        cryptoHelper = new CryptoHelper(phone.key);
     }
 
     public void prepareToSend(Boolean production) {
@@ -46,7 +44,7 @@ public class BisqNotification extends BisqNotificationObject {
 
         String cipher = null;
         try {
-            cipher = cryptoHelper.encrypt(json, iv);
+            cipher = phone.encrypt(json, iv);
             logger.info("key = "+phone.key);
             logger.info("iv = "+iv);
             logger.info("encryptedJson = "+cipher);
@@ -68,7 +66,7 @@ public class BisqNotification extends BisqNotificationObject {
             System.out.println("combined = "+combined);
             System.out.println("token = "+phone.notificationToken);
             try {
-                String decipher = cryptoHelper.decrypt(cipher, iv);
+                String decipher = phone.decrypt(cipher, iv);
                 System.out.println("decipher = |"+decipher+"|");
 
             } catch (Exception e) {

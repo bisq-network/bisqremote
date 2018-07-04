@@ -137,6 +137,10 @@ public class NotificationApp extends Application {
         phoneTextField.setPromptText("copy the string from the email");
         gridPane.add(phoneTextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(phoneTextField, HPos.LEFT);
+        if (phone.isInitialized) {
+            phoneTextField.setText(phone.description());
+        }
+        // adding the listener *after* setting the text
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (listenTophoneTextFieldChanges) {
                 this.phone.fromString(newValue);
@@ -145,9 +149,6 @@ public class NotificationApp extends Application {
             }
         });
         listenTophoneTextFieldChanges = true;
-        if (phone.isInitialized) {
-            phoneTextField.setText(phone.description());
-        }
 
         rowindex++;
         Label headerSendLabel = new Label("Send message");
