@@ -88,13 +88,13 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
 
             if (result != null) {
                 String QRstring = result.getText();
-                phone.fromString(QRstring);
+                Boolean sendConfirmation = phone.fromString(QRstring);
                 phone.save();
                 dispatchEvent(new java.awt.event.WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 run = false;
                 Platform.runLater(
                         () -> {
-                            app.updateGUI();
+                            app.updateGUI(sendConfirmation);
                         }
                 );
             }

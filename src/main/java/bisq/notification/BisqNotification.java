@@ -10,8 +10,9 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BisqNotification extends BisqNotificationObject {
-    public static final String BISQ_MESSAGE_IOS_MAGIC     = "BisqMessageiOS";
-    public static final String BISQ_MESSAGE_ANDROID_MAGIC = "BisqMessageAndroid";
+    public static final String BISQ_MESSAGE_IOS_MAGIC      = "BisqMessageiOS";
+    public static final String BISQ_CONFIRMATION_MESSAGE   = "confirmationNotification";
+    public static final String BISQ_MESSAGE_ANDROID_MAGIC  = "BisqMessageAndroid";
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
     private BisqNotificationServer bisqNotificationServer;
@@ -22,7 +23,7 @@ public class BisqNotification extends BisqNotificationObject {
         bisqNotificationServer = new BisqNotificationServer();
     }
 
-    public void prepareToSend(Boolean production) {
+    public void prepareToSend() {
         // reduce the notification to the fields in the superclass BisqNotificationObject
         // A JSON from BisqNotification would be far to large
         BisqNotificationObject mini = new BisqNotificationObject(this);
@@ -51,27 +52,24 @@ public class BisqNotification extends BisqNotificationObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        send(iv, cipher);
+    }
+
+    public void sendConfirmation() {
+        send("not_encrypted", BISQ_CONFIRMATION_MESSAGE);
+    }
+
+    private void send(String iv, String cipher) {
         String combined;
         if (phone.os == Phone.OS.iOS) {
             combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
-            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, production);
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, true);
+        } else if (phone.os == Phone.OS.iOSDev) {
+            combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, false);
         } else if (phone.os == Phone.OS.Android) {
             combined =  BISQ_MESSAGE_ANDROID_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
             bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, combined);
-        } else {
-            combined = null;
-        }
-
-        if (combined != null) {
-            System.out.println("combined = "+combined);
-            System.out.println("token = "+phone.notificationToken);
-            try {
-                String decipher = phone.decrypt(cipher, iv);
-                System.out.println("decipher = |"+decipher+"|");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }
