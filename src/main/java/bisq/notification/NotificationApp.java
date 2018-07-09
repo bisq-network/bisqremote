@@ -25,9 +25,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -171,7 +171,7 @@ public class NotificationApp extends Application {
         Label titleLabel = new Label("Headline: ");
         gridPane.add(titleLabel, 0, rowindex);
 
-        TextField titleField = new TextField("Test title");
+        TextField titleField = new TextField("Notification Title");
         titleField.setPrefHeight(40);
         gridPane.add(titleField, 1, rowindex);
 
@@ -179,7 +179,7 @@ public class NotificationApp extends Application {
         Label messageLabel = new Label("Message text: ");
         gridPane.add(messageLabel, 0, rowindex);
 
-        TextField messageField = new TextField("Test message");
+        TextField messageField = new TextField("Notification message");
         messageField.setPrefHeight(40);
         gridPane.add(messageField, 1, rowindex);
 
@@ -187,9 +187,13 @@ public class NotificationApp extends Application {
         Label actionRequiredLabel = new Label("Action Required: ");
         gridPane.add(actionRequiredLabel, 0, rowindex);
 
-        TextField actionRequiredField = new TextField("Test action");
+        TextField actionRequiredField = new TextField("You need to do somthing!");
         actionRequiredField.setPrefHeight(40);
         gridPane.add(actionRequiredField, 1, rowindex);
+
+        rowindex++;
+        javafx.scene.control.CheckBox sound = new  javafx.scene.control.CheckBox("Play sound when in background");
+        gridPane.add(sound, 1, rowindex);
 
         rowindex++;
         sendButton = new Button("Send Notification");
@@ -204,7 +208,7 @@ public class NotificationApp extends Application {
             bisqNotification.title = titleField.getText();
             bisqNotification.message = messageField.getText();
             bisqNotification.actionRequired = actionRequiredField.getText();
-            bisqNotification.prepareToSend();
+            bisqNotification.prepareToSend(sound.isSelected());
         });
         updateGUI(false);
     }

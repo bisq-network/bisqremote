@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -79,9 +78,10 @@ public class BisqNotificationServer {
         }
     }
 
-    public void overTor_____sendiOSMessage(String apsTokenHex, String encryptedMessage, Boolean production) {
+    public void overTor_____sendiOSMessage(String apsTokenHex, String encryptedMessage, Boolean sound, Boolean production) {
         SimpleApnsPushNotification pushNotification;
         payloadBuilder = new ApnsPayloadBuilder();
+        if (sound) payloadBuilder.setSoundFileName("default");
         payloadBuilder.setAlertBody("Bisq notifcation");
         payloadBuilder.addCustomProperty("encrypted", encryptedMessage);
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
@@ -118,6 +118,7 @@ public class BisqNotificationServer {
     public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage) {
             Message message = Message.builder()
                     .putData("encrypted", encryptedMessage)
+                    .putData("sound", "default")
                     .setToken(apsTokenHex)
                     .build();
 
