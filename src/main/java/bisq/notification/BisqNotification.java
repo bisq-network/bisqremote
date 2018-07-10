@@ -12,6 +12,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class BisqNotification extends BisqNotificationObject {
     public static final String BISQ_MESSAGE_IOS_MAGIC      = "BisqMessageiOS";
     public static final String BISQ_CONFIRMATION_MESSAGE   = "confirmationNotification";
+    public static final String BISQ_FACTORY_RESET_MESSAGE  = "factoryResetNotification";
     public static final String BISQ_MESSAGE_ANDROID_MAGIC  = "BisqMessageAndroid";
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
@@ -58,6 +59,10 @@ public class BisqNotification extends BisqNotificationObject {
 //        String iv2 = uuid2.substring(0, 16);
 //        iv = iv2
         send(iv, cipher, sound);
+    }
+
+    public void sendDelete() {
+        send("not_encrypted", BISQ_FACTORY_RESET_MESSAGE, true);
     }
 
     public void sendConfirmation() {

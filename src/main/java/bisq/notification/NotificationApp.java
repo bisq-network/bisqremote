@@ -45,10 +45,11 @@ public class NotificationApp extends Application {
     private Phone phone;
     private BisqNotification bisqNotification;
     private Button sendButton;
+    private Button webcamButton;
+    private Button deleteButton;
     public static Webcam webcam;
     public TextField phoneTextField;
     private boolean listenTophoneTextFieldChanges;
-    private Button webcamButton;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -113,14 +114,15 @@ public class NotificationApp extends Application {
 
         Integer rowindex = 0;
 
-        Label headerSetupLabel = new Label("Register your phone");
+        Label headerSetupLabel = new Label("SETUP");
         headerSetupLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSetupLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSetupLabel, HPos.LEFT);
         GridPane.setMargin(headerSetupLabel, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        webcamButton = new Button("Use Webcam");
+        webcamButton = new Button("WEBCAM");
+        webcamButton.setDefaultButton(true);
         webcamButton.setOnAction((event) -> {
             this.webcamButton.setDisable(true);
             new ReadQRCode(this, this.phone);
@@ -153,7 +155,16 @@ public class NotificationApp extends Application {
         listenTophoneTextFieldChanges = true;
 
         rowindex++;
-        Label headerSendLabel = new Label("Send message");
+        webcamButton = new Button("FACTORY RESET");
+        webcamButton.setOnAction((event) -> {
+            factoryResetNotifications();
+        });
+        gridPane.add(webcamButton, 0, rowindex, 2, 1);
+        GridPane.setHalignment(webcamButton, HPos.CENTER);
+
+
+        rowindex++;
+        Label headerSendLabel = new Label("NOTIFY");
         headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSendLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSendLabel, HPos.LEFT);
@@ -210,22 +221,37 @@ public class NotificationApp extends Application {
             bisqNotification.actionRequired = actionRequiredField.getText();
             bisqNotification.prepareToSend(sound.isSelected());
         });
-        updateGUI(false);
+        updateGUI();
     }
 
-    public void updateGUI(Boolean sendConfirmation) {
+    public void sendConfirmation() {
+        if (bisqNotification != null && phone.isInitialized) {
+            bisqNotification.sendConfirmation();
+        }
+    }
+
+    public void factoryResetNotifications() {
+        if (bisqNotification != null && phone.isInitialized) {
+            bisqNotification.sendDelete();
+        }
+    }
+
+    public void updateGUI() {
         switch (phone.os) {
             case iOS:
+                sendButton.setDisable(false);
+                sendButton.setText("SEND (iPhone)");
+                break;
             case iOSDev:
                 sendButton.setDisable(false);
-                sendButton.setText("send to iPhone");
+                sendButton.setText("SEND (iPhone dev)");
                 break;
             case Android:
                 sendButton.setDisable(false);
-                sendButton.setText("send to Android phone");
+                sendButton.setText("SEND (Android");
                 break;
             case undefined:
-                sendButton.setText("send");
+                sendButton.setText("SEND");
                 sendButton.setDisable(true);
                 break;
         }
@@ -235,9 +261,6 @@ public class NotificationApp extends Application {
         listenTophoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
         if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
-        if (sendConfirmation) {
-            bisqNotification.sendConfirmation();
-        }
     }
 
 }

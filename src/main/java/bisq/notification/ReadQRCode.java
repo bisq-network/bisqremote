@@ -94,7 +94,8 @@ public class ReadQRCode extends JFrame implements Runnable, ThreadFactory {
                 run = false;
                 Platform.runLater(
                         () -> {
-                            app.updateGUI(sendConfirmation);
+                            app.updateGUI();
+                            app.sendConfirmation();
                         }
                 );
             }
