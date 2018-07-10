@@ -45,6 +45,7 @@ public class NotificationApp extends Application {
     private Phone phone;
     private Button sendButton;
     private Button webcamButton;
+    private Button eraseButton;
     private Button deleteButton;
     public static Webcam webcam;
     public TextField phoneTextField;
@@ -150,14 +151,14 @@ public class NotificationApp extends Application {
         listenToPhoneTextFieldChanges = true;
 
         rowindex++;
-        webcamButton = new Button("FACTORY RESET");
-        webcamButton.setOnAction((event) -> {
+        eraseButton = new Button("FACTORY RESET");
+        eraseButton.setOnAction((event) -> {
             BisqNotification n = new BisqNotification(phone);
             n.notificationType = NotificationTypes.ERASE.name();
             send(n, false);
         });
-        gridPane.add(webcamButton, 0, rowindex, 2, 1);
-        GridPane.setHalignment(webcamButton, HPos.CENTER);
+        gridPane.add(eraseButton, 0, rowindex, 2, 1);
+        GridPane.setHalignment(eraseButton, HPos.CENTER);
 
 
         rowindex++;
