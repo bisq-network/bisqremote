@@ -43,13 +43,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
-    private BisqNotification bisqNotification;
     private Button sendButton;
     private Button webcamButton;
     private Button deleteButton;
     public static Webcam webcam;
     public TextField phoneTextField;
-    private boolean listenTophoneTextFieldChanges;
+    private boolean listenToPhoneTextFieldChanges;
+    private BisqNotificationServer bisqNotificationServer;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -60,10 +60,10 @@ public class NotificationApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         phone = new Phone();
-        if (phone.isInitialized) {
-            if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
-        }
+        bisqNotificationServer = new BisqNotificationServer();
+
         primaryStage.setTitle("Bisq Notification Reference Implementation");
 
         // Create the registration form grid pane
@@ -143,21 +143,18 @@ public class NotificationApp extends Application {
         }
         // adding the listener *after* setting the text
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (listenTophoneTextFieldChanges) {
-                boolean sendNotification = this.phone.fromString(newValue);
-                if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
-                this.phone.save();
-                if (sendNotification) {
-                    bisqNotification.sendConfirmation();
-                }
+            if (listenToPhoneTextFieldChanges) {
+                sendConfirmation();
             }
         });
-        listenTophoneTextFieldChanges = true;
+        listenToPhoneTextFieldChanges = true;
 
         rowindex++;
         webcamButton = new Button("FACTORY RESET");
         webcamButton.setOnAction((event) -> {
-            factoryResetNotifications();
+            BisqNotification n = new BisqNotification(phone);
+            n.notificationType = NotificationTypes.ERASE.name();
+            send(n, false);
         });
         gridPane.add(webcamButton, 0, rowindex, 2, 1);
         GridPane.setHalignment(webcamButton, HPos.CENTER);
@@ -214,27 +211,39 @@ public class NotificationApp extends Application {
         GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
 
         sendButton.setOnAction(event -> {
-            // send to notification server
-            bisqNotification.notificationType = notificationTypeField.getText();
-            bisqNotification.title = titleField.getText();
-            bisqNotification.message = messageField.getText();
-            bisqNotification.actionRequired = actionRequiredField.getText();
-            bisqNotification.prepareToSend(sound.isSelected());
+            BisqNotification n = new BisqNotification(phone);
+            n.notificationType = NotificationTypes.TRADE.name();
+            n.title = titleField.getText();
+            n.message = messageField.getText();
+            n.actionRequired = actionRequiredField.getText();
+            send(n, sound.isSelected());
         });
         updateGUI();
     }
 
+
     public void sendConfirmation() {
-        if (bisqNotification != null && phone.isInitialized) {
-            bisqNotification.sendConfirmation();
+
+        // check syntax
+        boolean sendConfirmationNotification = this.phone.fromString(phoneTextField.getText());
+        if (phone.isInitialized) {
+            BisqNotification n = new BisqNotification(phone);
+            n.notificationType = NotificationTypes.SETUP_CONFIRMATION.name();
+            send(n, true);
         }
     }
 
-    public void factoryResetNotifications() {
-        if (bisqNotification != null && phone.isInitialized) {
-            bisqNotification.sendDelete();
+    private void send(BisqNotification n, Boolean sound) {
+        String payload = n.payload();
+        if (phone.os == Phone.OS.iOS) {
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, true);
+        } else if (phone.os == Phone.OS.iOSDev) {
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, false);
+        } else if (phone.os == Phone.OS.Android) {
+            bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, payload, sound);
         }
     }
+
 
     public void updateGUI() {
         switch (phone.os) {
@@ -256,11 +265,10 @@ public class NotificationApp extends Application {
                 break;
         }
 
-        listenTophoneTextFieldChanges = false;
+        listenToPhoneTextFieldChanges = false;
         phoneTextField.setText(phone.phoneID());
-        listenTophoneTextFieldChanges = true;
+        listenToPhoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
-        if (bisqNotification == null && phone.isInitialized) bisqNotification = new BisqNotification(phone);
     }
 
 }

@@ -115,12 +115,15 @@ public class BisqNotificationServer {
     }
 
 
-    public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage) {
-            Message message = Message.builder()
-                    .putData("encrypted", encryptedMessage)
-                    .putData("sound", "default")
-                    .setToken(apsTokenHex)
-                    .build();
+    public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage, Boolean sound) {
+        Message.Builder messageBuilder = Message.builder();
+        messageBuilder.putData("encrypted", encryptedMessage);
+        messageBuilder.setToken(apsTokenHex);
+        if (sound) {
+            messageBuilder.putData("sound", "default");
+        }
+
+        Message message = messageBuilder.build();
 
         String response = null;
         try {

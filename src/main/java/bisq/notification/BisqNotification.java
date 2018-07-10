@@ -9,6 +9,10 @@ import java.util.UUID;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+enum NotificationTypes {
+    SETUP_CONFIRMATION, ERASE, TRADE, DISPUTE, FINANCIAL
+}
+
 public class BisqNotification extends BisqNotificationObject {
     public static final String BISQ_MESSAGE_IOS_MAGIC      = "BisqMessageiOS";
     public static final String BISQ_CONFIRMATION_MESSAGE   = "confirmationNotification";
@@ -16,15 +20,13 @@ public class BisqNotification extends BisqNotificationObject {
     public static final String BISQ_MESSAGE_ANDROID_MAGIC  = "BisqMessageAndroid";
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
-    private BisqNotificationServer bisqNotificationServer;
 
     public BisqNotification(Phone phone_) {
         super();
         phone = phone_;
-        bisqNotificationServer = new BisqNotificationServer();
     }
 
-    public void prepareToSend(Boolean sound) {
+    public String payload() {
         // reduce the notification to the fields in the superclass BisqNotificationObject
         // A JSON from BisqNotification would be far to large
         BisqNotificationObject mini = new BisqNotificationObject(this);
@@ -42,44 +44,31 @@ public class BisqNotification extends BisqNotificationObject {
         String uuid = UUID.randomUUID().toString();
         uuid = uuid.replace("-", "");
         String iv = uuid.substring(0, 16);
-
-        String cipher = null;
-        try {
-            cipher = phone.encrypt(json, iv);
-            logger.info("key = "+phone.key);
-            logger.info("iv = "+iv);
-            logger.info("encryptedJson = "+cipher);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 //        // For testing: Code to provoke a decryption error
 //        String uuid2 = UUID.randomUUID().toString();
 //        uuid2 = uuid2.replace("-", "");
 //        String iv2 = uuid2.substring(0, 16);
 //        iv = iv2
-        send(iv, cipher, sound);
-    }
 
-    public void sendDelete() {
-        send("not_encrypted", BISQ_FACTORY_RESET_MESSAGE, true);
-    }
 
-    public void sendConfirmation() {
-        send("not_encrypted", BISQ_CONFIRMATION_MESSAGE, true);
-    }
-
-    private void send(String iv, String cipher, Boolean sound) {
-        String combined;
-        if (phone.os == Phone.OS.iOS) {
-            combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
-            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, sound, true);
-        } else if (phone.os == Phone.OS.iOSDev) {
-            combined =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
-            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, combined, sound, false);
-        } else if (phone.os == Phone.OS.Android) {
-            combined =  BISQ_MESSAGE_ANDROID_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
-            bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, combined);
+        String cipher = null;
+        String payload = null;
+        try {
+            cipher = phone.encrypt(json, iv);
+            logger.info("key = "+phone.key);
+            logger.info("iv = "+iv);
+            logger.info("encryptedJson = "+cipher);
+            if (phone.os == Phone.OS.iOS) {
+                payload =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            } else if (phone.os == Phone.OS.iOSDev) {
+                payload =  BISQ_MESSAGE_IOS_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            } else if (phone.os == Phone.OS.Android) {
+                payload =  BISQ_MESSAGE_ANDROID_MAGIC+Phone.PHONE_SEPARATOR_WRITING+iv+Phone.PHONE_SEPARATOR_WRITING+cipher;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return payload;
     }
+
 }

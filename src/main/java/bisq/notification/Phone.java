@@ -1,8 +1,5 @@
 package bisq.notification;
 
-import com.google.common.io.BaseEncoding;
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.Base58;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,6 +97,7 @@ public class Phone {
             notificationToken = a[2];
             isInitialized = true;
             cryptoHelper = new CryptoHelper(key);
+            save();
             return true;
         }
         catch (IOException e) {
