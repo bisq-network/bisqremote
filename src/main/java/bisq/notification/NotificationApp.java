@@ -28,9 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -38,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
@@ -46,7 +43,7 @@ public class NotificationApp extends Application {
     private Button sendButton;
     private Button webcamButton;
     private Button eraseButton;
-    private Button deleteButton;
+    private Button testButton;
     public static Webcam webcam;
     public TextField phoneTextField;
     private boolean listenToPhoneTextFieldChanges;
@@ -115,28 +112,30 @@ public class NotificationApp extends Application {
 
         Integer rowindex = 0;
 
-        Label headerSetupLabel = new Label("SETUP");
+        Label headerSetupLabel = new Label("Notification Setup");
         headerSetupLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSetupLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSetupLabel, HPos.LEFT);
         GridPane.setMargin(headerSetupLabel, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        webcamButton = new Button("WEBCAM");
-        webcamButton.setDefaultButton(true);
+        Label webcamLabel = new Label("Use webcam:");
+        gridPane.add(webcamLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(webcamLabel, HPos.RIGHT);
+        webcamButton = new Button("SCAN QR Code");
         webcamButton.setOnAction((event) -> {
             this.webcamButton.setDisable(true);
             new ReadQRCode(this, this.phone);
         });
-        gridPane.add(webcamButton, 0, rowindex, 2, 1);
-        GridPane.setHalignment(webcamButton, HPos.CENTER);
+        gridPane.add(webcamButton, 1, rowindex, 1, 1);
+        GridPane.setHalignment(webcamButton, HPos.LEFT);
 
         rowindex++;
-        Label phoneTitleLabel = new Label("Bisq Phone ID:");
+        Label phoneTitleLabel = new Label("Phone ID:");
         gridPane.add(phoneTitleLabel, 0, rowindex, 1, 1);
         GridPane.setHalignment(phoneTitleLabel, HPos.RIGHT);
         phoneTextField = new TextField();
-        phoneTextField.setPromptText("copy the string from the email");
+        phoneTextField.setPromptText("(optional) paste Phone ID from email");
         gridPane.add(phoneTextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(phoneTextField, HPos.LEFT);
         if (phone.isInitialized) {
@@ -151,74 +150,66 @@ public class NotificationApp extends Application {
         listenToPhoneTextFieldChanges = true;
 
         rowindex++;
-        eraseButton = new Button("FACTORY RESET");
+        Label testLabel = new Label("Send test Notification:");
+        gridPane.add(testLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(testLabel, HPos.RIGHT);
+        testButton = new Button("TEST");
+        testButton.setOnAction((event) -> {
+            BisqNotification n = new BisqNotification(phone);
+            n.notificationType = NotificationTypes.TRADE.name();
+            n.title = "test notifications";
+            n.message = "";
+            send(n, true);
+        });
+        gridPane.add(testButton, 1, rowindex, 1, 1);
+        GridPane.setHalignment(testButton, HPos.LEFT);
+
+        rowindex++;
+        Label eraseLabel = new Label("Erase Phone:");
+        gridPane.add(eraseLabel, 0, rowindex, 1, 1);
+        GridPane.setHalignment(eraseLabel, HPos.RIGHT);
+        eraseButton = new Button("ERASE");
+        eraseButton.setStyle("-fx-background-color: #ee6664;-fx-text-fill: #ffffff;"); // color from airbnb logo
+        eraseButton.setDisable(true);
         eraseButton.setOnAction((event) -> {
             BisqNotification n = new BisqNotification(phone);
             n.notificationType = NotificationTypes.ERASE.name();
             send(n, false);
         });
-        gridPane.add(eraseButton, 0, rowindex, 2, 1);
-        GridPane.setHalignment(eraseButton, HPos.CENTER);
-
+        gridPane.add(eraseButton, 1, rowindex, 1, 1);
+        GridPane.setHalignment(eraseButton, HPos.LEFT);
 
         rowindex++;
-        Label headerSendLabel = new Label("NOTIFY");
+        Label headerSendLabel = new Label("Notification Settings");
         headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         gridPane.add(headerSendLabel, 0, rowindex, 2, 1);
         GridPane.setHalignment(headerSendLabel, HPos.LEFT);
         GridPane.setMargin(headerSendLabel, new Insets(35, 0, 0, 0));
 
         rowindex++;
-        Label notificationTypeLabel = new Label("Message Type: ");
+        Label notificationTypeLabel = new Label("Trades: ");
         gridPane.add(notificationTypeLabel, 0, rowindex);
-
-        TextField notificationTypeField = new TextField("Test type");
-        notificationTypeField.setPrefHeight(40);
-        gridPane.add(notificationTypeField, 1, rowindex);
+        javafx.scene.control.CheckBox tradeCheckbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(tradeCheckbox, 1, rowindex);
 
         rowindex++;
-        Label titleLabel = new Label("Headline: ");
-        gridPane.add(titleLabel, 0, rowindex);
-
-        TextField titleField = new TextField("Notification Title");
-        titleField.setPrefHeight(40);
-        gridPane.add(titleField, 1, rowindex);
+        notificationTypeLabel = new Label("Market alerts: ");
+        gridPane.add(notificationTypeLabel, 0, rowindex);
+        tradeCheckbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(tradeCheckbox, 1, rowindex);
 
         rowindex++;
-        Label messageLabel = new Label("Message text: ");
-        gridPane.add(messageLabel, 0, rowindex);
-
-        TextField messageField = new TextField("Notification message");
-        messageField.setPrefHeight(40);
-        gridPane.add(messageField, 1, rowindex);
+        notificationTypeLabel = new Label("Price alerts: ");
+        gridPane.add(notificationTypeLabel, 0, rowindex);
+        tradeCheckbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(tradeCheckbox, 1, rowindex);
 
         rowindex++;
-        Label actionRequiredLabel = new Label("Action Required: ");
-        gridPane.add(actionRequiredLabel, 0, rowindex);
+        notificationTypeLabel = new Label("Play sound when in background:");
+        gridPane.add(notificationTypeLabel, 0, rowindex);
+        tradeCheckbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(tradeCheckbox, 1, rowindex);
 
-        TextField actionRequiredField = new TextField("You need to do somthing!");
-        actionRequiredField.setPrefHeight(40);
-        gridPane.add(actionRequiredField, 1, rowindex);
-
-        rowindex++;
-        javafx.scene.control.CheckBox sound = new  javafx.scene.control.CheckBox("Play sound when in background");
-        gridPane.add(sound, 1, rowindex);
-
-        rowindex++;
-        sendButton = new Button("Send Notification");
-        sendButton.setDefaultButton(true);
-        gridPane.add(sendButton, 0, rowindex, 2, 1);
-        GridPane.setHalignment(sendButton, HPos.CENTER);
-        GridPane.setMargin(sendButton, new Insets(20, 0, 20, 0));
-
-        sendButton.setOnAction(event -> {
-            BisqNotification n = new BisqNotification(phone);
-            n.notificationType = NotificationTypes.TRADE.name();
-            n.title = titleField.getText();
-            n.message = messageField.getText();
-            n.actionRequired = actionRequiredField.getText();
-            send(n, sound.isSelected());
-        });
         updateGUI();
     }
 
@@ -249,20 +240,14 @@ public class NotificationApp extends Application {
     public void updateGUI() {
         switch (phone.os) {
             case iOS:
-                sendButton.setDisable(false);
-                sendButton.setText("SEND (iPhone)");
-                break;
             case iOSDev:
-                sendButton.setDisable(false);
-                sendButton.setText("SEND (iPhone dev)");
-                break;
             case Android:
-                sendButton.setDisable(false);
-                sendButton.setText("SEND (Android");
+                testButton.setDisable(false);
+                eraseButton.setDisable(false);
                 break;
             case undefined:
-                sendButton.setText("SEND");
-                sendButton.setDisable(true);
+                testButton.setDisable(true);
+                eraseButton.setDisable(true);
                 break;
         }
 
