@@ -20,6 +20,7 @@ package bisq.notification;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,10 +41,11 @@ import java.awt.*;
 public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Phone phone;
-    private Button sendButton;
+    private Stage primaryStage;
     private Button webcamButton;
     private Button eraseButton;
     private Button testButton;
+    private QR qr;
     public static Webcam webcam;
     public TextField phoneTextField;
     private boolean listenToPhoneTextFieldChanges;
@@ -57,8 +59,8 @@ public class NotificationApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-
+    public void start(Stage primaryStage_) {
+        primaryStage = primaryStage_;
         phone = new Phone();
         bisqNotificationServer = new BisqNotificationServer();
 
@@ -124,8 +126,8 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(webcamLabel, HPos.RIGHT);
         webcamButton = new Button("SCAN QR Code");
         webcamButton.setOnAction((event) -> {
-            this.webcamButton.setDisable(true);
-            new ReadQRCode(this, this.phone);
+//            new ReadQRCode(this, this.phone);
+            qr = new QR(this, primaryStage, webcam);
         });
         gridPane.add(webcamButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(webcamButton, HPos.LEFT);
@@ -144,7 +146,10 @@ public class NotificationApp extends Application {
         // adding the listener *after* setting the text
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (listenToPhoneTextFieldChanges) {
-                sendConfirmation();
+                Boolean ok = phone.fromString(phoneTextField.getText());
+                if (ok) {
+                    sendConfirmation();
+                }
             }
         });
         listenToPhoneTextFieldChanges = true;
@@ -173,6 +178,9 @@ public class NotificationApp extends Application {
         eraseButton.setDisable(true);
         eraseButton.setOnAction((event) -> {
             BisqNotification n = new BisqNotification(phone);
+            phoneTextField.setText("");
+            eraseButton.setDisable(true);
+            testButton.setDisable(true);
             n.notificationType = NotificationTypes.ERASE.name();
             send(n, false);
         });
@@ -215,9 +223,6 @@ public class NotificationApp extends Application {
 
 
     public void sendConfirmation() {
-
-        // check syntax
-        boolean sendConfirmationNotification = this.phone.fromString(phoneTextField.getText());
         if (phone.isInitialized) {
             BisqNotification n = new BisqNotification(phone);
             n.notificationType = NotificationTypes.SETUP_CONFIRMATION.name();
@@ -235,7 +240,11 @@ public class NotificationApp extends Application {
             bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, payload, sound);
         }
     }
-
+    public void qrString(String s) {
+        qr.close();
+        if (phone.fromString(s)) { sendConfirmation(); }
+        updateGUI();
+    }
 
     public void updateGUI() {
         switch (phone.os) {
