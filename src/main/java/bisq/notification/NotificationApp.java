@@ -26,7 +26,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -111,19 +110,20 @@ public class NotificationApp extends Application {
     }
 
     private void addUIControls(GridPane gridPane) {
-
+        javafx.scene.control.Label label;
+        javafx.scene.control.CheckBox checkbox;
         Integer rowindex = 0;
 
-        Label headerSetupLabel = new Label("Notification Setup");
-        headerSetupLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridPane.add(headerSetupLabel, 0, rowindex, 2, 1);
-        GridPane.setHalignment(headerSetupLabel, HPos.LEFT);
-        GridPane.setMargin(headerSetupLabel, new Insets(5, 0, 0, 0));
+        label = new Label("Notification Setup");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        gridPane.add(label, 0, rowindex, 2, 1);
+        GridPane.setHalignment(label, HPos.LEFT);
+        GridPane.setMargin(label, new Insets(5, 0, 0, 0));
 
         rowindex++;
-        Label webcamLabel = new Label("Use webcam:");
-        gridPane.add(webcamLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(webcamLabel, HPos.RIGHT);
+        label = new Label("Use webcam:");
+        gridPane.add(label, 0, rowindex, 1, 1);
+        GridPane.setHalignment(label, HPos.RIGHT);
         webcamButton = new Button("SCAN QR Code");
         webcamButton.setOnAction((event) -> {
 //            new ReadQRCode(this, this.phone);
@@ -133,9 +133,9 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(webcamButton, HPos.LEFT);
 
         rowindex++;
-        Label phoneTitleLabel = new Label("Phone ID:");
-        gridPane.add(phoneTitleLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(phoneTitleLabel, HPos.RIGHT);
+        label = new Label("Phone ID:");
+        gridPane.add(label, 0, rowindex, 1, 1);
+        GridPane.setHalignment(label, HPos.RIGHT);
         phoneTextField = new TextField();
         phoneTextField.setPromptText("(optional) paste Phone ID from email");
         gridPane.add(phoneTextField, 1, rowindex, 1, 1);
@@ -155,9 +155,16 @@ public class NotificationApp extends Application {
         listenToPhoneTextFieldChanges = true;
 
         rowindex++;
-        Label testLabel = new Label("Send test Notification:");
-        gridPane.add(testLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(testLabel, HPos.RIGHT);
+        label = new Label("Play sound when in background:");
+        gridPane.add(label, 0, rowindex);
+        checkbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(checkbox, 1, rowindex);
+
+
+        rowindex++;
+        label = new Label("Send test Notification:");
+        gridPane.add(label, 0, rowindex, 1, 1);
+        GridPane.setHalignment(label, HPos.RIGHT);
         testButton = new Button("TEST");
         testButton.setOnAction((event) -> {
             BisqNotification n = new BisqNotification(phone);
@@ -170,9 +177,10 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(testButton, HPos.LEFT);
 
         rowindex++;
-        Label eraseLabel = new Label("Erase Phone:");
-        gridPane.add(eraseLabel, 0, rowindex, 1, 1);
-        GridPane.setHalignment(eraseLabel, HPos.RIGHT);
+        rowindex++;
+        label = new Label("Erase Phone:");
+        gridPane.add(label, 0, rowindex, 1, 1);
+        GridPane.setHalignment(label, HPos.RIGHT);
         eraseButton = new Button("ERASE");
         eraseButton.setStyle("-fx-background-color: #ee6664;-fx-text-fill: #ffffff;"); // color from airbnb logo
         eraseButton.setDisable(true);
@@ -187,36 +195,32 @@ public class NotificationApp extends Application {
         gridPane.add(eraseButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(eraseButton, HPos.LEFT);
 
-        rowindex++;
-        Label headerSendLabel = new Label("Notification Settings");
-        headerSendLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gridPane.add(headerSendLabel, 0, rowindex, 2, 1);
-        GridPane.setHalignment(headerSendLabel, HPos.LEFT);
-        GridPane.setMargin(headerSendLabel, new Insets(35, 0, 0, 0));
+
 
         rowindex++;
-        Label notificationTypeLabel = new Label("Trades: ");
-        gridPane.add(notificationTypeLabel, 0, rowindex);
-        javafx.scene.control.CheckBox tradeCheckbox = new  javafx.scene.control.CheckBox("");
-        gridPane.add(tradeCheckbox, 1, rowindex);
+        label = new Label("Notification Settings");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        gridPane.add(label, 0, rowindex, 2, 1);
+        GridPane.setHalignment(label, HPos.LEFT);
+        GridPane.setMargin(label, new Insets(35, 0, 0, 0));
 
         rowindex++;
-        notificationTypeLabel = new Label("Market alerts: ");
-        gridPane.add(notificationTypeLabel, 0, rowindex);
-        tradeCheckbox = new  javafx.scene.control.CheckBox("");
-        gridPane.add(tradeCheckbox, 1, rowindex);
+        label = new Label("Trades: ");
+        gridPane.add(label, 0, rowindex);
+        checkbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(checkbox, 1, rowindex);
 
         rowindex++;
-        notificationTypeLabel = new Label("Price alerts: ");
-        gridPane.add(notificationTypeLabel, 0, rowindex);
-        tradeCheckbox = new  javafx.scene.control.CheckBox("");
-        gridPane.add(tradeCheckbox, 1, rowindex);
+        label = new Label("Market alerts: ");
+        gridPane.add(label, 0, rowindex);
+        checkbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(checkbox, 1, rowindex);
 
         rowindex++;
-        notificationTypeLabel = new Label("Play sound when in background:");
-        gridPane.add(notificationTypeLabel, 0, rowindex);
-        tradeCheckbox = new  javafx.scene.control.CheckBox("");
-        gridPane.add(tradeCheckbox, 1, rowindex);
+        label = new Label("Price alerts: ");
+        gridPane.add(label, 0, rowindex);
+        checkbox = new  javafx.scene.control.CheckBox("");
+        gridPane.add(checkbox, 1, rowindex);
 
         updateGUI();
     }
