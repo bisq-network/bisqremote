@@ -169,7 +169,7 @@ public class NotificationApp extends Application {
         testButton.setOnAction((event) -> {
             BisqNotification n = new BisqNotification(phone);
             n.notificationType = NotificationTypes.TRADE.name();
-            n.title = "test notifications";
+            n.title = "Bisq test notification";
             n.message = "";
             send(n, true);
         });
