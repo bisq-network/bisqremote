@@ -70,7 +70,7 @@ public class Phone {
         String[] a = s.split(PHONE_SEPARATOR_ESCAPED);
         try {
             if (a.length != 3) {
-                throw new IOException("invalid Bisq Phone ID format: not three sections separated by "+PHONE_SEPARATOR_WRITING);
+                throw new IOException("invalid Bisq Phone ID format: not three sections separated by "+PHONE_SEPARATOR_WRITING+" n="+a.length+" s="+s);
             }
             if (a[1].length() != 32) {
                 throw new IOException("invalid Bisq Phone ID format: key not 32 bytes");

@@ -74,6 +74,14 @@ public class NotificationApp extends Application {
         // Set the scene in primary stage
         primaryStage.setScene(scene);
 
+        webcamButton.setDisable(false);
+        if (phone.isInitialized) {
+            testButton.setDisable(false);
+            eraseButton.setDisable(false);
+        } else {
+            testButton.setDisable(true);
+            eraseButton.setDisable(true);
+        }
         primaryStage.show();
     }
 
@@ -149,6 +157,11 @@ public class NotificationApp extends Application {
                 Boolean ok = phone.fromString(phoneTextField.getText());
                 if (ok) {
                     sendConfirmation();
+                    testButton.setDisable(false);
+                    eraseButton.setDisable(false);
+                } else {
+                    testButton.setDisable(true);
+                    eraseButton.setDisable(true);
                 }
             }
         });
@@ -167,11 +180,13 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(label, HPos.RIGHT);
         testButton = new Button("TEST");
         testButton.setOnAction((event) -> {
-            BisqNotification n = new BisqNotification(phone);
-            n.notificationType = NotificationTypes.TRADE.name();
-            n.title = "Bisq test notification";
-            n.message = "";
-            send(n, true);
+            if (phone.isInitialized) {
+                BisqNotification n = new BisqNotification(phone);
+                n.notificationType = NotificationTypes.TRADE.name();
+                n.title = "Bisq test notification";
+                n.message = "";
+                send(n, true);
+            }
         });
         gridPane.add(testButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(testButton, HPos.LEFT);
@@ -185,12 +200,16 @@ public class NotificationApp extends Application {
         eraseButton.setStyle("-fx-background-color: #ee6664;-fx-text-fill: #ffffff;"); // color from airbnb logo
         eraseButton.setDisable(true);
         eraseButton.setOnAction((event) -> {
-            BisqNotification n = new BisqNotification(phone);
-            phoneTextField.setText("");
-            eraseButton.setDisable(true);
-            testButton.setDisable(true);
-            n.notificationType = NotificationTypes.ERASE.name();
-            send(n, false);
+            if (phone.isInitialized) {
+                BisqNotification n = new BisqNotification(phone);
+                eraseButton.setDisable(true);
+                testButton.setDisable(true);
+                n.notificationType = NotificationTypes.ERASE.name();
+                send(n, false);
+                listenToPhoneTextFieldChanges = false;
+                phoneTextField.setText("");
+                listenToPhoneTextFieldChanges = true;
+            }
         });
         gridPane.add(eraseButton, 1, rowindex, 1, 1);
         GridPane.setHalignment(eraseButton, HPos.LEFT);
@@ -268,6 +287,11 @@ public class NotificationApp extends Application {
         phoneTextField.setText(phone.phoneID());
         listenToPhoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
+        if (!phone.isInitialized) {
+            this.testButton.setDisable(true);
+            this.eraseButton.setDisable(true);
+        }
+
     }
 
 }
