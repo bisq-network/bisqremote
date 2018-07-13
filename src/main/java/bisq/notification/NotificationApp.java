@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -49,6 +50,7 @@ public class NotificationApp extends Application {
     public TextField phoneTextField;
     private boolean listenToPhoneTextFieldChanges;
     private BisqNotificationServer bisqNotificationServer;
+    private CheckBox soundCheckBox;
 
     public static void main(String[] args) {
         Webcam.getDiscoveryService().setEnabled(true);
@@ -118,8 +120,8 @@ public class NotificationApp extends Application {
     }
 
     private void addUIControls(GridPane gridPane) {
-        javafx.scene.control.Label label;
-        javafx.scene.control.CheckBox checkbox;
+        Label label;
+        CheckBox checkbox;
         Integer rowindex = 0;
 
         label = new Label("Notification Setup");
@@ -170,8 +172,8 @@ public class NotificationApp extends Application {
         rowindex++;
         label = new Label("Play sound when in background:");
         gridPane.add(label, 0, rowindex);
-        checkbox = new  javafx.scene.control.CheckBox("");
-        gridPane.add(checkbox, 1, rowindex);
+        soundCheckBox = new  CheckBox("");
+        gridPane.add(soundCheckBox, 1, rowindex);
 
 
         rowindex++;
@@ -185,7 +187,7 @@ public class NotificationApp extends Application {
                 n.notificationType = NotificationTypes.TRADE.name();
                 n.title = "Bisq test notification";
                 n.message = "";
-                send(n, true);
+                send(n, soundCheckBox.isSelected());
             }
         });
         gridPane.add(testButton, 1, rowindex, 1, 1);
@@ -226,19 +228,19 @@ public class NotificationApp extends Application {
         rowindex++;
         label = new Label("Trades: ");
         gridPane.add(label, 0, rowindex);
-        checkbox = new  javafx.scene.control.CheckBox("");
+        checkbox = new  CheckBox("");
         gridPane.add(checkbox, 1, rowindex);
 
         rowindex++;
         label = new Label("Market alerts: ");
         gridPane.add(label, 0, rowindex);
-        checkbox = new  javafx.scene.control.CheckBox("");
+        checkbox = new  CheckBox("");
         gridPane.add(checkbox, 1, rowindex);
 
         rowindex++;
         label = new Label("Price alerts: ");
         gridPane.add(label, 0, rowindex);
-        checkbox = new  javafx.scene.control.CheckBox("");
+        checkbox = new  CheckBox("");
         gridPane.add(checkbox, 1, rowindex);
 
         updateGUI();
