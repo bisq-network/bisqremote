@@ -48,6 +48,7 @@ public class NotificationApp extends Application {
     private QR qr;
     public static Webcam webcam;
     public TextField phoneTextField;
+    private int testCounter = 1;
     private boolean listenToPhoneTextFieldChanges;
     private BisqNotificationServer bisqNotificationServer;
     private CheckBox soundCheckBox;
@@ -185,8 +186,9 @@ public class NotificationApp extends Application {
             if (phone.isInitialized) {
                 BisqNotification n = new BisqNotification(phone);
                 n.notificationType = NotificationTypes.TRADE.name();
-                n.title = "Bisq test notification";
-                n.message = "";
+                n.title = "Bisq test notification "+testCounter;
+                testCounter += 1;
+                n.message = "message text";
                 send(n, soundCheckBox.isSelected());
             }
         });

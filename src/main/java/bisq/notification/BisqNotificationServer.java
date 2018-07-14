@@ -83,6 +83,7 @@ public class BisqNotificationServer {
         payloadBuilder = new ApnsPayloadBuilder();
         if (sound) payloadBuilder.setSoundFileName("default");
         payloadBuilder.setAlertBody("Bisq notifcation");
+        payloadBuilder.setContentAvailable(true);
         payloadBuilder.addCustomProperty("encrypted", encryptedMessage);
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
         SimpleApnsPushNotification simpleApnsPushNotification = new SimpleApnsPushNotification(apsTokenHex, IOS_BUNDLE_IDENTIFIER, payload);
