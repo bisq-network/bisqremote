@@ -20,7 +20,6 @@ package bisq.notification;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,8 +34,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
 
 public class NotificationApp extends Application {
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
@@ -185,7 +182,7 @@ public class NotificationApp extends Application {
         testButton.setOnAction((event) -> {
             if (phone.isInitialized) {
                 BisqNotification n = new BisqNotification(phone);
-                n.notificationType = NotificationTypes.TRADE.name();
+                n.type = NotificationTypes.TRADE.name();
                 n.title = "Bisq test notification "+testCounter;
                 testCounter += 1;
                 n.message = "message text";
@@ -208,7 +205,7 @@ public class NotificationApp extends Application {
                 BisqNotification n = new BisqNotification(phone);
                 eraseButton.setDisable(true);
                 testButton.setDisable(true);
-                n.notificationType = NotificationTypes.ERASE.name();
+                n.type = NotificationTypes.ERASE.name();
                 send(n, false);
                 listenToPhoneTextFieldChanges = false;
                 phoneTextField.setText("");
@@ -252,7 +249,7 @@ public class NotificationApp extends Application {
     public void sendConfirmation() {
         if (phone.isInitialized) {
             BisqNotification n = new BisqNotification(phone);
-            n.notificationType = NotificationTypes.SETUP_CONFIRMATION.name();
+            n.type = NotificationTypes.SETUP_CONFIRMATION.name();
             send(n, true);
         }
     }

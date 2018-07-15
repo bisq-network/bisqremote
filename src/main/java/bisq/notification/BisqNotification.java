@@ -55,6 +55,7 @@ public class BisqNotification extends BisqNotificationObject {
         String payload = null;
         try {
             cipher = phone.encrypt(json, iv);
+            logger.info("json = "+json);
             logger.info("key = "+phone.key);
             logger.info("iv = "+iv);
             logger.info("encryptedJson = "+cipher);

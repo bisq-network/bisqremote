@@ -1,11 +1,11 @@
 package bisq.notification;
 
 public class BisqNotificationObject {
-    String timestampEvent = "2018-06-19 11:58:41";
-    String transactionID = "234523423";
+    long sentDate;
+    String txId= "";
     String title = "";
     String message = "";
-    String notificationType = "";
+    String type = "";
     String actionRequired = "";
     int version = 1;
 
@@ -14,12 +14,13 @@ public class BisqNotificationObject {
 
     public BisqNotificationObject(BisqNotificationObject template) {
         // this constructor is used to strip variables from the subclass BisqNotifcation
-        timestampEvent=template.timestampEvent;
-        transactionID=template.transactionID;
-        title=template.title;
-        message=template.message;
-        notificationType=template.notificationType;
-        actionRequired=template.actionRequired;
-        version=template.version;
+        sentDate = template.sentDate;
+        txId = template.txId;
+        title = template.title;
+        message = template.message;
+        type = template.type;
+        actionRequired = template.actionRequired;
+        version = template.version;
+        sentDate = 0;
     }
 }
