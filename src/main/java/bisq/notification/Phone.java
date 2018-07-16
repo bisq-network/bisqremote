@@ -11,12 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Phone {
-    private static final String PHONE_MAGIC_IOS     = "BisqPhoneiOS";
-    private static final String PHONE_MAGIC_IOS_DEV = "BisqPhoneiOSDev";
-    private static final String PHONE_MAGIC_ANDROID = "BisqPhoneAndroid";
+    private static final String PHONE_MAGIC_IOS     = "iOS";
+    private static final String PHONE_MAGIC_IOS_DEV = "iOSDev";
+    private static final String PHONE_MAGIC_ANDROID = "android";
     static final String PHONE_SEPARATOR_ESCAPED   = "\\|"; // see https://stackoverflow.com/questions/5675704/java-string-split-not-returning-the-right-values
     static final String PHONE_SEPARATOR_WRITING = "|";
-    private static final String PHONE_FILENAME = "BisqPhoneID.txt";
+    private static final String PHONE_FILENAME = "BisqPairingToken.txt";
     private CryptoHelper cryptoHelper;
 
     public enum OS {
@@ -24,6 +24,7 @@ public class Phone {
     }
 
     public OS os = OS.undefined;
+    public String descriptor;
     public String key;
     public String notificationToken;
     public Boolean isInitialized;
@@ -69,32 +70,33 @@ public class Phone {
         logger.info(s);
         String[] a = s.split(PHONE_SEPARATOR_ESCAPED);
         try {
-            if (a.length != 3) {
+            if (a.length != 4) {
                 throw new IOException("invalid Bisq Phone ID format: not three sections separated by "+PHONE_SEPARATOR_WRITING+" n="+a.length+" s="+s);
             }
-            if (a[1].length() != 32) {
+            if (a[2].length() != 32) {
                 throw new IOException("invalid Bisq Phone ID format: key not 32 bytes");
             }
             if (a[0].equals(PHONE_MAGIC_IOS)) {
                 os = OS.iOS;
-                if (a[2].length() != 64) {
+                if (a[3].length() != 64) {
                     throw new IOException("invalid Bisq Phone ID format: iOS token not 64 bytes");
                 }
             } else if (a[0].equals(PHONE_MAGIC_IOS_DEV)) {
                 os = OS.iOSDev;
-                if (a[2].length() != 64) {
+                if (a[3].length() != 64) {
                     throw new IOException("invalid Bisq Phone ID format: iOS token not 64 bytes");
                 }
             } else if (a[0].equals(PHONE_MAGIC_ANDROID)){
                 os = OS.Android;
-                if (a[2].length() < 32) {
+                if (a[3].length() < 32) {
                     throw new IOException("invalid Bisq Phone ID format: Android token too short (<32 bytes)");
                 }
             } else {
                 throw new IOException("invalid Bisq Phone ID format");
             }
-            key = a[1];
-            notificationToken = a[2];
+            descriptor = a[1];
+            key = a[2];
+            notificationToken = a[3];
             isInitialized = true;
             cryptoHelper = new CryptoHelper(key);
             save();
@@ -102,6 +104,7 @@ public class Phone {
         }
         catch (IOException e) {
             key = "";
+            descriptor = "";
             notificationToken = "";
             isInitialized = false;
             logger.error(e.getMessage());

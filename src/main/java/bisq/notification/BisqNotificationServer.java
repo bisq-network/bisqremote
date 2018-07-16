@@ -78,12 +78,12 @@ public class BisqNotificationServer {
         }
     }
 
-    public void overTor_____sendiOSMessage(String apsTokenHex, String encryptedMessage, Boolean sound, Boolean production) {
+    public void overTor_____sendiOSMessage(String apsTokenHex, String encryptedMessage, Boolean sound, Boolean production, Boolean contentAvailable) {
         SimpleApnsPushNotification pushNotification;
         payloadBuilder = new ApnsPayloadBuilder();
         if (sound) payloadBuilder.setSoundFileName("default");
         payloadBuilder.setAlertBody("Bisq notification");
-        payloadBuilder.setContentAvailable(true);
+        if (contentAvailable) {payloadBuilder.setContentAvailable(true);}
         payloadBuilder.addCustomProperty("encrypted", encryptedMessage);
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
         logger.error("payload "+payload);

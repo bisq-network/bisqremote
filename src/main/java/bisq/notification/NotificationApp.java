@@ -186,7 +186,7 @@ public class NotificationApp extends Application {
                 n.title = "Bisq test notification "+testCounter;
                 testCounter += 1;
                 n.message = "message text";
-                send(n, soundCheckBox.isSelected());
+                send(n, soundCheckBox.isSelected(), true);
             }
         });
         gridPane.add(testButton, 1, rowindex, 1, 1);
@@ -206,7 +206,7 @@ public class NotificationApp extends Application {
                 eraseButton.setDisable(true);
                 testButton.setDisable(true);
                 n.type = NotificationTypes.ERASE.name();
-                send(n, false);
+                send(n, false, true);
                 listenToPhoneTextFieldChanges = false;
                 phoneTextField.setText("");
                 listenToPhoneTextFieldChanges = true;
@@ -250,16 +250,16 @@ public class NotificationApp extends Application {
         if (phone.isInitialized) {
             BisqNotification n = new BisqNotification(phone);
             n.type = NotificationTypes.SETUP_CONFIRMATION.name();
-            send(n, true);
+            send(n, true, false);
         }
     }
 
-    private void send(BisqNotification n, Boolean sound) {
+    private void send(BisqNotification n, Boolean sound, Boolean contentAvailable) {
         String payload = n.payload();
         if (phone.os == Phone.OS.iOS) {
-            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, true);
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, true, contentAvailable);
         } else if (phone.os == Phone.OS.iOSDev) {
-            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, false);
+            bisqNotificationServer.overTor_____sendiOSMessage(phone.notificationToken, payload, sound, false, contentAvailable);
         } else if (phone.os == Phone.OS.Android) {
             bisqNotificationServer.overTor_____sendAndroidMessage(phone.notificationToken, payload, sound);
         }
