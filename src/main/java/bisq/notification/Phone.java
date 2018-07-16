@@ -66,7 +66,7 @@ public class Phone {
 
     // return value: confirmation notification required?
     public boolean fromString(String s) {
-        if (phoneID() == s) return false; // nothing new - no confirmation notification action required
+        if (pairingToken() == s) return false; // nothing new - no confirmation notification action required
         logger.info(s);
         String[] a = s.split(PHONE_SEPARATOR_ESCAPED);
         try {
@@ -113,13 +113,13 @@ public class Phone {
         return false;
     }
 
-    public String phoneID() {
+    public String pairingToken() {
         if (os == OS.iOS) {
-            return PHONE_MAGIC_IOS + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
+            return PHONE_MAGIC_IOS + PHONE_SEPARATOR_WRITING + descriptor + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
         } else if (os == OS.iOSDev) {
-            return PHONE_MAGIC_IOS_DEV + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
+            return PHONE_MAGIC_IOS_DEV + PHONE_SEPARATOR_WRITING + descriptor + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
         } else if (os == OS.Android) {
-            return PHONE_MAGIC_ANDROID + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
+            return PHONE_MAGIC_ANDROID + PHONE_SEPARATOR_WRITING + descriptor + PHONE_SEPARATOR_WRITING + key + PHONE_SEPARATOR_WRITING + notificationToken;
         } else {
             return null; // invalid Bisq phone ID
         }
@@ -129,7 +129,7 @@ public class Phone {
         // TODO change to proper mechanism to store the BisqToken persistently
         try {
             PrintStream out = new PrintStream(new FileOutputStream(PHONE_FILENAME));
-            out.print(phoneID());
+            out.print(pairingToken());
             out.close();
             isInitialized = true;
         } catch (FileNotFoundException e) {

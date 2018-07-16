@@ -141,15 +141,15 @@ public class NotificationApp extends Application {
         GridPane.setHalignment(webcamButton, HPos.LEFT);
 
         rowindex++;
-        label = new Label("Phone ID:");
+        label = new Label("Pairing token:");
         gridPane.add(label, 0, rowindex, 1, 1);
         GridPane.setHalignment(label, HPos.RIGHT);
         phoneTextField = new TextField();
-        phoneTextField.setPromptText("(optional) paste Phone ID from email");
+        phoneTextField.setPromptText("(optional) paste pairing token from email");
         gridPane.add(phoneTextField, 1, rowindex, 1, 1);
         GridPane.setHalignment(phoneTextField, HPos.LEFT);
         if (phone.isInitialized) {
-            phoneTextField.setText(phone.phoneID());
+            phoneTextField.setText(phone.pairingToken());
         }
         // adding the listener *after* setting the text
         phoneTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -285,7 +285,7 @@ public class NotificationApp extends Application {
         }
 
         listenToPhoneTextFieldChanges = false;
-        phoneTextField.setText(phone.phoneID());
+        phoneTextField.setText(phone.pairingToken());
         listenToPhoneTextFieldChanges = true;
         this.webcamButton.setDisable(false);
         if (!phone.isInitialized) {
