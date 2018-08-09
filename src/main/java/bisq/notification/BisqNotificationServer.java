@@ -27,7 +27,7 @@ public class BisqNotificationServer {
     private ApnsClient apnsClientProduction;
     private ApnsClient apnsClientDevelopment;
     private ApnsPayloadBuilder payloadBuilder;
-    public static final String IOS_BUNDLE_IDENTIFIER = "com.joachimneumann.bisqremotetest";
+    public static final String IOS_BUNDLE_IDENTIFIER = "bisqremote.joachimneumann.com";
     public static final String IOS_CERTIFICATE_FILE = "push_certificate.production.p12";
     public static final String ANDROID_CERTIFICATE_FILE = "serviceAccountKey.json";
     public static final String ANDROID_DATABASE_URL = "https://bisqremotetest.firebaseio.com";
