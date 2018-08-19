@@ -7,6 +7,7 @@ import com.google.zxing.common.HybridBinarizer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Point3D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -71,6 +72,8 @@ public class QR implements Runnable {
 
             WritableImage writableImage = SwingFXUtils.toFXImage(bufferedImage, null);
             capturedImage.setImage(writableImage);
+            capturedImage.setRotationAxis(new Point3D(0.0, 1.0, 0.0));
+            capturedImage.setRotate(180.0);
 
             // QR code detection
             detectQRcounter += 1;
