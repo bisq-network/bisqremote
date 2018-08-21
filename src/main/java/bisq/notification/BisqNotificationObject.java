@@ -1,5 +1,7 @@
 package bisq.notification;
 
+import java.util.Date;
+
 public class BisqNotificationObject {
     long sentDate;
     String txId= "";
@@ -14,13 +16,13 @@ public class BisqNotificationObject {
 
     public BisqNotificationObject(BisqNotificationObject template) {
         // this constructor is used to strip variables from the subclass BisqNotifcation
-        sentDate = template.sentDate;
         txId = template.txId;
         title = template.title;
         message = template.message;
         type = template.type;
         actionRequired = template.actionRequired;
         version = template.version;
-        sentDate = 0;
+        Date now = new Date();
+        sentDate = now.getTime();
     }
 }
