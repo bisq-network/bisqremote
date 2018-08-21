@@ -15,9 +15,7 @@ import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
@@ -29,6 +27,7 @@ public class BisqNotificationServer {
     private ApnsPayloadBuilder payloadBuilder;
     public static final String IOS_BUNDLE_IDENTIFIER = "bisqremote.joachimneumann.com";
     public static final String IOS_CERTIFICATE_FILE = "push_certificate.production.p12";
+    public static final String IOS_PASSWORD_FILE = "iOS_certificate_password";
     public static final String ANDROID_CERTIFICATE_FILE = "serviceAccountKey.json";
     public static final String ANDROID_DATABASE_URL = "https://bisqremotetest.firebaseio.com";
 
@@ -55,6 +54,16 @@ public class BisqNotificationServer {
             // ***
             // *** iOS
             // ***
+
+            String password = "";
+            URL password_iOS = classLoader.getResource(IOS_PASSWORD_FILE);
+            if (password_iOS == null) {
+                throw new IOException(IOS_PASSWORD_FILE+" does not exist");
+            } else {
+                File passwordFile = new File(password_iOS.getFile());
+                BufferedReader br = new BufferedReader(new FileReader(passwordFile));
+                password = br.readLine();
+            }
             URL resource_iOS = classLoader.getResource(IOS_CERTIFICATE_FILE);
             if (resource_iOS == null) {
                 throw new IOException(IOS_CERTIFICATE_FILE+" does not exist");
@@ -63,11 +72,11 @@ public class BisqNotificationServer {
                 logger.info("Using iOS certification file {}.", p12File.getAbsolutePath());
                 apnsClientProduction = new ApnsClientBuilder()
                         .setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
-                        .setClientCredentials(p12File, "")
+                        .setClientCredentials(p12File, password)
                         .build();
                 apnsClientDevelopment = new ApnsClientBuilder()
                         .setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
-                        .setClientCredentials(p12File, "")
+                        .setClientCredentials(p12File, password)
                         .build();
             }
 
