@@ -29,7 +29,7 @@ public class BisqNotificationServer {
     public static final String IOS_CERTIFICATE_FILE = "push_certificate.production.p12";
     public static final String IOS_PASSWORD_FILE = "iOS_certificate_password";
     public static final String ANDROID_CERTIFICATE_FILE = "serviceAccountKey.json";
-    public static final String ANDROID_DATABASE_URL = "https://bisqremotetest.firebaseio.com";
+    public static final String ANDROID_DATABASE_URL = "https://bisqnotifications.firebaseio.com";
 
     BisqNotificationServer() {
         try {
@@ -39,6 +39,7 @@ public class BisqNotificationServer {
             // ***
             // *** Android
             // ***
+
             InputStream resource_Android = classLoader.getResourceAsStream(ANDROID_CERTIFICATE_FILE);
             if (resource_Android == null) {
                 throw new IOException(ANDROID_CERTIFICATE_FILE+" does not exist");
@@ -82,8 +83,6 @@ public class BisqNotificationServer {
 
         } catch (IOException e) {
             e.printStackTrace();
-//        } catch (FirebaseMessagingException e) {
-//            e.printStackTrace();
         }
     }
 
@@ -128,6 +127,7 @@ public class BisqNotificationServer {
 
     public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage, Boolean sound) {
         Message.Builder messageBuilder = Message.builder();
+        messageBuilder.putData("title", "Title");
         messageBuilder.putData("encrypted", encryptedMessage);
         messageBuilder.setToken(apsTokenHex);
         if (sound) {
