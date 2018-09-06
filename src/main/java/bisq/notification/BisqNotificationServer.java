@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -127,6 +128,9 @@ public class BisqNotificationServer {
 
     public void overTor_____sendAndroidMessage(String apsTokenHex, String encryptedMessage, Boolean sound) {
         Message.Builder messageBuilder = Message.builder();
+
+        Notification notification = new Notification("Bisq", "notification");
+        messageBuilder.setNotification(notification);
         messageBuilder.putData("title", "Title");
         messageBuilder.putData("encrypted", encryptedMessage);
         messageBuilder.setToken(apsTokenHex);
