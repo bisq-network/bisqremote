@@ -40,6 +40,10 @@ public class Phone {
         return null;
     }
 
+    public byte[] newIV() {
+        return cryptoHelper.newIV();
+    }
+    
     public String decrypt(String cipher, String iv) {
         try {
             return cryptoHelper.decrypt(cipher, iv);

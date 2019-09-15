@@ -1,6 +1,7 @@
 package bisq.notification;
 
 import com.google.gson.Gson;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +42,8 @@ public class BisqNotification extends BisqNotificationObject {
         json = padded.toString();
 
         // generate 16 random characters for iv
-        String uuid = UUID.randomUUID().toString();
-        uuid = uuid.replace("-", "");
-        String iv = uuid.substring(0, 16);
+        String iv = Base64.encode(phone.newIV());
+
 //        // For testing: Code to provoke a decryption error
 //        String uuid2 = UUID.randomUUID().toString();
 //        uuid2 = uuid2.replace("-", "");

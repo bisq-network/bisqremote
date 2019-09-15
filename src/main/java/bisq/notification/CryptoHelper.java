@@ -25,6 +25,10 @@ public class CryptoHelper {
         }
     }
 
+    public byte[] newIV() {
+        return cipher.getIV();
+    }
+
     public void updateKey(String key_) {
         if (key_.length() != 32) {
             try {
