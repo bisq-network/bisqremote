@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ This file is part of Bisq.
+  ~
+  ~ Bisq is free software: you can redistribute it and/or modify it
+  ~ under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ Bisq is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  ~ FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+  ~ License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with Bisq. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="480.0" minWidth="640.0" prefHeight="720.0" prefWidth="1280.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bisq.remote.ui.views.main.MainViewController">
+    <children>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane>
+               <children>
+                    <VBox prefHeight="425.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <TitledPane animated="false" collapsible="false" text="Recipients" VBox.vgrow="ALWAYS">
+                                <content>
+                                    <AnchorPane>
+                                        <children>
+                                            <VBox layoutX="20.4" layoutY="20.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                <children>
+                                                    <ButtonBar nodeOrientation="RIGHT_TO_LEFT">
+                                                        <buttons>
+                                                            <Button fx:id="removeRecipientButton" mnemonicParsing="false" text="Remove" />
+                                                            <Button fx:id="addRecipientButton" mnemonicParsing="false" text="Add" />
+                                                        </buttons>
+                                                        <VBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                        </VBox.margin>
+                                                    </ButtonBar>
+                                                    <SplitPane dividerPositions="0.29797979797979796">
+                                                        <items>
+                                                            <AnchorPane minWidth="50.0" prefWidth="400.0">
+                                                                <children>
+                                                                    <ListView fx:id="recipientListView" prefHeight="400.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                </children>
+                                                            </AnchorPane>
+                                                            <fx:include fx:id="recipientPanel" source="panel/RecipientPanel.fxml" />
+                                                        </items>
+                                                    </SplitPane>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </TitledPane>
+                            <TitledPane animated="false" collapsible="false" text="Message" VBox.vgrow="ALWAYS">
+                                <content>
+                                    <AnchorPane>
+                                        <children>
+                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <children>
+                                                    <HBox alignment="CENTER_LEFT">
+                                                        <children>
+                                                            <Label minWidth="100.0" text="Payload:">
+                                                                <HBox.margin>
+                                                                    <Insets />
+                                                                </HBox.margin>
+                                                            </Label>
+                                                <ComboBox fx:id="payloadComboBox" prefWidth="150.0" />
+                                                            <TextField fx:id="payloadTextField" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin></TextField>
+                                                        </children>
+                                                    </HBox>
+                                          <HBox alignment="CENTER_LEFT">
+                                             <children>
+                                                            <Button fx:id="sendMessageButton" mnemonicParsing="false" prefWidth="100.0" text="Send" />
+                                                <Label fx:id="sendMessageResultText" nodeOrientation="LEFT_TO_RIGHT" prefWidth="800.0" textFill="#e41111" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </HBox.margin></Label>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="15.0" />
+                                             </VBox.margin></HBox>
+                                                </children>
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                            </VBox>
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </TitledPane>
+                        </children>
+                    </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This file is part of Bisq.
+  ~
+  ~ Bisq is free software: you can redistribute it and/or modify it
+  ~ under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ Bisq is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  ~ FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+  ~ License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with Bisq. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" prefHeight="690.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bisq.remote.ui.views.scanqr.ScanQrViewController">
+    <bottom>
+        <FlowPane fx:id="bottomPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="40.0" style="-fx-background-color:#ccc;">
+            <Button fx:id="closeButton" cancelButton="true" prefWidth="150.0" text="Close" />
+        </FlowPane>
+    </bottom>
+    <center>
+        <BorderPane>
+            <center>
+                <FlowPane fx:id="webcamPane" alignment="CENTER" columnHalignment="CENTER"
+                          style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets/>
+                    </BorderPane.margin>
+                    <Label fx:id="webcamStatusLabel" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER"
+                           textFill="WHITE"/>
+                    <ImageView fx:id="webcamImageView" pickOnBounds="true" preserveRatio="true">
+                        <FlowPane.margin>
+                            <Insets/>
+                        </FlowPane.margin>
+                    </ImageView>
+                </FlowPane>
+            </center>
+        </BorderPane>
+    </center>
+    <top>
+        <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="40.0" style="-fx-background-color:#ccc;">
+            <ComboBox fx:id="webcamComboBox" prefWidth="350.0" />
+        </FlowPane>
+    </top>
+</BorderPane>
